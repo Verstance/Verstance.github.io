@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        Leetcode 140.单词拆分II |
+        
+        Homgun&#39;s Blog
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let ILS = window.ILS || {};
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"2.1.0","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"},"toc":{"enable":true,"number":false,"expand_all":true},"back2top":{"enable":true},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Homgun&#39;s Blog
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/tags"
+                    >
+                        标签
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">Leetcode 140.单词拆分II</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-11-01 09:41:22
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/LeetCode/">LeetCode</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/DFS/">DFS</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/">记忆化搜索</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+        <span class="article-wordcount article-meta-item">
+        <i class="fa fa-book"></i> <span>1.2k 字</span>
+        </span>
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <p>题目描述：</p>
+<p>给定一个非空字符串 s 和一个包含非空单词列表的字典 wordDict，在字符串中增加空格来构建一个句子，使得句子中所有的单词都在词典中。返回所有这些可能的句子。</p>
+<p>说明：</p>
+<ul>
+<li>分隔时可以重复使用字典中的单词。</li>
+<li>你可以假设字典中没有重复的单词。</li>
+</ul>
+<p>示例1：</p>
+<p>输入:<br>s = “catsanddog”<br>wordDict = [“cat”, “cats”, “and”, “sand”, “dog”]<br>输出:<br>[<br>  “cats and dog”,<br>  “cat sand dog”<br>]</p>
+<p>示例2：</p>
+<p>输入:<br>s = “pineapplepenapple”<br>wordDict = [“apple”, “pen”, “applepen”, “pine”, “pineapple”]<br>输出:<br>[<br>  “pine apple pen apple”,<br>  “pineapple pen apple”,<br>  “pine applepen apple”<br>]<br>解释: 可以重复使用字典中的单词。</p>
+<p>示例3：</p>
+<p>输入:<br>s = “catsandog”<br>wordDict = [“cats”, “dog”, “sand”, “and”, “cat”]<br>输出:<br>[]</p>
+<p>概述：动态规划求是否有解、回溯算法求所有具体解。题目问可不可以拆分，没有问具体怎么拆分，通常考虑使用动态规划解决；题目如果问一个问题的所有的具体解，一般而言使用回溯算法（DFS）完成。</p>
+<p>动态规划求是否有解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">wordBreak</span><span class="params">(String s, List&lt;String&gt; wordDict)</span> </span>&#123;</span><br><span class="line">        Set&lt;String&gt; wordSet = <span class="keyword">new</span> HashSet&lt;&gt;(wordDict);</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 状态定义：以 s[i] 结尾的子字符串是否符合题意</span></span><br><span class="line">        <span class="keyword">boolean</span>[] dp = <span class="keyword">new</span> <span class="keyword">boolean</span>[len];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> right = <span class="number">0</span>; right &lt; len; right++) &#123;</span><br><span class="line">            <span class="comment">// 分类讨论 1：不拆分，substring 右端点不包含，所以是 right + 1</span></span><br><span class="line">            <span class="keyword">if</span> (wordSet.contains(s.substring(<span class="number">0</span>, right + <span class="number">1</span>))) &#123;</span><br><span class="line">                dp[right] = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 分类讨论 2：拆分</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> left = right - <span class="number">1</span>; left &gt;= <span class="number">0</span>; left--) &#123;</span><br><span class="line">                <span class="keyword">if</span> (wordSet.contains(s.substring(left + <span class="number">1</span>, right + <span class="number">1</span>)) &amp;&amp; dp[left]) &#123;</span><br><span class="line">                    dp[right] = <span class="keyword">true</span>;</span><br><span class="line">                    <span class="comment">// 这个 break 很重要，一旦得到 dp[right] = True ，循环不必再继续</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[len - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回溯的时间复杂度在最坏情况下高达 O(n^n)。时间复杂度高的原因是存在大量重复计算，可以通过动态规划+深度优先搜索或者记忆化搜索的方式降低时间复杂度。</p>
+<p>回溯算法求所有具体解：</p>
+<p>1.动态规划+深度优先搜索</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayDeque;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Deque;</span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">wordBreak</span><span class="params">(String s, List&lt;String&gt; wordDict)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 为了快速判断一个单词是否在单词集合中，需要将它们加入哈希表</span></span><br><span class="line">        Set&lt;String&gt; wordSet = <span class="keyword">new</span> HashSet&lt;&gt;(wordDict);</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第 1 步：动态规划计算是否有解</span></span><br><span class="line">        <span class="comment">// dp[i] 表示「长度」为 i 的 s 前缀子串可以拆分成 wordDict 中的单词</span></span><br><span class="line">        <span class="comment">// 长度包括 0 ，因此状态数组的长度为 len + 1</span></span><br><span class="line">        <span class="keyword">boolean</span>[] dp = <span class="keyword">new</span> <span class="keyword">boolean</span>[len + <span class="number">1</span>];</span><br><span class="line">        <span class="comment">// 0 这个值需要被后面的状态值参考，如果一个单词正好在 wordDict 中，dp[0] 设置成 true 是合理的</span></span><br><span class="line">        dp[<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> right = <span class="number">1</span>; right &lt;= len; right++) &#123;</span><br><span class="line">            <span class="comment">// 如果单词集合中的单词长度都不长，从后向前遍历是更快的</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> left = right - <span class="number">1</span>; left &gt;= <span class="number">0</span>; left--) &#123;</span><br><span class="line">                <span class="comment">// substring 不截取 s[right]，dp[left] 的结果不包含 s[left]</span></span><br><span class="line">                <span class="keyword">if</span> (wordSet.contains(s.substring(left, right)) &amp;&amp; dp[left]) &#123;</span><br><span class="line">                    dp[right] = <span class="keyword">true</span>;</span><br><span class="line">                    <span class="comment">// 这个 break 很重要，一旦得到 dp[right] = True ，不必再计算下去</span></span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第 2 步：回溯算法搜索所有符合条件的解</span></span><br><span class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (dp[len]) &#123;</span><br><span class="line">            Deque&lt;String&gt; path = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">            dfs(s, len, wordSet, dp, path, res);</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(String s, <span class="keyword">int</span> len, Set&lt;String&gt; wordSet, <span class="keyword">boolean</span>[] dp, Deque&lt;String&gt; path, List&lt;String&gt; res)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">            res.add(String.join(<span class="string">&quot; &quot;</span>,path));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 可以拆分的左边界从 len - 1 依次枚举到 0</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            String suffix = s.substring(i, len);</span><br><span class="line">            <span class="keyword">if</span> (wordSet.contains(suffix) &amp;&amp; dp[i]) &#123;</span><br><span class="line">                path.addFirst(suffix);</span><br><span class="line">                dfs(s, i, wordSet, dp, path, res);</span><br><span class="line">                path.removeFirst();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.记忆化搜索</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">wordBreak</span><span class="params">(String s, List&lt;String&gt; wordDict)</span> </span>&#123;</span><br><span class="line">        Map&lt;Integer, List&lt;List&lt;String&gt;&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, List&lt;List&lt;String&gt;&gt;&gt;();</span><br><span class="line">        List&lt;List&lt;String&gt;&gt; wordBreaks = backtrack(s, s.length(), <span class="keyword">new</span> HashSet&lt;String&gt;(wordDict), <span class="number">0</span>, map);</span><br><span class="line">        List&lt;String&gt; breakList = <span class="keyword">new</span> LinkedList&lt;String&gt;();</span><br><span class="line">        <span class="keyword">for</span> (List&lt;String&gt; wordBreak : wordBreaks) &#123;</span><br><span class="line">            breakList.add(String.join(<span class="string">&quot; &quot;</span>, wordBreak));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> breakList;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; backtrack(String s, <span class="keyword">int</span> length, Set&lt;String&gt; wordSet, <span class="keyword">int</span> index, Map&lt;Integer, List&lt;List&lt;String&gt;&gt;&gt; map) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!map.containsKey(index)) &#123;</span><br><span class="line">            List&lt;List&lt;String&gt;&gt; wordBreaks = <span class="keyword">new</span> LinkedList&lt;List&lt;String&gt;&gt;();</span><br><span class="line">            <span class="keyword">if</span> (index == length) &#123;</span><br><span class="line">                wordBreaks.add(<span class="keyword">new</span> LinkedList&lt;String&gt;());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = index + <span class="number">1</span>; i &lt;= length; i++) &#123;</span><br><span class="line">                String word = s.substring(index, i);</span><br><span class="line">                <span class="keyword">if</span> (wordSet.contains(word)) &#123;</span><br><span class="line">                    List&lt;List&lt;String&gt;&gt; nextWordBreaks = backtrack(s, length, wordSet, i, map);</span><br><span class="line">                    <span class="keyword">for</span> (List&lt;String&gt; nextWordBreak : nextWordBreaks) &#123;</span><br><span class="line">                        LinkedList&lt;String&gt; wordBreak = <span class="keyword">new</span> LinkedList&lt;String&gt;(nextWordBreak);</span><br><span class="line">                        wordBreak.offerFirst(word);</span><br><span class="line">                        wordBreaks.add(wordBreak);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(index, wordBreaks);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map.get(index);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/word-break-ii">https://leetcode-cn.com/problems/word-break-ii</a></p>
+
+        </div>
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next btn"
+                           rel="next"
+                           href="/2020/10/30/LeetCode463-%E5%B2%9B%E5%B1%BF%E7%9A%84%E9%95%BF%E5%BA%A6/"
+                        >
+                            <span class="post-nav-title-item">LeetCode 463.岛屿的长度</span>
+                            <span class="post-nav-item">下一篇</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">Homgun</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.1.0</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa fa-outdent"></i>
+            </li>
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="sidebar-tools-2">
+        <div class="tools2-container">
+
+    <button class="tools-button">
+        <i class="fa fa-plus"></i>
+    </button>
+
+    <ul class="tools-wrapper">
+        <!-- back2top -->
+        
+            <li class="tools-item scroll-to-bottom">
+                <i class="fa fa-arrow-down"></i>
+            </li>
+            <li class="tools-item scroll-to-top">
+                <i class="fa fa-arrow-up"></i>
+            </li>
+        
+
+        <!-- mode toggle -->
+        <li class="tools-item mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+
+    </ul>
+</div>
+
+    </div>
+
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/dark-light-toggle.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/back2top.js"></script>
+
+
+
+
+
+    
+<script src="/js/left-side-toggle.js"></script>
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+</body>
+</html>

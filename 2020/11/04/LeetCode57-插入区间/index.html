@@ -148,7 +148,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-        <i class="fa fa-book"></i> <span>692 字</span>
+        <i class="fa fa-book"></i> <span>701 字</span>
         </span>
     
     
@@ -186,8 +186,7 @@
 <p>然后将第一个区间加入 <code>merged</code> 数组中，并按顺序依次考虑之后的每个区间。如果当前区间的左端点在数组 <code>merged</code> 中最后一个区间的右端点之后，直接将这个区间加入数组 <code>merged</code> 的末尾；否则，需要用当前区间的右端点更新数组 <code>merged</code> 中最后一个区间的右端点，将其置为二者的较大值。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[][] merge(<span class="keyword">int</span>[][] intervals) &#123;</span><br><span class="line">    <span class="keyword">if</span> (intervals.length == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>][<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    Arrays.sort(intervals, (<span class="keyword">int</span>[] interval1, <span class="keyword">int</span>[] interval2) -&gt; interval1[<span class="number">0</span>] - interval2[<span class="number">0</span>]);</span><br><span class="line">    List&lt;<span class="keyword">int</span>[]&gt; merged = <span class="keyword">new</span> ArrayList&lt;<span class="keyword">int</span>[]&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; intervals.length; ++i) &#123;</span><br><span class="line">        <span class="keyword">int</span> L = intervals[i][<span class="number">0</span>], R = intervals[i][<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (merged.size() == <span class="number">0</span> || merged.get(merged.size() - <span class="number">1</span>)[<span class="number">1</span>] &lt; L) &#123;</span><br><span class="line">            merged.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;L, R&#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            merged.get(merged.size() - <span class="number">1</span>)[<span class="number">1</span>] = Math.max(merged.get(merged.size() - <span class="number">1</span>)[<span class="number">1</span>], R);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> merged.toArray(<span class="keyword">new</span> <span class="keyword">int</span>[merged.size()][]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/merge-intervals">https://leetcode-cn.com/problems/merge-intervals</a></p>
 
         </div>
 

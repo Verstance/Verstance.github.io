@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        LeetCode 57.插入区间 |
+        
+        Homgun&#39;s Blog
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let ILS = window.ILS || {};
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"2.1.0","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"},"toc":{"enable":true,"number":false,"expand_all":true},"back2top":{"enable":true},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Homgun&#39;s Blog
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/tags"
+                    >
+                        标签
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">LeetCode 57.插入区间</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-11-04 13:18:29
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/LeetCode/">LeetCode</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%95%B0%E7%BB%84/">数组</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%8E%92%E5%BA%8F/">排序</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+        <span class="article-wordcount article-meta-item">
+        <i class="fa fa-book"></i> <span>692 字</span>
+        </span>
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <p><strong>题目描述：</strong></p>
+<p>给出一个<em>无重叠的 ，</em>按照区间起始端点排序的区间列表。</p>
+<p>在列表中插入一个新的区间，你需要确保列表中的区间仍然有序且不重叠（如果有必要的话，可以合并区间）。</p>
+<p><strong>示例1：</strong></p>
+<p>输入：intervals = [[1,3],[6,9]], newInterval = [2,5]<br>输出：[[1,5],[6,9]]</p>
+<p><strong>示例2：</strong></p>
+<p>输入：intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]<br>输出：[[1,2],[3,10],[12,16]]</p>
+<p><strong>思路：</strong>找出所有与新插入区间 newInterval = [left,right] 重叠的区间集合并将这些区间合并</p>
+<p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/1.png" alt="fig1"></p>
+<p>遍历 intervals 的区间 [li,ri] </p>
+<ul>
+<li>如果 ri &lt; left 或者 li &gt; right，说明 [li,ri] 与 newInterval不重叠，可直接将 [li,ri] 加入答案</li>
+<li>否则， [li,ri] 与 newInterval重叠，需要将 [li,ri] 与 newInterval合并</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[][] insert(<span class="keyword">int</span>[][] intervals, <span class="keyword">int</span>[] newInterval) &#123;</span><br><span class="line">    <span class="keyword">int</span> left = newInterval[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> right = newInterval[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">boolean</span> placed = <span class="keyword">false</span>;</span><br><span class="line">    List&lt;<span class="keyword">int</span>[]&gt; ansList = <span class="keyword">new</span> ArrayList&lt;<span class="keyword">int</span>[]&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span>[] interval : intervals) &#123;</span><br><span class="line">        <span class="keyword">if</span> (interval[<span class="number">0</span>] &gt; right) &#123;</span><br><span class="line">            <span class="comment">// 在插入区间的右侧且无交集</span></span><br><span class="line">            <span class="keyword">if</span> (!placed) &#123;</span><br><span class="line">                ansList.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;left, right&#125;);</span><br><span class="line">                placed = <span class="keyword">true</span>;                    </span><br><span class="line">            &#125;</span><br><span class="line">            ansList.add(interval);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (interval[<span class="number">1</span>] &lt; left) &#123;</span><br><span class="line">            <span class="comment">// 在插入区间的左侧且无交集</span></span><br><span class="line">            ansList.add(interval);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 与插入区间有交集，计算它们的并集</span></span><br><span class="line">            left = Math.min(left, interval[<span class="number">0</span>]);</span><br><span class="line">            right = Math.max(right, interval[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!placed) &#123;</span><br><span class="line">        ansList.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;left, right&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span>[][] ans = <span class="keyword">new</span> <span class="keyword">int</span>[ansList.size()][<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ansList.size(); ++i) &#123;</span><br><span class="line">        ans[i] = ansList.get(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/insert-interval">https://leetcode-cn.com/problems/insert-interval</a></p>
+<p>类似题目：56.合并区间</p>
+<p>题目描述：</p>
+<p>给出一个区间的集合，请合并所有重叠的区间。</p>
+<p>示例1：</p>
+<p>输入: intervals = [[1,3],[2,6],[8,10],[15,18]]<br>输出: [[1,6],[8,10],[15,18]]</p>
+<p>示例2：</p>
+<p>输入: intervals = [[1,4],[4,5]]<br>输出: [[1,5]]</p>
+<p>思路：按照区间的左端点排序，那么在排完序的列表中，可以合并的区间一定是连续的。</p>
+<p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/50417462969bd13230276c0847726c0909873d22135775ef4022e806475d763e-56-2.png" alt="56-2.png"></p>
+<p>然后将第一个区间加入 <code>merged</code> 数组中，并按顺序依次考虑之后的每个区间。如果当前区间的左端点在数组 <code>merged</code> 中最后一个区间的右端点之后，直接将这个区间加入数组 <code>merged</code> 的末尾；否则，需要用当前区间的右端点更新数组 <code>merged</code> 中最后一个区间的右端点，将其置为二者的较大值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[][] merge(<span class="keyword">int</span>[][] intervals) &#123;</span><br><span class="line">    <span class="keyword">if</span> (intervals.length == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>][<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    Arrays.sort(intervals, (<span class="keyword">int</span>[] interval1, <span class="keyword">int</span>[] interval2) -&gt; interval1[<span class="number">0</span>] - interval2[<span class="number">0</span>]);</span><br><span class="line">    List&lt;<span class="keyword">int</span>[]&gt; merged = <span class="keyword">new</span> ArrayList&lt;<span class="keyword">int</span>[]&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; intervals.length; ++i) &#123;</span><br><span class="line">        <span class="keyword">int</span> L = intervals[i][<span class="number">0</span>], R = intervals[i][<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (merged.size() == <span class="number">0</span> || merged.get(merged.size() - <span class="number">1</span>)[<span class="number">1</span>] &lt; L) &#123;</span><br><span class="line">            merged.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;L, R&#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            merged.get(merged.size() - <span class="number">1</span>)[<span class="number">1</span>] = Math.max(merged.get(merged.size() - <span class="number">1</span>)[<span class="number">1</span>], R);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> merged.toArray(<span class="keyword">new</span> <span class="keyword">int</span>[merged.size()][]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+        </div>
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev btn"
+                           rel="prev"
+                           href="/2020/11/06/Leetcode1356-%E6%A0%B9%E6%8D%AE%E6%95%B0%E5%AD%97%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%8B1%E7%9A%84%E6%95%B0%E7%9B%AE%E6%8E%92%E5%BA%8F/"
+                        >
+                            <i class="fa fa-chevron-left"></i>
+                            <span class="post-nav-title-item">LeetCode 1356.根据数字二进制下1的数目排序</span>
+                            <span class="post-nav-item">上一篇</span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next btn"
+                           rel="next"
+                           href="/2020/11/03/JavaWeb%E5%85%A5%E9%97%A8/"
+                        >
+                            <span class="post-nav-title-item">JavaWeb入门</span>
+                            <span class="post-nav-item">下一篇</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">Homgun</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.1.0</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa fa-outdent"></i>
+            </li>
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="sidebar-tools-2">
+        <div class="tools2-container">
+
+    <button class="tools-button">
+        <i class="fa fa-plus"></i>
+    </button>
+
+    <ul class="tools-wrapper">
+        <!-- back2top -->
+        
+            <li class="tools-item scroll-to-bottom">
+                <i class="fa fa-arrow-down"></i>
+            </li>
+            <li class="tools-item scroll-to-top">
+                <i class="fa fa-arrow-up"></i>
+            </li>
+        
+
+        <!-- mode toggle -->
+        <li class="tools-item mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+
+    </ul>
+</div>
+
+    </div>
+
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/dark-light-toggle.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/back2top.js"></script>
+
+
+
+
+
+    
+<script src="/js/left-side-toggle.js"></script>
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+</body>
+</html>

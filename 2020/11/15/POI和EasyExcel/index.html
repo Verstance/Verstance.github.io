@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        POI和EasyExcel |
+        
+        Homgun&#39;s Blog
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let ILS = window.ILS || {};
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"2.1.0","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"},"toc":{"enable":true,"number":false,"expand_all":true},"back2top":{"enable":true},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Homgun&#39;s Blog
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/tags"
+                    >
+                        标签
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">POI和EasyExcel</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-11-15 21:22:11
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Java/">Java</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Excel/">Excel</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+        <span class="article-wordcount article-meta-item">
+        <i class="fa fa-book"></i> <span>1.7k 字</span>
+        </span>
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h2 id="POI和EasyExcel"><a href="#POI和EasyExcel" class="headerlink" title="POI和EasyExcel"></a>POI和EasyExcel</h2><p>应用场景：</p>
+<ol>
+<li>将数据导出为Excel表格</li>
+<li>将Excel表格数据录入到数据库</li>
+</ol>
+<p>操作Excel表格目前比较流行的是<strong>Apache POI</strong>和阿里巴巴的<strong>EasyExcel</strong></p>
+<h3 id="Apache-POI"><a href="#Apache-POI" class="headerlink" title="Apache POI"></a>Apache POI</h3><blockquote>
+<p>Apache POI是Apache软件基金会的开放源码函式库，POI提供API给Java程序对Microsoft Office格式档案读和写的功能。</p>
+</blockquote>
+<p>官网：<a target="_blank" rel="noopener" href="http://poi.apache.org/">http://poi.apache.org/</a></p>
+<p>基本功能：</p>
+<p>HSSF － 提供读写Microsoft Excel格式档案的功能。（03）<br>XSSF － 提供读写Microsoft Excel OOXML格式档案的功能。（07）<br>HWPF － 提供读写Microsoft Word格式档案的功能。<br>HSLF － 提供读写Microsoft PowerPoint格式档案的功能。<br>HDGF － 提供读写Microsoft Visio格式档案的功能。</p>
+<p>导入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- xls(03) --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.poi/poi --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- xls(07) --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>poi-ooxml<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 日期格式化工具 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/joda-time/joda-time --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>joda-time<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>joda-time<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.10.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- test --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/junit/junit --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="POI-Excel写"><a href="#POI-Excel写" class="headerlink" title="POI-Excel写"></a>POI-Excel写</h4><p>工作簿 → 工作表 → 行 → 列</p>
+<p>03版本：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testWrite03</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="comment">// 1.创建一个工作簿</span></span><br><span class="line">    Workbook workbook = <span class="keyword">new</span> HSSFWorkbook();</span><br><span class="line">    <span class="comment">// 2.创建一个工作表</span></span><br><span class="line">    Sheet sheet = workbook.createSheet(<span class="string">&quot;打卡记录03&quot;</span>);</span><br><span class="line">    <span class="comment">// 3.创建一个行</span></span><br><span class="line">    <span class="comment">// 第一行</span></span><br><span class="line">    Row row1 = sheet.createRow(<span class="number">0</span>);</span><br><span class="line">    <span class="comment">// 4.创建一个单元格</span></span><br><span class="line">    Cell cell11 = row1.createCell(<span class="number">0</span>);</span><br><span class="line">    cell11.setCellValue(<span class="string">&quot;姓名&quot;</span>);</span><br><span class="line">    Cell cell12 = row1.createCell(<span class="number">1</span>);</span><br><span class="line">    cell12.setCellValue(<span class="string">&quot;XXX&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第二行</span></span><br><span class="line">    Row row2 = sheet.createRow(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 4.创建一个单元格</span></span><br><span class="line">    Cell cell21 = row2.createCell(<span class="number">0</span>);</span><br><span class="line">    cell21.setCellValue(<span class="string">&quot;打卡时间&quot;</span>);</span><br><span class="line">    Cell cell22 = row2.createCell(<span class="number">1</span>);</span><br><span class="line">    String time = <span class="keyword">new</span> DateTime().toString(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line">    cell22.setCellValue(time);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生成一张表（IO流）</span></span><br><span class="line">    FileOutputStream fileOutputStream = <span class="keyword">new</span> FileOutputStream(PATH + <span class="string">&quot;打卡记录03.xls&quot;</span>);</span><br><span class="line">    <span class="comment">// 输出</span></span><br><span class="line">    workbook.write(fileOutputStream);</span><br><span class="line">    <span class="comment">// 关闭流</span></span><br><span class="line">    fileOutputStream.close();</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;打卡记录03.xls生成完毕！&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>07版本：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testWrite07</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="comment">// 1.创建一个工作簿</span></span><br><span class="line">    Workbook workbook = <span class="keyword">new</span> XSSFWorkbook();</span><br><span class="line">    <span class="comment">// 2.创建一个工作表</span></span><br><span class="line">    Sheet sheet = workbook.createSheet(<span class="string">&quot;打卡记录07&quot;</span>);</span><br><span class="line">    <span class="comment">// 3.创建一个行</span></span><br><span class="line">    <span class="comment">// 第一行</span></span><br><span class="line">    Row row1 = sheet.createRow(<span class="number">0</span>);</span><br><span class="line">    <span class="comment">// 4.创建一个单元格</span></span><br><span class="line">    Cell cell11 = row1.createCell(<span class="number">0</span>);</span><br><span class="line">    cell11.setCellValue(<span class="string">&quot;姓名&quot;</span>);</span><br><span class="line">    Cell cell12 = row1.createCell(<span class="number">1</span>);</span><br><span class="line">    cell12.setCellValue(<span class="string">&quot;XXX&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第二行</span></span><br><span class="line">    Row row2 = sheet.createRow(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 4.创建一个单元格</span></span><br><span class="line">    Cell cell21 = row2.createCell(<span class="number">0</span>);</span><br><span class="line">    cell21.setCellValue(<span class="string">&quot;打卡时间&quot;</span>);</span><br><span class="line">    Cell cell22 = row2.createCell(<span class="number">1</span>);</span><br><span class="line">    String time = <span class="keyword">new</span> DateTime().toString(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line">    cell22.setCellValue(time);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生成一张表（IO流）</span></span><br><span class="line">    FileOutputStream fileOutputStream = <span class="keyword">new</span> FileOutputStream(PATH + <span class="string">&quot;打卡记录07.xlsx&quot;</span>);</span><br><span class="line">    <span class="comment">// 输出</span></span><br><span class="line">    workbook.write(fileOutputStream);</span><br><span class="line">    <span class="comment">// 关闭流</span></span><br><span class="line">    fileOutputStream.close();</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;打卡记录07.xlsx生成完毕！&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>03版的xls最多只能容纳65536行数据</p>
+</li>
+<li><p>07版的xlsx则没有限制，但耗时长</p>
+</li>
+</ul>
+<p>可以使用SXSSFWorkbook读写大数据量的Excel表格，且耗时比XSSFWorkbook短，不过在使用SXSSFWorkbook读写Excel表格时会生成临时文件，处理结束时需加上<code>((SXSSFWorkbook) workbook).dispose()</code>将其清理。</p>
+<p>官方解释：实现”BigGridDemo”策略的流式XSSFWorkbook版本允许写入非常大的文件而不会耗尽内存，因为任何时候只有可配置的行部分被保存在内存中。但是注意，如果广泛使用例如合并区域，注释这类功能，将可能消耗大量内存。</p>
+<h4 id="POI-Excel读"><a href="#POI-Excel读" class="headerlink" title="POI-Excel读"></a>POI-Excel读</h4><p>03版本：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRead03</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取文件流</span></span><br><span class="line">    FileInputStream fileInputStream = <span class="keyword">new</span> FileInputStream(PATH + <span class="string">&quot;打卡记录03.xls&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1.创建一个工作簿</span></span><br><span class="line">    Workbook workbook = <span class="keyword">new</span> HSSFWorkbook(fileInputStream);</span><br><span class="line">    <span class="comment">// 2.得到表</span></span><br><span class="line">    Sheet sheet = workbook.getSheetAt(<span class="number">0</span>);</span><br><span class="line">    <span class="comment">// 3.得到行</span></span><br><span class="line">    Row row = sheet.getRow(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 4.得到列</span></span><br><span class="line">    Cell cell = row.getCell(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读取值的时候一定要注意类型！</span></span><br><span class="line">    System.out.println(cell.getStringCellValue());</span><br><span class="line">    fileInputStream.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>07版本：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRead07</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="comment">// 获取文件流</span></span><br><span class="line">    FileInputStream fileInputStream = <span class="keyword">new</span> FileInputStream(PATH + <span class="string">&quot;打卡记录07.xlsx&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1.创建一个工作簿</span></span><br><span class="line">    Workbook workbook = <span class="keyword">new</span> XSSFWorkbook(fileInputStream);</span><br><span class="line">    <span class="comment">// 2.得到表</span></span><br><span class="line">    Sheet sheet = workbook.getSheetAt(<span class="number">0</span>);</span><br><span class="line">    <span class="comment">// 3.得到行</span></span><br><span class="line">    Row row = sheet.getRow(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 4.得到列</span></span><br><span class="line">    Cell cell = row.getCell(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读取值的时候一定要注意类型！</span></span><br><span class="line">    System.out.println(cell.getStringCellValue());</span><br><span class="line">    fileInputStream.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>读取不同类型的数据类型</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCellType</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    <span class="comment">// 获取文件流，读取工作簿</span></span><br><span class="line">    FileInputStream fileInputStream = <span class="keyword">new</span> FileInputStream(PATH + <span class="string">&quot;明细表.xls&quot;</span>);</span><br><span class="line">    Workbook workbook = <span class="keyword">new</span> HSSFWorkbook(fileInputStream);</span><br><span class="line">    Sheet sheet = workbook.getSheetAt(<span class="number">0</span>);</span><br><span class="line">    <span class="comment">// 获取标题内容</span></span><br><span class="line">    Row rowTitle = sheet.getRow(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span>(rowTitle!=<span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">int</span> cellCount = rowTitle.getPhysicalNumberOfCells();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> cellNum = <span class="number">0</span>; cellNum &lt; cellCount; cellNum++)&#123;</span><br><span class="line">            Cell cell = rowTitle.getCell(cellNum);</span><br><span class="line">            <span class="keyword">if</span>(cell != <span class="keyword">null</span>)&#123;</span><br><span class="line">                String cellValue = cell.getStringCellValue();</span><br><span class="line">                System.out.print(cellValue + <span class="string">&quot; | &quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 获取表中内容</span></span><br><span class="line">    <span class="keyword">int</span> rowCount = sheet.getPhysicalNumberOfRows();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> rowNum = <span class="number">1</span>; rowNum &lt; rowCount; rowNum++)&#123;</span><br><span class="line">        Row rowData = sheet.getRow(rowNum);</span><br><span class="line">        <span class="keyword">if</span>(rowData!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> cellCount = rowTitle.getPhysicalNumberOfCells();</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> cellNum = <span class="number">0</span>; cellNum &lt; cellCount; cellNum++)&#123;</span><br><span class="line">                System.out.print(<span class="string">&quot;[&quot;</span>+(rowNum+<span class="number">1</span>)+<span class="string">&quot;-&quot;</span>+(cellNum+<span class="number">1</span>)+<span class="string">&quot;] &quot;</span>);</span><br><span class="line">                Cell cell = rowData.getCell(cellNum);</span><br><span class="line">                <span class="comment">// 匹配列的数据类型</span></span><br><span class="line">                <span class="keyword">if</span>(cell != <span class="keyword">null</span>)&#123;</span><br><span class="line">                    <span class="keyword">int</span> cellType = cell.getCellType();</span><br><span class="line">                    String cellValue = <span class="string">&quot;&quot;</span>;</span><br><span class="line">                    <span class="keyword">switch</span>(cellType)&#123;</span><br><span class="line">                        <span class="keyword">case</span> HSSFCell.CELL_TYPE_STRING:</span><br><span class="line">                            System.out.print(<span class="string">&quot;String - &quot;</span>);</span><br><span class="line">                            cellValue = cell.getStringCellValue();</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        <span class="keyword">case</span> HSSFCell.CELL_TYPE_BOOLEAN:</span><br><span class="line">                            System.out.print(<span class="string">&quot;Boolean - &quot;</span>);</span><br><span class="line">                            cellValue = String.valueOf(cell.getBooleanCellValue());</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        <span class="keyword">case</span> HSSFCell.CELL_TYPE_BLANK:</span><br><span class="line">                            System.out.print(<span class="string">&quot;Blank&quot;</span>);</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        <span class="keyword">case</span> HSSFCell.CELL_TYPE_NUMERIC:</span><br><span class="line">                            System.out.print(<span class="string">&quot;Numeric - &quot;</span>);</span><br><span class="line">                            <span class="keyword">if</span>(HSSFDateUtil.isCellDateFormatted(cell))&#123;</span><br><span class="line">                                System.out.print(<span class="string">&quot;Date - &quot;</span>);</span><br><span class="line">                                Date date = cell.getDateCellValue();</span><br><span class="line">                                cellValue = <span class="keyword">new</span> DateTime(date).toString(<span class="string">&quot;yyyy-MM-dd&quot;</span>);</span><br><span class="line">                            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                                System.out.print(<span class="string">&quot;Number - &quot;</span>);</span><br><span class="line">                                cell.setCellType(HSSFCell.CELL_TYPE_STRING); <span class="comment">// 防止数字过长，转化为字符串类型</span></span><br><span class="line">                                cellValue = cell.toString();</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        <span class="keyword">case</span> HSSFCell.CELL_TYPE_ERROR:</span><br><span class="line">                            System.out.println(<span class="string">&quot;Error&quot;</span>);</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    System.out.println(cellValue);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    fileInputStream.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>计算公式</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFormula</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    FileInputStream fileInputStream = <span class="keyword">new</span> FileInputStream(PATH + <span class="string">&quot;公式.xls&quot;</span>);</span><br><span class="line"></span><br><span class="line">    Workbook workbook = <span class="keyword">new</span> HSSFWorkbook(fileInputStream);</span><br><span class="line">    Sheet sheet = workbook.getSheetAt(<span class="number">0</span>);</span><br><span class="line">    Row row = sheet.getRow(<span class="number">1</span>);</span><br><span class="line">    Cell cell = row.getCell(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 拿到计算公式eval</span></span><br><span class="line">    FormulaEvaluator FormulaEvaluator = <span class="keyword">new</span> HSSFFormulaEvaluator((HSSFWorkbook)workbook);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 输出单元格的内容</span></span><br><span class="line">    <span class="keyword">int</span> cellType = cell.getCellType();</span><br><span class="line">    <span class="keyword">switch</span>(cellType)&#123;</span><br><span class="line">        <span class="keyword">case</span> Cell.CELL_TYPE_FORMULA:</span><br><span class="line">            String formula = cell.getCellFormula();</span><br><span class="line">            System.out.println(formula);</span><br><span class="line">            <span class="comment">// 计算</span></span><br><span class="line">            CellValue evaluate = FormulaEvaluator.evaluate(cell);</span><br><span class="line">            String cellValue = evaluate.formatAsString();</span><br><span class="line">            System.out.println(cellValue);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    fileInputStream.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="EasyExcel"><a href="#EasyExcel" class="headerlink" title="EasyExcel"></a>EasyExcel</h3><blockquote>
+<p>EasyExcel重写了POI对07版Excel的解析，能够原本一个3M的excel用POI sax依然需要100M左右内存降低到几M，并且再大的excel不会出现内存溢出，03版依赖POI的sax模式。在上层做了模型转换的封装，让使用者更加简单方便。</p>
+</blockquote>
+<p>官网：<a target="_blank" rel="noopener" href="https://github.com/alibaba/easyexcel/">https://github.com/alibaba/easyexcel/</a></p>
+<p>EasyExcel能大大减少占用内存的主要原因是在解析Excel时没有将文件数据一次性全部加载到内存中，而是从磁盘上一行一行读取数据，逐个解析。</p>
+<p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/1584449986458-75c79796-c987-4b0f-92cd-82cd1855384e.png" alt="img"></p>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://www.yuque.com/easyexcel/doc/easyexcel">https://www.yuque.com/easyexcel/doc/easyexcel</a></p>
+<p>导入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>easyexcel<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="EasyExcel操作"><a href="#EasyExcel操作" class="headerlink" title="EasyExcel操作"></a>EasyExcel操作</h4><p>写入操作：固定类格式进行写入</p>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/easyexcel/doc/write">https://www.yuque.com/easyexcel/doc/write</a></p>
+<p>读取操作：根据监听器设置规则进行读取</p>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/easyexcel/doc/read">https://www.yuque.com/easyexcel/doc/read</a></p>
+
+        </div>
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next btn"
+                           rel="next"
+                           href="/2020/11/14/LeetCode1122-%E6%95%B0%E7%BB%84%E7%9A%84%E7%9B%B8%E5%AF%B9%E6%8E%92%E5%BA%8F/"
+                        >
+                            <span class="post-nav-title-item">LeetCode 1122.数组的相对排序</span>
+                            <span class="post-nav-item">下一篇</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">Homgun</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.1.0</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa fa-outdent"></i>
+            </li>
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="sidebar-tools-2">
+        <div class="tools2-container">
+
+    <button class="tools-button">
+        <i class="fa fa-plus"></i>
+    </button>
+
+    <ul class="tools-wrapper">
+        <!-- back2top -->
+        
+            <li class="tools-item scroll-to-bottom">
+                <i class="fa fa-arrow-down"></i>
+            </li>
+            <li class="tools-item scroll-to-top">
+                <i class="fa fa-arrow-up"></i>
+            </li>
+        
+
+        <!-- mode toggle -->
+        <li class="tools-item mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+
+    </ul>
+</div>
+
+    </div>
+
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#POI%E5%92%8CEasyExcel"><span class="nav-text">POI和EasyExcel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Apache-POI"><span class="nav-text">Apache POI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#POI-Excel%E5%86%99"><span class="nav-text">POI-Excel写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POI-Excel%E8%AF%BB"><span class="nav-text">POI-Excel读</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EasyExcel"><span class="nav-text">EasyExcel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#EasyExcel%E6%93%8D%E4%BD%9C"><span class="nav-text">EasyExcel操作</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/dark-light-toggle.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/back2top.js"></script>
+
+
+
+
+
+    
+<script src="/js/left-side-toggle.js"></script>
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+</body>
+</html>

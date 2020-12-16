@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        日期时间处理 |
+        
+        Homgun&#39;s Blog
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let ILS = window.ILS || {};
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"2.1.0","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"},"toc":{"enable":true,"number":false,"expand_all":true},"back2top":{"enable":true},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Homgun&#39;s Blog
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/tags"
+                    >
+                        标签
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">日期时间处理</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-12-10 15:55:49
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Java/">Java</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JavaSE/">JavaSE</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MySQL/">MySQL</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+        <span class="article-wordcount article-meta-item">
+        <i class="fa fa-book"></i> <span>3.6k 字</span>
+        </span>
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h3 id="Java日期时间"><a href="#Java日期时间" class="headerlink" title="Java日期时间"></a>Java日期时间</h3><h4 id="Date-amp-Calendar"><a href="#Date-amp-Calendar" class="headerlink" title="Date&amp;Calendar"></a>Date&amp;Calendar</h4><p>菜鸟教程 - Java日期时间：<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-date-time.html">https://www.runoob.com/java/java-date-time.html</a></p>
+<p>java.util.Date：<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Date.html">https://docs.oracle.com/javase/8/docs/api/java/util/Date.html</a></p>
+<p>java.text.SimpleDateFormat：<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html">https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html</a></p>
+<p>java.util.Calendar：<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Calendar.html">https://docs.oracle.com/javase/8/docs/api/java/util/Calendar.html</a></p>
+<p><strong>Date类</strong>封装了当前的日期和时间，可以用来比较两个日期。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">       <span class="comment">// 初始化 Date 对象</span></span><br><span class="line">       Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        </span><br><span class="line">       <span class="comment">// 使用 toString() 函数显示日期时间</span></span><br><span class="line">       System.out.println(date.toString());</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 通过getTime()，before() after() equals()，compareTo()三种方法比较时间</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>SimpleDateFormat类</strong>可以将字符串和日期时间相互转化（格式化日期或解析字符串为时间）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>  java.util.*;</span><br><span class="line"><span class="keyword">import</span> java.text.*;</span><br><span class="line"> <span class="comment">// 通过sdf.format(date)格式化日期</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SDFDemo1</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">      Date dNow = <span class="keyword">new</span> Date( );</span><br><span class="line">      SimpleDateFormat ft = <span class="keyword">new</span> SimpleDateFormat (<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line"> </span><br><span class="line">      System.out.println(<span class="string">&quot;当前时间为: &quot;</span> + ft.format(dNow));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 通过sdf.parse(string)解析字符串为时间</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SDFDemo2</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">      SimpleDateFormat ft = <span class="keyword">new</span> SimpleDateFormat (<span class="string">&quot;yyyy-MM-dd&quot;</span>); </span><br><span class="line"> </span><br><span class="line">      String input = args.length == <span class="number">0</span> ? <span class="string">&quot;1818-11-11&quot;</span> : args[<span class="number">0</span>]; </span><br><span class="line"> </span><br><span class="line">      System.out.print(input + <span class="string">&quot; Parses as &quot;</span>); </span><br><span class="line"> </span><br><span class="line">      Date t; </span><br><span class="line"> </span><br><span class="line">      <span class="keyword">try</span> &#123; </span><br><span class="line">          t = ft.parse(input); </span><br><span class="line">          System.out.println(t); </span><br><span class="line">      &#125; <span class="keyword">catch</span> (ParseException e) &#123; </span><br><span class="line">          System.out.println(<span class="string">&quot;Unparseable using &quot;</span> + ft); </span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Calendar类</strong>可以设置和获取日期数据的特定部分，在日期的这些部分加上或者减去值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Calendar;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalendarDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 初始值</span></span><br><span class="line">        Calendar cal = Calendar.getInstance(); <span class="comment">//得到当前时间</span></span><br><span class="line">        cal.setTimeInMillis(<span class="number">0</span>); <span class="comment">//转换成格林威治时间,由于中国时区设置是GMT+8,所以打印格林威治时间得到的是1970-01-01 08:00:00.</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 获取值</span></span><br><span class="line">        <span class="keyword">int</span> year = cal.get(Calendar.YEAR); <span class="comment">//年</span></span><br><span class="line">        <span class="keyword">int</span> month = cal.get(Calendar.MONTH) + <span class="number">1</span>; <span class="comment">//月(必须要+1)</span></span><br><span class="line">        <span class="keyword">int</span> date = cal.get(Calendar.DATE); <span class="comment">//日</span></span><br><span class="line">        <span class="keyword">int</span> hour = cal.get(Calendar.HOUR_OF_DAY); <span class="comment">//时</span></span><br><span class="line">        <span class="keyword">int</span> minute = cal.get(Calendar.MINUTE); <span class="comment">//分</span></span><br><span class="line">        <span class="keyword">int</span> second = cal.get(Calendar.SECOND); <span class="comment">//秒</span></span><br><span class="line">        <span class="keyword">int</span> day = cal.get(Calendar.DAY_OF_WEEK); <span class="comment">//星期(Locale.ENGLISH情况下，周日是1)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置值</span></span><br><span class="line">        cal.set(<span class="number">2013</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">13</span>, <span class="number">44</span>, <span class="number">51</span>); <span class="comment">//年月日时分秒(月份0代表1月)</span></span><br><span class="line">        cal.set(Calendar.YEAR, <span class="number">2014</span>); <span class="comment">//年</span></span><br><span class="line">        cal.set(Calendar.MONTH, <span class="number">0</span>); <span class="comment">//月(月份0代表1月)</span></span><br><span class="line">        cal.set(Calendar.DATE, <span class="number">11</span>); <span class="comment">//日</span></span><br><span class="line">        cal.set(Calendar.HOUR_OF_DAY, <span class="number">15</span>); <span class="comment">//时</span></span><br><span class="line">        cal.set(Calendar.MINUTE, <span class="number">33</span>); <span class="comment">//分</span></span><br><span class="line">        cal.set(Calendar.SECOND, <span class="number">32</span>); <span class="comment">//秒</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 比较值</span></span><br><span class="line">        <span class="comment">// before(),after(),equals(),compareTo()</span></span><br><span class="line">        String startTime = <span class="string">&quot;2012-12-12 12:45:39&quot;</span>;  </span><br><span class="line">        String endTime = <span class="string">&quot;2012-12-12 12:45:40&quot;</span>;  </span><br><span class="line">        SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);  </span><br><span class="line">        Date startDate = sdf.parse(startTime);  </span><br><span class="line">        Date endDate = sdf.parse(endTime);  </span><br><span class="line">        Calendar start = Calendar.getInstance();  </span><br><span class="line">        Calendar end = Calendar.getInstance();  </span><br><span class="line">        start.setTime(startDate);  </span><br><span class="line">        end.setTime(endDate);  </span><br><span class="line">        <span class="keyword">if</span>(start.before(end))&#123;  </span><br><span class="line">            System.err.println(<span class="string">&quot;开始时间小于结束时间&quot;</span>);  </span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(start.after(end))&#123;  </span><br><span class="line">            System.err.println(<span class="string">&quot;开始时间大于结束时间&quot;</span>);  </span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(start.equals(end))&#123;  </span><br><span class="line">            System.err.println(<span class="string">&quot;开始时间等于结束时间&quot;</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="comment">/*  </span></span><br><span class="line"><span class="comment">             * start &lt; end 返回-1  </span></span><br><span class="line"><span class="comment">             * start = end 返回0  </span></span><br><span class="line"><span class="comment">             * start &gt; end 返回1  </span></span><br><span class="line"><span class="comment">             */</span>  </span><br><span class="line">        <span class="keyword">int</span> count = start.compareTo(end);  </span><br><span class="line">        System.err.println(count);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 运算值</span></span><br><span class="line">        cal.add(Calendar.YEAR, <span class="number">1</span>); <span class="comment">//年</span></span><br><span class="line">        cal.add(Calendar.MONTH, <span class="number">1</span>); <span class="comment">//月</span></span><br><span class="line">        cal.add(Calendar.DATE, <span class="number">1</span>); <span class="comment">//日</span></span><br><span class="line">        cal.add(Calendar.HOUR_OF_DAY, -<span class="number">1</span>); <span class="comment">//时</span></span><br><span class="line">        cal.add(Calendar.MINUTE, <span class="number">1</span>); <span class="comment">//分</span></span><br><span class="line">        cal.add(Calendar.SECOND, <span class="number">1</span>); <span class="comment">//秒</span></span><br><span class="line">        cal.add(Calendar.DATE, <span class="number">7</span>); <span class="comment">//周        </span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Date-Time"><a href="#Date-Time" class="headerlink" title="Date/Time"></a>Date/Time</h4><p>在旧版的 Java 中，日期时间 API 存在诸多问题，其中有：</p>
+<ul>
+<li><strong>非线程安全</strong> − java.util.Date 是非线程安全的，所有的日期类都是可变的，这是Java日期类最大的问题之一。</li>
+<li><strong>设计很差</strong> − Java的日期/时间类的定义并不一致，在java.util和java.sql的包中都有日期类，此外用于格式化和解析的类在java.text包中定义。java.util.Date同时包含日期和时间，而java.sql.Date仅包含日期，将其纳入java.sql包并不合理。另外这两个类都有相同的名字，这本身就是一个非常糟糕的设计。</li>
+<li><strong>时区处理麻烦</strong> − 日期类并不提供国际化，没有时区支持，因此Java引入了java.util.Calendar和java.util.TimeZone类，但他们同样存在上述所有的问题。</li>
+</ul>
+<p>Java 8引入了新的API <em>Date/Time</em>，以解决较旧的<em>java.util.Date</em>和<em>java.util.Calendar</em>的问题，新的java.time包涵盖了所有处理日期，时间，日期/时间，时区，时刻（instants），过程（during）与时钟（clock）的操作。</p>
+<p>java.time：<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html</a></p>
+<p>最常用的类是LocalDate，LocalTime和LocalDateTime。 顾名思义，它们代表观察者上下文中的本地日期/时间。这些类主要用于不需要在上下文中明确指定时区的情况。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.time.*;</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.ChronoUnit;</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.TemporalAdjusters;</span><br><span class="line"><span class="keyword">import</span> java.util.Calendar;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LocalDateTimeDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// LocalDate</span></span><br><span class="line">        <span class="comment">// 创建日期</span></span><br><span class="line">        LocalDate today = LocalDate.now(); <span class="comment">// 获取当前日期的实例</span></span><br><span class="line">        LocalDate date1 = LocalDate.of(<span class="number">2015</span>, <span class="number">2</span>, <span class="number">20</span>); <span class="comment">// 通过年月日数值获取指定日期的实例</span></span><br><span class="line">        LocalDate date2 = LocalDate.parse(<span class="string">&quot;2015-02-20&quot;</span>); <span class="comment">// 通过字符串获取指定日期的实例</span></span><br><span class="line">        <span class="comment">// 日期加减</span></span><br><span class="line">        LocalDate tomorrow = LocalDate.now().plusDays(<span class="number">1</span>); <span class="comment">// 天</span></span><br><span class="line">        LocalDate previousMonthSameDay = LocalDate.now().minus(<span class="number">1</span>, ChronoUnit.MONTHS); <span class="comment">// 指定时间单位</span></span><br><span class="line">        <span class="comment">// 获取日期相关信息</span></span><br><span class="line">        DayOfWeek sunday = LocalDate.parse(<span class="string">&quot;2016-06-12&quot;</span>).getDayOfWeek(); <span class="comment">// 查询日期星期</span></span><br><span class="line">        <span class="keyword">int</span> twelve = LocalDate.parse(<span class="string">&quot;2016-06-12&quot;</span>).getDayOfMonth(); <span class="comment">// 查询日期月份天数</span></span><br><span class="line">        <span class="keyword">boolean</span> leapYear = LocalDate.now().isLeapYear(); <span class="comment">// 判断日期年份是否是闰年</span></span><br><span class="line">        <span class="comment">// 获取日期当天/当月最开始时刻</span></span><br><span class="line">        LocalDateTime beginningOfDay = LocalDate.parse(<span class="string">&quot;2016-06-12&quot;</span>).atStartOfDay();</span><br><span class="line">        LocalDate firstDayOfMonth = LocalDate.parse(<span class="string">&quot;2016-06-12&quot;</span>).with(TemporalAdjusters.firstDayOfMonth());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// LocalTime</span></span><br><span class="line">        <span class="comment">// 创建时间</span></span><br><span class="line">        LocalTime now = LocalTime.now();</span><br><span class="line">        LocalTime time1 = LocalTime.parse(<span class="string">&quot;06:30&quot;</span>);</span><br><span class="line">        LocalTime time2 = LocalTime.of(<span class="number">6</span>, <span class="number">30</span>);</span><br><span class="line">        <span class="comment">// 时间加减</span></span><br><span class="line">        LocalTime sevenThirty = LocalTime.parse(<span class="string">&quot;06:30&quot;</span>).plus(<span class="number">1</span>, ChronoUnit.HOURS);</span><br><span class="line">        <span class="comment">// 获取时间相关信息</span></span><br><span class="line">        <span class="keyword">int</span> six = LocalTime.parse(<span class="string">&quot;06:30&quot;</span>).getHour();</span><br><span class="line">        <span class="keyword">boolean</span> isBefore = LocalTime.parse(<span class="string">&quot;06:30&quot;</span>).isBefore(LocalTime.parse(<span class="string">&quot;07:30&quot;</span>)); <span class="comment">// 比较时间先后</span></span><br><span class="line">        LocalTime maxTime = LocalTime.MAX;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// LocalDateTime</span></span><br><span class="line">        <span class="comment">// 创建日期时间</span></span><br><span class="line">        LocalDateTime curDatetime = LocalDateTime.now();</span><br><span class="line">        LocalDateTime dateTime1 = LocalDateTime.of(<span class="number">2015</span>, Month.FEBRUARY, <span class="number">20</span>, <span class="number">06</span>, <span class="number">30</span>);</span><br><span class="line">        LocalDateTime dateTime2 = LocalDateTime.parse(<span class="string">&quot;2015-02-20T06:30:00&quot;</span>);</span><br><span class="line">        <span class="comment">// 组合日期和时间</span></span><br><span class="line">        LocalDate date = LocalDate.of(<span class="number">2014</span>,<span class="number">02</span>,<span class="number">26</span>);</span><br><span class="line">        LocalTime time = LocalTime.of(<span class="number">12</span>,<span class="number">23</span>,<span class="number">20</span>);</span><br><span class="line">        LocalDateTime dt1 = LocalDateTime.of(date,time);</span><br><span class="line">        <span class="comment">//LocalDate结合LocalTime成一个LocalDateTime</span></span><br><span class="line">        LocalDateTime dt2 = date.atTime(<span class="number">13</span>,<span class="number">45</span>,<span class="number">20</span>);</span><br><span class="line">        <span class="comment">//LocalDate结合LocalTime成一个LocalDateTime</span></span><br><span class="line">        LocalDateTime dt3 = date.atTime(time);</span><br><span class="line">        <span class="comment">//LocalTime结合LocalDate成LocalDateTime</span></span><br><span class="line">        LocalDateTime dt4 = time.atDate(date);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 日期时间加减</span></span><br><span class="line">        LocalDateTime nextDay = curDatetime.plusDays(<span class="number">1</span>);</span><br><span class="line">        LocalDateTime preTime = curDatetime.minusHours(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将Date和Calendar转换为Instant再转换为LocalDateTime</span></span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        Calendar calendar = Calendar.getInstance();</span><br><span class="line">        LocalDateTime dateTimeC1 = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());</span><br><span class="line">        LocalDateTime dateTimeC2 = LocalDateTime.ofInstant(calendar.toInstant(), ZoneId.systemDefault());</span><br><span class="line">        LocalDateTime dateTimeC3 = LocalDateTime.ofEpochSecond(<span class="number">1465817690</span>, <span class="number">0</span>, ZoneOffset.UTC);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// DateTime格式化</span></span><br><span class="line">        <span class="comment">// 格式化</span></span><br><span class="line">        LocalDateTime localDateTime = LocalDateTime.of(<span class="number">2015</span>, Month.JANUARY, <span class="number">25</span>, <span class="number">6</span>, <span class="number">30</span>);</span><br><span class="line">        String localDateString1 = localDateTime.format(DateTimeFormatter.ISO_DATE); <span class="comment">// ISO日期格式：2015-01-25</span></span><br><span class="line">        String localDateString2 = localDateTime.format(DateTimeFormatter.ofPattern(<span class="string">&quot;yyyy/MM/dd&quot;</span>));</span><br><span class="line">        String localDateString3 = localDateTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)); <span class="comment">// SHORT:15-1-25 上午6:30 MEDIUM:2015-1-25 6:30:00 LONG:2015年1月25日 上午06时30分00秒</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当需要处理时区特定的日期和时间时，Java 8提供了ZonedDateTime， ZoneId用于表示不同区域的标识符。使用时区的另一种方法是使用具有偏移量的日期时间OffsetDateTime。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.time.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ZonedDateTimeDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ZoneId zoneId = ZoneId.of(<span class="string">&quot;Europe/Paris&quot;</span>); <span class="comment">// 创建巴黎时区</span></span><br><span class="line">        Set&lt;String&gt; allZoneIds = ZoneId.getAvailableZoneIds(); <span class="comment">//获取所有时区的ZoneId</span></span><br><span class="line">        <span class="comment">// 本地日期时间localDateTime转换成特定时区的zonedDateTime1</span></span><br><span class="line">        LocalDateTime localDateTime = LocalDateTime.now();</span><br><span class="line">        ZonedDateTime zonedDateTime1 = ZonedDateTime.of(localDateTime, zoneId);</span><br><span class="line">        <span class="comment">// 解析字符串生成时区日期时间zonedDateTime2</span></span><br><span class="line">        ZonedDateTime zonedDateTime2 = ZonedDateTime.parse(<span class="string">&quot;2015-05-03T10:15:30+01:00[Europe/Paris]&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 创建具有偏移量的日期时间OffsetDateTime</span></span><br><span class="line">        ZoneOffset offset = ZoneOffset.of(<span class="string">&quot;+02:00&quot;</span>);</span><br><span class="line">        OffsetDateTime offSetByTwo = OffsetDateTime.of(localDateTime, offset);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Period类表示以年、月和日为单位的时间数量，广泛用于修改给定日期的值或获取两个日期之间的差异；Duration类表示以秒和纳米秒为单位的时间数量，与Period类似，Duration类用于处理时间。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.time.Duration;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalTime;</span><br><span class="line"><span class="keyword">import</span> java.time.Period;</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.ChronoUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PeriodDurationDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Period</span></span><br><span class="line">        <span class="comment">// 创建两个本地日期</span></span><br><span class="line">        LocalDate initialDate = LocalDate.parse(<span class="string">&quot;2007-05-10&quot;</span>);</span><br><span class="line">        LocalDate finalDate = initialDate.plus(Period.ofDays(<span class="number">5</span>));</span><br><span class="line">        <span class="comment">// 计算两个日期的差值</span></span><br><span class="line">        <span class="keyword">int</span> five1 = Period.between(initialDate, finalDate).getDays();</span><br><span class="line">        <span class="keyword">long</span> five2 = ChronoUnit.DAYS.between(initialDate, finalDate);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Duration</span></span><br><span class="line">        <span class="comment">// 创建两个本地时间</span></span><br><span class="line">        LocalTime initialTime = LocalTime.of(<span class="number">6</span>, <span class="number">30</span>, <span class="number">0</span>);</span><br><span class="line">        LocalTime finalTime = initialTime.plus(Duration.ofSeconds(<span class="number">30</span>));</span><br><span class="line">        <span class="comment">// 计算两个时间的差值</span></span><br><span class="line">        <span class="keyword">long</span> thirty1 = Duration.between(initialTime, finalTime).getSeconds();</span><br><span class="line">        <span class="keyword">long</span> thirty2 = ChronoUnit.SECONDS.between(initialTime, finalTime);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Joda-Time"><a href="#Joda-Time" class="headerlink" title="Joda-Time"></a>Joda-Time</h4><p>JodaTime 提供了一组Java类包用于处理包括ISO8601标准在内的date和time。可以利用它把JDK Date和Calendar类完全替换掉，而且仍然能够提供很好的集成。（Joda-Time的作者（Stephen Colebourne）和Oracle的作者在JSR 310下共同领导，开发了Java SE 8软件包中java.time。）</p>
+<p>Joda-Time主要的特点包括：</p>
+<ol>
+<li>易于使用：Calendar让获取”正常的”的日期变得很困难，使它没办法提供简单的方法，而Joda-Time能够 直接进行访问域并且索引值1就是代表January。</li>
+<li>易于扩展：JDK支持多日历系统是通过Calendar的子类来实现，这样就显示的非常笨重而且事实 上要实现其它日历系统是很困难的。Joda-Time支持多日历系统是通过基于Chronology类的插件体系来实现。</li>
+<li>提供一组完整的功能：它打算提供 所有关系到date-time计算的功能．Joda-Time当前支持6种日历系统，而且在将来还会继续添加。有着比JDK Calendar更好的整体性能等等。</li>
+</ol>
+<p>文档地址：<a target="_blank" rel="noopener" href="https://www.joda.org/joda-time/userguide.html">https://www.joda.org/joda-time/userguide.html</a></p>
+<p>导入Maven依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>joda-time<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>joda-time<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>与java.time类似，Joda-Time有5个最常用的date-time类：Instant, DateTime, LocalDate, LocalTime, LocalDateTime，都是不可变的类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.joda.time.DateTime;</span><br><span class="line"><span class="keyword">import</span> org.joda.time.LocalDate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JodaTimeDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        DateTime today = <span class="keyword">new</span> DateTime();</span><br><span class="line">        DateTime datetorrow = today.plusDays(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(today.toString(<span class="string">&quot;yyyy-MM-dd&quot;</span>));<span class="comment">//2020-12-14</span></span><br><span class="line">        System.out.println(today.toString(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>));<span class="comment">//2020-12-14 17:19:39</span></span><br><span class="line">        System.out.println(datetorrow.toString(<span class="string">&quot;yyyy-MM-dd&quot;</span>));<span class="comment">//2020-12-15</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;......................&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获得一个时间的副本，将day设置成自己制定的时间,不改变月份，只改变日期</span></span><br><span class="line">        DateTime d1 = today.withDayOfMonth(<span class="number">1</span>);</span><br><span class="line">        System.out.println(d1.toString(<span class="string">&quot;yyyy-MM-dd&quot;</span>));<span class="comment">//2020-12-01</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;......................&quot;</span>);</span><br><span class="line"></span><br><span class="line">        LocalDate localDate = <span class="keyword">new</span> LocalDate();</span><br><span class="line">        System.out.println(localDate);<span class="comment">//2020-12-14</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;........................&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取当前时间三个月后的月份的最后一天</span></span><br><span class="line">        localDate = localDate.plusMonths(<span class="number">3</span>).dayOfMonth().withMaximumValue();</span><br><span class="line">        System.out.println(localDate);<span class="comment">//2021-03-31</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;........................&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算二年前第三个月第一天的日期</span></span><br><span class="line">        DateTime dateTime = <span class="keyword">new</span> DateTime();</span><br><span class="line">        DateTime dateTime2 = dateTime.minusYears(<span class="number">2</span>).monthOfYear().setCopy(<span class="number">3</span>).</span><br><span class="line">                dayOfMonth().withMinimumValue();</span><br><span class="line">        System.out.println(dateTime2.toString(<span class="string">&quot;yyyy-MM-dd&quot;</span>));<span class="comment">//2018-03-01</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Interval表示两个 instant 之间的间隔，左闭右开，而java time 中没有提供类似l的 API，因为 JSR-310 标准中没有这个概念。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DateTime dt1 = <span class="keyword">new</span> DateTime();</span><br><span class="line">DateTime dt2 = <span class="keyword">new</span> DateTime().plusDays(<span class="number">1</span>);</span><br><span class="line">Interval interval = <span class="keyword">new</span> Interval(dt1.toInstant(), dt2.toInstant());</span><br></pre></td></tr></table></figure>
+
+<h3 id="MySQL日期时间"><a href="#MySQL日期时间" class="headerlink" title="MySQL日期时间"></a>MySQL日期时间</h3><p>官网文档：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html">https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html</a></p>
+<p>MySQL中重要的内建日期函数</p>
+<table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">NOW()</td>
+<td align="left">返回当前的日期和时间</td>
+</tr>
+<tr>
+<td align="left">CURDATE()</td>
+<td align="left">返回当前的日期</td>
+</tr>
+<tr>
+<td align="left">CURTIME()</td>
+<td align="left">返回当前的时间</td>
+</tr>
+<tr>
+<td align="left">DATE()</td>
+<td align="left">提取日期或日期/时间表达式的日期部分</td>
+</tr>
+<tr>
+<td align="left">TIME()</td>
+<td align="left">返回参数表达式中的时间部分</td>
+</tr>
+<tr>
+<td align="left">EXTRACT()</td>
+<td align="left">返回日期/时间的单独部分</td>
+</tr>
+<tr>
+<td align="left">DATE_ADD()</td>
+<td align="left">向日期添加指定的时间间隔</td>
+</tr>
+<tr>
+<td align="left">DATE_SUB()</td>
+<td align="left">从日期减去指定的时间间隔</td>
+</tr>
+<tr>
+<td align="left">DATEDIFF()</td>
+<td align="left">返回两个日期之间的天数</td>
+</tr>
+<tr>
+<td align="left">DATE_FORMAT()</td>
+<td align="left">用不同的格式显示日期/时间</td>
+</tr>
+<tr>
+<td align="left">DAY()</td>
+<td align="left">DAYOFMONTH() 的别名</td>
+</tr>
+<tr>
+<td align="left">DAYNAME()</td>
+<td align="left">返回某天在用星期中的名称</td>
+</tr>
+<tr>
+<td align="left">DAYOFMONTH()</td>
+<td align="left">返回某天是当月的第几天 （1-31）</td>
+</tr>
+<tr>
+<td align="left">DAYOFWEEK()</td>
+<td align="left">返回某天是该星期的第几天</td>
+</tr>
+<tr>
+<td align="left">DAYOFYEAR()</td>
+<td align="left">返回某天是一年中的第几天（1-366）</td>
+</tr>
+<tr>
+<td align="left">LAST_DAY()</td>
+<td align="left">返回参数日期所在月份的最后一天</td>
+</tr>
+<tr>
+<td align="left">DATE_FORMAT()</td>
+<td align="left">根据格式字符串对日期值进行格式化</td>
+</tr>
+</tbody></table>
+<h3 id="项目应用"><a href="#项目应用" class="headerlink" title="项目应用"></a>项目应用</h3><p>根据数据库员工出勤记录生成月报表统计每名员工的出勤率。</p>
+<p>出勤记录表<code>tb_attendance-record</code></p>
+<p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/image-20201216163820869.png" alt="image-20201216163820869"></p>
+<p>出勤月报表示例</p>
+<p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/image-20201216194617082.png" alt="image-20201216194617082"></p>
+<p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/image-20201216194638807.png" alt="image-20201216194638807"></p>
+<p>AttendanceRecordMapper.java（接口）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查询某员工某月出勤数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countOneMonth</span><span class="params">(<span class="meta">@Param(&quot;eid&quot;)</span> <span class="keyword">int</span> eid,<span class="meta">@Param(&quot;month&quot;)</span> String month)</span></span>;</span><br><span class="line"><span class="comment">//查询某员工某月未迟到出勤数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countEarlyOneMonth</span><span class="params">(<span class="meta">@Param(&quot;eid&quot;)</span> <span class="keyword">int</span> eid,<span class="meta">@Param(&quot;month&quot;)</span> String month,<span class="meta">@Param(&quot;time&quot;)</span> String time)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>AttendanceRecordMapper.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;countOneMonth&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;_int&quot;</span>&gt;</span></span><br><span class="line">    select ifnull(t.count,0) from</span><br><span class="line">    report.tb_employee e</span><br><span class="line">    left join  (select count(1) count,e.id eid</span><br><span class="line">    from report.tb_employee e</span><br><span class="line">    join report.tb_attendance_record r</span><br><span class="line">    on e.id = r.employee_id</span><br><span class="line">    where date_format(r.attendance_date,&#x27;%Y-%m&#x27;) = #&#123;month&#125;</span><br><span class="line">    group by e.id) as t</span><br><span class="line">    on e.id = t.eid</span><br><span class="line">    where id = #&#123;eid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;countEarlyOneMonth&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;_int&quot;</span>&gt;</span></span><br><span class="line">    select ifnull(t.count,0) from</span><br><span class="line">    report.tb_employee e</span><br><span class="line">    left join  (select count(1) count,e.id eid</span><br><span class="line">    from report.tb_employee e</span><br><span class="line">    join report.tb_attendance_record r</span><br><span class="line">    on e.id = r.employee_id</span><br><span class="line">    where date_format(r.attendance_date,&#x27;%Y-%m&#x27;) = #&#123;month&#125; and time(r.accurate_time) <span class="symbol">&amp;lt;</span> #&#123;time&#125;</span><br><span class="line">    group by e.id) as t</span><br><span class="line">    on e.id = t.eid</span><br><span class="line">    where id = #&#123;eid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>AttendanceRecordService（接口）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取月出勤记录</span></span><br><span class="line">List&lt;Map&lt;String,String&gt;&gt; getMonthList(String month);</span><br><span class="line"><span class="comment">//获取月出勤迟到记录</span></span><br><span class="line">List&lt;Map&lt;String,String&gt;&gt; getMonthLateList(String month, String time);</span><br></pre></td></tr></table></figure>
+
+<p>AttendanceRecordServiceImpl（实现类）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> List&lt;Map&lt;String, String&gt;&gt; getMonthList(String month) &#123;</span><br><span class="line">    List&lt;Employee&gt; employees = employeeMapper.getAll();</span><br><span class="line">    ArrayList&lt;Map&lt;String, String&gt;&gt; records = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (Employee employee : employees) &#123;</span><br><span class="line">        Map&lt;String, String&gt; record = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> id = employee.getId();</span><br><span class="line">        record.put(<span class="string">&quot;id&quot;</span>,String.valueOf(id));</span><br><span class="line">        String name = employee.getName();</span><br><span class="line">        record.put(<span class="string">&quot;name&quot;</span>,name);</span><br><span class="line">        <span class="keyword">int</span> attendance = attendanceRecordMapper.countOneMonth(employee.getId(),month);</span><br><span class="line">        <span class="keyword">int</span> countDay = DateUtil.getCountDay(month);</span><br><span class="line">        <span class="keyword">double</span> attendanceRate = (<span class="keyword">double</span>)(Math.round(attendance * <span class="number">1.0</span> / countDay * <span class="number">100</span>) / <span class="number">100.0</span>);</span><br><span class="line">        record.put(<span class="string">&quot;attendanceRate&quot;</span>,String.valueOf(attendanceRate));</span><br><span class="line">        record.put(<span class="string">&quot;attendanceDay&quot;</span>,String.valueOf(attendance));</span><br><span class="line">        record.put(<span class="string">&quot;absenceDay&quot;</span>,String.valueOf(countDay - attendance));</span><br><span class="line">        records.add(record);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> records;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> List&lt;Map&lt;String, String&gt;&gt; getMonthLateList(String month, String time) &#123;</span><br><span class="line">    List&lt;Employee&gt; employees = employeeMapper.getAll();</span><br><span class="line">    ArrayList&lt;Map&lt;String, String&gt;&gt; records = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (Employee employee : employees) &#123;</span><br><span class="line">        <span class="keyword">int</span> lateDay = DateUtil.getCountDay(month) - attendanceRecordMapper.countEarlyOneMonth(employee.getId(),month,time);</span><br><span class="line">        <span class="keyword">if</span>(lateDay &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            Map&lt;String, String&gt; record = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">            <span class="keyword">int</span> id = employee.getId();</span><br><span class="line">            record.put(<span class="string">&quot;id&quot;</span>,String.valueOf(id));</span><br><span class="line">            record.put(<span class="string">&quot;name&quot;</span>,String.valueOf(employee.getName()));</span><br><span class="line">            record.put(<span class="string">&quot;lateDay&quot;</span>,String.valueOf(lateDay));</span><br><span class="line">            records.add(record);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> records;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>DateUtil.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Calendar;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Calendar <span class="title">getNextMonth</span><span class="params">(String month)</span></span>&#123;</span><br><span class="line">        Calendar cal = Calendar.getInstance();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            cal.setTime(<span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM&quot;</span>).parse(month));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        cal.add(Calendar.MONTH, <span class="number">1</span>);</span><br><span class="line">        cal.set(Calendar.DAY_OF_MONTH,<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> cal;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getMonthDay</span><span class="params">(String month)</span></span>&#123;</span><br><span class="line">        Calendar cal = Calendar.getInstance();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            cal.setTime(<span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM&quot;</span>).parse(month));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//获取某月最大天数</span></span><br><span class="line">        <span class="keyword">int</span> monthDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);</span><br><span class="line">        <span class="keyword">return</span> monthDay;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getCountDay</span><span class="params">(String month)</span></span>&#123;</span><br><span class="line">        Calendar today = Calendar.getInstance();</span><br><span class="line">        Calendar nextMonth = DateUtil.getNextMonth(month);</span><br><span class="line">        <span class="keyword">int</span> countDay = DateUtil.getMonthDay(month);</span><br><span class="line">        <span class="keyword">if</span>(today.compareTo(nextMonth) == -<span class="number">1</span>)&#123;</span><br><span class="line">            countDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> countDay;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next btn"
+                           rel="next"
+                           href="/2020/12/10/SpringMVC%E6%95%99%E7%A8%8B/"
+                        >
+                            <span class="post-nav-title-item">SpringMVC教程</span>
+                            <span class="post-nav-item">下一篇</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">Homgun</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.1.0</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa fa-outdent"></i>
+            </li>
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="sidebar-tools-2">
+        <div class="tools2-container">
+
+    <button class="tools-button">
+        <i class="fa fa-plus"></i>
+    </button>
+
+    <ul class="tools-wrapper">
+        <!-- back2top -->
+        
+            <li class="tools-item scroll-to-bottom">
+                <i class="fa fa-arrow-down"></i>
+            </li>
+            <li class="tools-item scroll-to-top">
+                <i class="fa fa-arrow-up"></i>
+            </li>
+        
+
+        <!-- mode toggle -->
+        <li class="tools-item mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+
+    </ul>
+</div>
+
+    </div>
+
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="nav-text">Java日期时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Date-amp-Calendar"><span class="nav-text">Date&amp;Calendar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Date-Time"><span class="nav-text">Date&#x2F;Time</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Joda-Time"><span class="nav-text">Joda-Time</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="nav-text">MySQL日期时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%BA%94%E7%94%A8"><span class="nav-text">项目应用</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/dark-light-toggle.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/back2top.js"></script>
+
+
+
+
+
+    
+<script src="/js/left-side-toggle.js"></script>
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+</body>
+</html>

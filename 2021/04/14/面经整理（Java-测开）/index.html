@@ -125,7 +125,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-        <i class="fa fa-book"></i> <span>16k 字</span>
+        <i class="fa fa-book"></i> <span>17.2k 字</span>
         </span>
     
     
@@ -151,12 +151,14 @@
 <p>　　3、StringBuilder（StringBuff）拼接。</p>
 <p>其中第一种方式拼接字符串在我的视眼中是最常见的，孰不知第一种方式是最不值得提倡的（性能消耗大，效率低），concat是由String类提供的封装类性能较“+”好很多，相较于前两者StringBuilder的速度基本可以忽略，快太多了。</p>
 <p>StringBuffer和StringBuilder的实现实现原理和操作基本上一致，主要差别是StringBuffer是由<strong>synchronized修饰</strong>，支持<strong>并发操作线程安全</strong>的类。而StringBuilder是不支持并发操作的，所以多线程时建议使用StringBuffer。单线程中StringBuilder的性能要好于StringBuffer。</p>
-<p><strong><em>HashMap</em></strong>（**）</p>
+<p><strong><em>HashMap</em></strong>（***）</p>
 <p><strong>数据结构</strong>：数组+链表（+红黑树）</p>
 <p><strong>插入方式</strong>：头插→尾插</p>
 <p><strong>冲突解决</strong>：拉链法 </p>
 <p><strong><em>HashSet</em></strong></p>
 <p><strong>实现原理</strong>：HashSet是基于HashMap实现的，都是一个存放链表的数组。它不保证存储元素的迭代顺序，允许使用null元素，不允许有重复元素。当向HashSet中添加对象时，首先调用此对象所在类的hashCode()方法，计算次对象的哈希值，此哈希值决定了此对象在HashSet中存放的位置；若此位置没有被存储对象则直接存储，若已有对象则通过对象所在类的equals()比较两个对象是否相同，相同则不能被添加。因此，如果想实现自定义去重，需要重写model的hashcode方法和equals方法。</p>
+<p><strong>HashSet和HashMap的区别</strong>：<br>(1)HashSet实现了Set接口, 仅存储对象; HashMap实现了 Map接口, 存储的是键值对；</p>
+<p>(2)HashSet底层其实是用HashMap实现存储的, HashSet封装了一系列HashMap的方法. 依靠HashMap来存储元素值,(利用hashMap的key键进行存储), 而value值默认为Object对象. 所以HashSet也不允许出现重复值, 判断标准和HashMap判断标准相同, 两个元素的hashCode相等并且通过equals()方法返回true。</p>
 <p><strong><em>权限修饰符（可见性修饰符）</em></strong></p>
 <table>
 <thead>
@@ -287,7 +289,16 @@
 
 
 
-<h5 id="实现细节（JVM）"><a href="#实现细节（JVM）" class="headerlink" title="实现细节（JVM）"></a>实现细节（JVM）</h5><p><strong><em>乐观锁</em></strong>（**）</p>
+<h5 id="实现细节（并发-JVM）"><a href="#实现细节（并发-JVM）" class="headerlink" title="实现细节（并发 / JVM）"></a>实现细节（并发 / JVM）</h5><p>synchronized</p>
+<p>synchronized关键字用于为Java对象、方法、代码块提供线程安全的操作。</p>
+<p> synchronized属于独占式的悲观锁，同时属于可重入锁。</p>
+<p>在使用synchronized修饰对象时， 同一时刻只能有一个线程对该对象进行访问；在synchronized修饰方法、代码块时，同一 时刻只能有一个线程执行该方法体或代码块，其他线程只有等待当前线程执行完毕并释放锁资源后才能访问该对象或执行同步代码块。</p>
+<p> Java中的每个对象都有个monitor对象，加锁就是在竞争monitor对象。对代码块加锁 是通过在前后分别加上monitorenter和monitorexit指令实现的，对方法是否加锁是通过一个 标记位来判断的。 </p>
+<p><strong>作用范围</strong>：</p>
+<p> ◎ synchronized作用于成员变量和非静态方法时，锁住的是对象的实例，即this对 象。 </p>
+<p>◎ synchronized作用于静态方法时，锁住的是Class实例，因为静态方法属于Class而不 属于对象。</p>
+<p> ◎ synchronized作用于一个代码块时，锁住的是所有代码块中配置的对象。 </p>
+<p><strong><em>乐观锁</em></strong>（**）</p>
 <p>​        乐观锁采用乐观的思想处理数据，在<strong>每次读取数据时都认为别人不会修改该数据，所以不会上锁</strong>，但在更新时会判断在此期间别人有没有更新该数据，通常采用在写时先读出当前版本号然后加锁的方法。具体过程为：比较当前版本号与上一次的版本号，如果版本号一致，则更新，如果版本号不一致，则重复进行读、比较、写操作。</p>
 <p>​         Java中的乐观锁大部分是通过CAS（Compare And Swap，比较和交换）操作实现的， CAS是一种<strong>原子更新操作</strong>，在对数据操作之前首先会比较当前值跟传入的值是否一样，如果一样则更新，否则不执行更新操作，直接返回失败状态。</p>
 <p><strong><em>JVM体系结构</em></strong></p>
@@ -326,6 +337,18 @@
 <p><strong>回收策略</strong></p>
 <p>Minor GC 和 Full GC<br><strong>Minor GC</strong> 指发生在新生代的垃圾回收操作。因为大多数对象的生命周期都很短，因此 Minor GC 会频繁执行，一般回收速度也比较快。</p>
 <p><strong>Full GC</strong> 也称 Major GC，指发生在老年代的垃圾回收操作。出现了 Full GC，经常会伴随至少一次的 Minor GC。老年代对象的存活时间长，因此 Full GC 很少执行，而且执行速度会比 Minor GC <strong>慢</strong>很多。</p>
+<p><strong>参数调优</strong></p>
+<p>内存参数</p>
+<pre><code>-Xms1024m （堆初始化内存）     X-Memory Startup
+-Xmx1024m （堆的最大内存）     X-Memory Maximum, 注意: 堆内存大小=年轻代(1/3)+老年代(2/3)
+-Xmn256m （堆-年轻代大小）     X-Memory New, 注意: 老年代大小=Xmx-年轻代, 年轻代占比
+-Xss256k （棧-最大深度大小）     X-Stack Size
+-XX:MetaspaceSize=?m （元空间默认大小） , 注意: 元空间默认大小取决于系统内存,实测64bit-16G电脑, 默认30M
+-XX:MaxMetaspaceSize=?m （元空间最大大小） , 注意: 只要不设置上限,只要电脑内存足够就会动态增加
+-XX:SurvivorRatio=? （默认值:8, 即新生代分区比例默认 8:2, 即 Eden:S1:S2=8:1:1, S1约定于S2)
+-XX:+UseConcMarkSweepGC （指定使用的垃圾收集器，这里使用CMS收集器） 
+-XX:+PrintGCDetails （打印详细的GC日志）
+注意:jdk1.8已经移除了-XX:PermSize 和  -XX:MaxPermGen，取而代之的是 Metaspace</code></pre>
 <h5 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h5><p><strong><em>单例模式</em></strong></p>
 <p>单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
 <p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有<strong>单个对象</strong>被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
@@ -362,6 +385,23 @@
 <li>View（视图）代表模型包含的数据的<strong>可视化</strong>。</li>
 <li>Controller（控制器）控制器作用于模型和视图上。它<strong>控制数据流向</strong>模型对象，并在数据变化时<strong>更新视图</strong>。它使视图与模型分离开。</li>
 </ul>
+<p><strong><em>Spring中Bean的作用域</em></strong></p>
+<p>Spring IOC容器创建一个Bean实例时，可以为Bean指定实例的作用域，作用域包括singleton（单例模式）、prototype（原型模式）、request（HTTP请求）、session（会话）、global-session（全局会话）。</p>
+<p><strong><em>Session / Cookie</em></strong></p>
+<p>Cookie 和 Session都是用来跟踪浏览器用户身份的会话方式。</p>
+<p>Cookie 一般用来保存用户信息，Session 的主要作用就是通过服务端记录用户的状态</p>
+<p>Cookie 数据保存在客户端(浏览器端)，Session 数据保存在服务器端。相对来说 Session 安全性更高。如果要在 Cookie 中存储一些敏感信息，不要直接写入 Cookie 中，最好能将Cookie 信息加密然后使用到的时候再去服务器端解密。</p>
+<p><strong>Cookie的缺点</strong>：</p>
+<p>(1) 每个特定域名下的cookie数量有限：</p>
+<p>IE6或IE6-(IE6以下版本)：最多20个cookie</p>
+<p>IE7或IE7+(IE7以上版本)：最多50个cookie</p>
+<p>FF:最多50个cookie</p>
+<p>Opera:最多30个cookie</p>
+<p>Chrome和safari没有硬性限制</p>
+<p>当超过单个域名限制之后，再设置cookie，浏览器就会清除以前设置的cookie。IE和Opera会清理近期最少使用的cookie，FF会随机清理cookie；</p>
+<p>(2) 存储量太小，只有4KB；</p>
+<p>(3) 每次HTTP请求都会发送到服务端，影响获取资源的效率；</p>
+<p>(4) 需要自己封装获取、设置、删除cookie的方法；</p>
 <p><strong><em>表单重复提交</em></strong></p>
 <p>​        表单重复提交会造成数据重复，<strong>增加服务器负载</strong>，严重甚至会造成服务器宕机。因此有效防止表单重复提交有一定的必要性。</p>
 <p><strong>解决方案</strong></p>
@@ -376,6 +416,9 @@
 </ul>
 </li>
 </ol>
+<p><strong><em>SpringBoot / SpringMVC</em></strong></p>
+<p>spring boot就是一个大框架里面包含了许许多多的东西，其中spring就是最核心的内容之一，当然也就包含spring mvc。</p>
+<p>spring mvc 只是spring 处理web层请求的一个模块。</p>
 <h4 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h4><p><strong><em>Redis</em></strong></p>
 <p>​        Redis是现在最受欢迎的NoSQL数据库之一，Redis是一个使用ANSI C编写的开源、包含多种数据结构、支持网络、基于内存、可选持久性的键值对存储数据库，其具备如下特性：</p>
 <ul>
@@ -724,6 +767,13 @@
 <p>需求分析→测试计划→测试设计→测试环境搭建→测试执行→测试记录→缺陷管理→软件评估→测试总结→测试维护</p>
 <p><strong><em>测试分类</em></strong></p>
 <p>1、按开发阶段：单元测试、集成测试、系统测试、验收测试<br>2、按测试实施组织：α、β、第三方<br>3、按测试执行方式：静态测试、动态测试<br>4、按是否查看代码：黑盒测试、白盒测试、灰盒测试<br>5、按是否手工执行划分：手工测试、自动化测试<br>6、按测试对象划分：性能测试、安全测试、兼容性测试、文档测试、易用性测试（用户体验测试）、业务测试、界面测试、安装测试（功能测试、接口测试）<br>7、按测试地域划分：本地化测试、国际化测试</p>
+<p><strong><em>冒烟测试</em></strong></p>
+<p>1.冒烟测试是什么？</p>
+<p>　　针对每个版本或每次<strong>需求变更</strong>后，在正式测试前，对产品或系统的一次<strong>简单</strong>的验证性测试。</p>
+<p>2.冒烟测试的目的</p>
+<p>　　为正式测试前，验证是否产品或系统的<strong>主要需求或预置条件</strong>是否存在bug。</p>
+<p>3.冒烟测试怎么做？</p>
+<p>　　最好的方法，设计出<strong>自动化测试脚本</strong>，每一次版本更新后都可以去执行脚本验证一下。</p>
 <p><strong><em>常用自动化测试工具</em></strong></p>
 <p>1、Appium</p>
 <p>官网：<a target="_blank" rel="noopener" href="http://appium.io/">http://appium.io</a></p>
@@ -933,7 +983,7 @@
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-text">基础语法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E7%AE%97%E6%B3%95"><span class="nav-text">编程算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82%EF%BC%88JVM%EF%BC%89"><span class="nav-text">实现细节（JVM）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%EF%BC%88%E5%90%AB%E5%89%8D%E7%AB%AF%EF%BC%89"><span class="nav-text">框架（含前端）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-text">网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-text">基础语法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E7%AE%97%E6%B3%95"><span class="nav-text">编程算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82%EF%BC%88%E5%B9%B6%E5%8F%91-JVM%EF%BC%89"><span class="nav-text">实现细节（并发 &#x2F; JVM）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%EF%BC%88%E5%90%AB%E5%89%8D%E7%AB%AF%EF%BC%89"><span class="nav-text">框架（含前端）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-text">网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol>
     </div>
 </div>
         

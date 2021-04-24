@@ -125,7 +125,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-        <i class="fa fa-book"></i> <span>18.5k 字</span>
+        <i class="fa fa-book"></i> <span>21.2k 字</span>
         </span>
     
     
@@ -289,7 +289,7 @@
 
 
 
-<h5 id="实现细节（并发-JVM）"><a href="#实现细节（并发-JVM）" class="headerlink" title="实现细节（并发 / JVM）"></a>实现细节（并发 / JVM）</h5><p>synchronized</p>
+<h5 id="实现细节（锁-JVM）"><a href="#实现细节（锁-JVM）" class="headerlink" title="实现细节（锁 / JVM）"></a>实现细节（锁 / JVM）</h5><p>synchronized</p>
 <p>synchronized关键字用于为Java对象、方法、代码块提供线程安全的操作。</p>
 <p> synchronized属于独占式的悲观锁，同时属于可重入锁。</p>
 <p>在使用synchronized修饰对象时， 同一时刻只能有一个线程对该对象进行访问；在synchronized修饰方法、代码块时，同一 时刻只能有一个线程执行该方法体或代码块，其他线程只有等待当前线程执行完毕并释放锁资源后才能访问该对象或执行同步代码块。</p>
@@ -419,6 +419,19 @@
 <p><strong><em>SpringBoot / SpringMVC</em></strong></p>
 <p>spring boot就是一个大框架里面包含了许许多多的东西，其中spring就是最核心的内容之一，当然也就包含spring mvc。</p>
 <p>spring mvc 只是spring 处理web层请求的一个模块。</p>
+<p><strong><em>SpringMVC 执行流程</em></strong></p>
+<p>1、 首先用户发送请求到前端控制器，前端控制器根据请求信息（如 URL）来决定选择哪一个页面控制器进行处理并把请求委托给它，即以前的控制器的控制逻辑部分；</p>
+<p>2、 页面控制器接收到请求后，进行功能处理，首先需要收集和绑定请求参数到一个对象，这个对象在 Spring Web MVC 中叫命令对象，并进行验证，然后将命令对象委托给业务对象进行处理；处理完毕后返回一个 ModelAndView（模型数据和逻辑视图名）；</p>
+<p>3、 前端控制器收回控制权，然后根据返回的逻辑视图名，选择相应的视图进行渲染，并把模型数据传入以便视图渲染；</p>
+<p>4、 前端控制器再次收回控制权，将响应返回给用户。</p>
+<p><strong>JavaScript中let和var区别</strong></p>
+<p>1、作用域不同</p>
+<p>var是函数作用域，let是块作用域。</p>
+<p>在函数中声明了var，整个函数内都是有效的，比如说在for循环内定义的一个var变量，实际上其在for循环以外也是可以访问的</p>
+<p>而let由于是块作用域，所以如果在块作用域内定义的变量，比如说在for循环内，在其外面是不可被访问的，所以for循环推荐用let</p>
+<p>2、let不能在定义之前访问该变量，但是var可以。</p>
+<p>let必须先声明，在使用。而var先使用后声明也行，只不过直接使用但没有定义的时候，其值是undefined。var有一个变量提升的过程，当整个函数作用域被创建的时候，实际上var定义的变量都会被创建，并且如果此时没有初始化的话，则默认为初始化一个undefined</p>
+<p>3、let不能被重新定义，但是var是可以的</p>
 <h4 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h4><p><strong><em>Redis</em></strong></p>
 <p>​        Redis是现在最受欢迎的NoSQL数据库之一，Redis是一个使用ANSI C编写的开源、包含多种数据结构、支持网络、基于内存、可选持久性的键值对存储数据库，其具备如下特性：</p>
 <ul>
@@ -783,7 +796,14 @@
 <p>　　这是数据库最高的隔离级别，这种级别下，事务“<strong>串行化</strong>顺序执行”，也就是一个一个排队执行。这种级别下，“脏读”、“不可重复读”、“幻读”都可以被避免，但是执行效率奇差，性能开销也最大，所以基本没人会用。</p>
 <hr>
 <p>值得一提的是：大多数数据库默认的事务隔离级别是Read committed，比如Sql Server , Oracle。Mysql的默认隔离级别是Repeatable read。</p>
-<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p><strong><em>测试流程</em></strong></p>
+<p><strong><em>数据库引擎</em></strong></p>
+<p>​        数据库引擎简单来说就是一个”数据库发动机”。当你访问数据库时，不管是手工访问，还是程序访问，都不是直接读写数据库文件，而是通过数据库引擎去访问数据库文件。以关系型数据库为例，你发SQL语句给数据库引擎， 数据库引擎解释SQL语句，提取出你需要的数据返回给你。因此，对访问者来说，数据库引擎就是SQL语句的<strong>解释器</strong>。</p>
+<p>  正式来说，数据库引擎是用于存储、处理和保护数据的核心服务。利用数据库引擎可以<strong>控制访问权限并快速处理事务</strong>，从而满足企业内大多数需要处理大量数据的应用程序的要求，这包括创建用于存储数据的表和用于查看、管理和保护数据安全的数据库对象（如索引、视图和存储过程）。</p>
+<p>​        你能用的数据库引擎取决于mysql在安装的时候是如何被<strong>编译</strong>的。要添加一个新的引擎，就必须重新编译MYSQL。在缺省情况下,MYSQL支持三个引擎:<strong>ISAM、MYISAM和HEAP</strong>。另外两种类型<strong>INNODB和BERKLEY（BDB）</strong>，也常常可以使用。</p>
+<p>​        <strong>MyISAM</strong>是MySQL的ISAM扩展格式。除了提供ISAM里所没有的<strong>索引</strong> （ISAM允许没有任何索引和主键的表存在，索引都是保存行的地址）和字段管理的大量功能， MyISAM还使用一种表格锁定的机制（<strong>表级锁</strong>），来优化多个并发的读写操作，其代价是你需要经常运行OPTIMIZE TABLE命令，来恢复被更新机制所浪费的空间，否则碎片也会随之增加，最终影响数据访问性能。 MYISAM强调了<strong>快速读取操作</strong> ，这可能就是为什么MySQL受到了WEB开发如此青睐的主要原因：在WEB开发中你所进行的大量数据操作都是读取操作。所以，大多数虚拟主机提供商和INTERNET平台提供商只允许使用MYISAM格式。</p>
+<p>​        <strong>InnoDB</strong>数据库引擎是早就Mysql灵活性的技术的直接产品，这项技术就是mysql+api，在使用mysql的时候，你所面对的每一个挑战几乎都源于isam和myisam数据库引擎不支持事务处理也不支持外键。InnoDB要比isam和myisam引擎<strong>慢</strong>，innoDB为mysql表提供了<strong>acid事务支持</strong>，系统崩溃修复能力和多版本并发控制的<strong>行级锁</strong>，该引擎提供了行级锁和外键约束，所以InnoDB是事务型数据库首选的引擎。采用B+树实现，索引与数据存储在同一文件中。</p>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/image-20210419232705108.png" alt="image-20210419232705108"></p>
+<p><strong><em>测试流程</em></strong></p>
 <p>需求分析→测试计划→测试设计→测试环境搭建→测试执行→测试记录→缺陷管理→软件评估→测试总结→测试维护</p>
 <p><strong><em>测试分类</em></strong></p>
 <p>1、按开发阶段：单元测试、集成测试、系统测试、验收测试<br>2、按测试实施组织：α、β、第三方<br>3、按测试执行方式：静态测试、动态测试<br>4、按是否查看代码：黑盒测试、白盒测试、灰盒测试<br>5、按是否手工执行划分：手工测试、自动化测试<br>6、按测试对象划分：性能测试、安全测试、兼容性测试、文档测试、易用性测试（用户体验测试）、业务测试、界面测试、安装测试（功能测试、接口测试）<br>7、按测试地域划分：本地化测试、国际化测试</p>
@@ -862,6 +882,87 @@
 <p>@Before修饰的方法，会在测试方法之前被自动执行，所有测试方法在执行之前都会执行该方法</p>
 <p>@After修饰的方法，会在测试方法执行之后自动被执行，在所有测试方法执行完之后，都会自动执行该方法</p>
 <p>无论测试方法是否会出现异常，这两个修饰的方法总是会自动执行的。</p>
+<p><strong><em>测试用例</em></strong></p>
+<p><strong>设计方法</strong>：等价类划分法、边界值分析法、错误推测法、判定表法、正交实验法。</p>
+<p><strong>点赞（抖音）</strong></p>
+<ol>
+<li>未点赞时，点赞按钮为浅色或灰色；点赞之后为深色或填满。</li>
+<li>点赞为零时，不显示点赞数。</li>
+<li>点赞大于零时，显示点赞数。</li>
+<li>当点赞数过大时，达到千或万（有时百），需考虑简化点赞数，如1k或1w（跟手机屏幕也有关系）。</li>
+<li>取消点赞时，点赞数需跟着减少。</li>
+<li>每人每天点赞次数，按业务设置上限。</li>
+<li>点赞到达上限时，是否有提示用户点赞达到上限。</li>
+</ol>
+<p><strong>搜索</strong></p>
+<p>1：不输入任何字符，点击搜索按钮，一般搜索出网站所有的信息</p>
+<p>2：一般搜索输入框中的有<strong>文章</strong>显示，当鼠标点击时，文章消失</p>
+<p>3：输入全角/半角中文字符（一个字符、超长字符、已经信息字符）</p>
+<p>4：输入全角/半角英文字符（一个字符、超长字符、已经信息字符）</p>
+<p>5：输入全角/半角特殊字符~!@#$%^&amp;*()_+|{}:”&lt;&gt;?.,;’[]=-(注意单引号经常会发现bug)</p>
+<p>6：输入全角/半角中英文空格</p>
+<p>7：输入html语言</p>
+<p>8：输入特殊字符串NULL、null、&amp;nbsp空格的转义字 符；&lt;scrīpt&gt;&lt;/scrīpt&gt;；<br>；<tr>；<td>；&lt; /tr&gt;；</td>；</html>；</body>；</table></p>
+<p>9：输入javascript</p>
+<p><strong>电梯</strong></p>
+<p>测试电梯能否实现正常的上升和下降功能，每层是否都可以停靠。</p>
+<p>每层停靠楼层是否与所按的楼层一致</p>
+<p>电梯按键在按下时是否点亮按键灯</p>
+<p>电梯在每个楼层的上行和下行的申请是否可以有效</p>
+<p>电梯满负载的时候，是否会忽略其他楼层外部的上行和下行申请</p>
+<p>电梯的两边按钮是否都可以使用，三列按钮。</p>
+<p>电梯的楼层选择是否可以取消电梯门的打开，关闭是否正常关闭（自动关闭）。</p>
+<p>报警装置是否可用。</p>
+<p>（满载）超重时是否能强制关门超重时重新挪动一下人员是否可以上下行与另外一部电梯之间是否协作良好。</p>
+<p>（算法）电梯的灯光是否满足看书的要求联系外界的电话是否可用通风状况如何，人多的时候是否会很热，通风不畅（排气扇）</p>
+<p>电梯里面的摄像头是否可用，拍摄是否清晰</p>
+<p>门不夹人伸手的话，应该不会强制关门管理员可以和内部人通话在各种场合下，可以强制开门运行中时，不能按开门键，不会强制开门在不同情况下（如：有人挡着、马上关门的时候、停电的时候、没有请求的时候…），一直按开门键和关门键从电梯外部可以强制开门</p>
+<p><strong>购物车</strong></p>
+<p>功能性测试:</p>
+<p>1.购物车是否可以添加商品</p>
+<p>2.购物车的优惠券是否可以使用</p>
+<p>3.购物车的计算结果是否正确</p>
+<p>4.如果使用购物券购物车里面的价格是否发送改变</p>
+<p>5.未登录时购物车是否可以正常显示</p>
+<p>6.如果没有登录会不会让你登录之后才可以使用</p>
+<p>7.所有的页面链接功能是否正常，是否可以正确跳转到指定页面</p>
+<p>8.商品没有勾选时结算按钮是否可以点击</p>
+<p>9.购物车页面时用户是否可以取消订单，或者进入订单和客服进行聊天</p>
+<p>10.卖家在线时是否显示在线</p>
+<p>11.购物车添加的商品是否可以有数量上限</p>
+<p>12.购物车点击几件商品时点击结算会不会跳转到支付页面</p>
+<p>13.是否可以批量删除商品</p>
+<p>14.如果没有在指定时间下单，订单会不会自动失效并在购物车清除该商品信息</p>
+<p>15.可否对添加的商品是否可以进行 增加</p>
+<p>16.商品信息过长是否可以显示完整</p>
+<p>17.商品是否可以进行收藏并推荐相似的商品（宝贝）</p>
+<p>18.购物车中的降价商品，库存紧张商品是否成功分类<br>19.购物车商品降价时，购物车是否显示降价信息</p>
+<p>性能性测试:</p>
+<p>20.打开购物车这个页面需要多长时间</p>
+<p>21.弱网时是否还可以进行添加商品，计算商品的价格并且可以正常结算</p>
+<p>22.无网状态下是否提醒请检测你的网络设置</p>
+<p>23.用户过多会不会使购物车服务器崩溃</p>
+<p>24.编辑购物车：删除、添加商品需要的时间。</p>
+<p>25.在购物车页面选择需要购买的商品进行结算的时候，结算金额可不可以实时显示。</p>
+<p>26.清空失效商品需要的时间。</p>
+<p>兼容性测试</p>
+<p>27.ios:不同型号，不同ios的手机系统的耗电情况，打开速度，安装后是否闪退，卸载</p>
+<p>28.安卓：不同品牌，不同型号，不同的安卓系统，手机系统的耗电情况，打开速度，安装后是否闪退，卸载<br>29.web端的打开速度</p>
+<p>界面测试</p>
+<p>30.购物车界面是否完善</p>
+<p>31.各个功能的设计是否美观 ，大小是否合适</p>
+<p>32.页面的功能按钮可以正常显示。</p>
+<p>33.商品的最下方显示失效宝贝。</p>
+<p>34.页面的最低端显示“你可能喜欢”</p>
+<p>35.购物车中如果存在有商品降价、库存不足、限购件数等，在商品详情的下面，会有对应的字体展示</p>
+<p>安全性测试</p>
+<p>36.用户实名认证后个人信息是否会泄露</p>
+<p>37.是否需要绑定手机号</p>
+<p>易用性测试</p>
+<p>38.是否方便人们操作</p>
+<p>39.是否有免密码支付功能</p>
+<p>40.是否具有青少年模式</p>
+<p><strong><em>测试场景</em></strong></p>
 <h4 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h4><p><strong><em>Git常用命令</em></strong></p>
 <p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/bg2015120901.png" alt="img"></p>
 <ul>
@@ -897,6 +998,17 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev btn"
+                           rel="prev"
+                           href="/2021/04/24/JVM%E6%8E%A2%E7%A9%B6/"
+                        >
+                            <i class="fa fa-chevron-left"></i>
+                            <span class="post-nav-title-item">JVM探究</span>
+                            <span class="post-nav-item">上一篇</span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
@@ -1003,7 +1115,7 @@
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-text">基础语法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E7%AE%97%E6%B3%95"><span class="nav-text">编程算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82%EF%BC%88%E5%B9%B6%E5%8F%91-JVM%EF%BC%89"><span class="nav-text">实现细节（并发 &#x2F; JVM）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%EF%BC%88%E5%90%AB%E5%89%8D%E7%AB%AF%EF%BC%89"><span class="nav-text">框架（含前端）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-text">网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-text">基础语法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E7%AE%97%E6%B3%95"><span class="nav-text">编程算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82%EF%BC%88%E9%94%81-JVM%EF%BC%89"><span class="nav-text">实现细节（锁 &#x2F; JVM）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%EF%BC%88%E5%90%AB%E5%89%8D%E7%AB%AF%EF%BC%89"><span class="nav-text">框架（含前端）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-text">网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol>
     </div>
 </div>
         

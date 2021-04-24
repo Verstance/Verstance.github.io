@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        JVM探究 |
+        
+        Homgun&#39;s Blog
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let ILS = window.ILS || {};
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"2.1.0","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"},"toc":{"enable":true,"number":false,"expand_all":true},"back2top":{"enable":true},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Homgun&#39;s Blog
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/tags"
+                    >
+                        标签
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">JVM探究</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2021-04-24 18:14:56
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Java/">Java</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JVM/">JVM</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+        <span class="article-wordcount article-meta-item">
+        <i class="fa fa-book"></i> <span>3.8k 字</span>
+        </span>
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <blockquote>
+<p>面试常见问题：</p>
+<p>JVM的理解？Java8虚拟机变化更新？</p>
+<p>OOM？栈溢出？怎么分析？</p>
+<p>JVM常用调优参数？</p>
+<p>内存快照如何抓取？怎么分析Dump文件？</p>
+<p>类加载器的认识？</p>
+</blockquote>
+<h4 id="1-JVM的位置"><a href="#1-JVM的位置" class="headerlink" title="1  JVM的位置"></a>1  JVM的位置</h4><p>   <img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/eb0c087d81de4eb64dcb3076f7d07608.png" alt="JVM study notes one: Overview of JVM architecture - Programmer Sought"></p>
+<h4 id="2-JVM的体系结构"><a href="#2-JVM的体系结构" class="headerlink" title="2 JVM的体系结构"></a>2 JVM的体系结构</h4><p>   <img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/1377269-20200115202410991-705795907.jpg" alt="img"></p>
+<h4 id="3-类加载器"><a href="#3-类加载器" class="headerlink" title="3 类加载器"></a>3 类加载器</h4><p>   作用：加载Class文件</p>
+<p>   new 对象 （引用：栈 值：堆） </p>
+<p>   getClass class类</p>
+<p>   getClassLoader 类加载器</p>
+<ul>
+<li><p>BootstrapClassLoader（启动类加载器）</p>
+<p><code>c++</code>编写，加载<code>java</code>核心库 <code>java.*</code>,构造<code>ExtClassLoader</code>和<code>AppClassLoader</code>。由于引导类加载器涉及到虚拟机本地实现细节，开发者无法直接获取到启动类加载器的引用，所以不允许直接通过引用进行操作</p>
+</li>
+<li><p>ExtClassLoader （标准扩展类加载器）</p>
+<p><code>java</code>编写，加载扩展库，如<code>classpath</code>中的<code>jre</code> ，<code>javax.*</code>或者<br> <code>java.ext.dir</code> 指定位置中的类，开发者可以直接使用标准扩展类加载器。</p>
+</li>
+<li><p>AppClassLoader（系统类加载器）</p>
+<p><code>java</code>编写，加载程序所在的目录，如<code>user.dir</code>所在的位置的<code>class</code></p>
+</li>
+<li><p>CustomClassLoader（用户自定义类加载器）</p>
+<p><code>java</code>编写,用户自定义的类加载器,可加载指定路径的<code>class</code>文件</p>
+</li>
+</ul>
+<h4 id="4-双亲委派机制"><a href="#4-双亲委派机制" class="headerlink" title="4 双亲委派机制"></a>4 双亲委派机制</h4><p>   当某个类加载器需要加载某个<code>.class</code>文件时，它首先把这个任务委托给他的上级类加载器，递归这个操作，如果上级的类加载器没有加载，自己才会去加载这个类。</p>
+<p>   <img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/7634245-7b7882e1f4ea5d7d.png" alt="img"></p>
+<p>   作用：</p>
+<ul>
+<li><strong>防止重复加载</strong>同一个<code>.class</code>。通过委托去向上面问一问，加载过了，就不用再加载一遍。保证数据安全。</li>
+<li>保证核心<code>.class</code>不能被篡改。通过委托方式，不会去篡改核心<code>.class</code>，即使篡改也不会去加载，即使加载也不会是同一个<code>.class</code>对象了。不同的加载器加载同一个<code>.class</code>也不是同一个<code>Class</code>对象。这样<strong>保证了<code>Class</code>执行安全</strong>。</li>
+</ul>
+<h4 id="5-沙箱安全机制"><a href="#5-沙箱安全机制" class="headerlink" title="5 沙箱安全机制"></a>5 沙箱安全机制</h4><p>   <strong>沙箱</strong>是指一个限制程序运行的环境。</p>
+<p>   <strong>沙箱机制</strong>就是将JAVA代码限定在JVM特定的运行环境中 ，并且严格限制代码对本地系统资源访问，通过这样的措施来保证对代码的有限隔离，防止对本地系统造成破坏。</p>
+<p>   沙箱主要限制系统资源（CPU,内存,文件系统,网络）访问，不同级别的沙箱对这些资源访问的限制也可以不一样。</p>
+<p>   所有的java程序运行都可以指定沙箱，可以定制安全策略。</p>
+<p>   <strong>组成沙箱的基本组件：</strong></p>
+<ul>
+<li><p><code>字节码校验器</code>（bytecode verifier）：确保Java类文件遵循Java语言规范。这样可以帮助Java程序实现内存保护。但并不是所有的类文件都会经过字节码校验，比如核心类。</p>
+</li>
+<li><p><code>类装载器</code>（class loader）：其中类装载器在3个方面对Java沙箱起作用</p>
+<ul>
+<li>它防止恶意代码去干涉善意的代码；</li>
+<li>它守护了被信任的类库边界；</li>
+<li>它将代码归入保护域，确定了代码可以进行哪些操作。</li>
+</ul>
+<p>  虚拟机为不同的类加载器载入的类提供不同的命名空间，命名空间由一系列唯一的名称组成，每一个被装载的类将有一个名字，这个命名空间是由Java虚拟机为每一个类装载器维护的，它们互相之间甚至不可见。</p>
+<p>  类装载器采用的机制是<code>双亲委派模式</code>。</p>
+<ol>
+<li>从最内层JVM自带类加载器开始加载，外层恶意同名类得不到加载从而无法使用；</li>
+<li>由于严格通过包来区分了访问域，外层恶意的类通过内置代码也无法获得权限访问到内层类，破坏代码就自然无法生效。</li>
+</ol>
+</li>
+<li><p><code>存取控制器</code>（access controller）：存取控制器可以控制核心API对操作系统的存取权限，而这个控制的策略设定，可以由用户指定。</p>
+</li>
+<li><p><code>安全管理器</code>（security manager）：是核心API和操作系统之间的主要接口。实现权限控制，比存取控制器优先级高。</p>
+</li>
+<li><p><code>安全软件包</code>（security package）：java.security下的类和扩展包下的类，允许用户为自己的应用增加新的安全特性，包括：</p>
+<ul>
+<li>安全提供者</li>
+<li>消息摘要</li>
+<li>数字签名</li>
+<li>加密</li>
+<li>鉴别</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-Native"><a href="#6-Native" class="headerlink" title="6 Native"></a>6 Native</h4><p>带了native关键字的方法会进入本地方法栈调用本地接口（JNI，底层C语言库），不受Java语法规则约束。</p>
+<p>JNI作用：扩展Java的使用，融合不同语言。</p>
+<h4 id="7-PC寄存器"><a href="#7-PC寄存器" class="headerlink" title="7 PC寄存器"></a>7 PC寄存器</h4><p>程序计数器（Program Counter Register）：每个线程都有一个程序计数器，是指向方法区中的方法字节码（指令代码）的指针，使执行引擎读取下一条指令。</p>
+<h4 id="8-方法区"><a href="#8-方法区" class="headerlink" title="8 方法区"></a>8 方法区</h4><p>方法区被所有线程共享，所有字段和方法字节码，以及一些特殊方法，如构造函数，接口代码也在此定义，简单说，所有定义的方法的信息都保存在该区域，此区域属于<strong>共享区间</strong>。</p>
+<p>静态变量、常量、类信息（构造方法、接口定义）。运行时常量池存在方法区中；但是实例变量存在堆内存中，和方法区无关。</p>
+<p>static final Class 常量池 → 方法区</p>
+<h4 id="9-栈"><a href="#9-栈" class="headerlink" title="9 栈"></a>9 栈</h4><p>栈内存，主管程序的运行，生命周期和线程同步；</p>
+<p>线程结束，栈内存也是释放，对于栈不存在垃圾回收问题。</p>
+<p>栈存储8大基本类型、对象引用和实例方法。</p>
+<p>运行原理：栈帧 </p>
+<h4 id="10-三种JVM"><a href="#10-三种JVM" class="headerlink" title="10 三种JVM"></a>10 三种JVM</h4><ol>
+<li><p>Sun公司的HotSpot 是目前使用范围最广的Java虚拟机。</p>
+</li>
+<li><p>BEA公司的JRockit（原来的 Bea JRockit）电脑软件，系列产品是一个全面的Java运行时解决方案组合。</p>
+</li>
+<li><p>IBM公司的J9 VM 是一个高性能的企业级 Java 虚拟机。</p>
+</li>
+</ol>
+<h4 id="11-堆"><a href="#11-堆" class="headerlink" title="11 堆"></a>11 堆</h4><p>一个JVM只有一个堆，可以调整大小。</p>
+<p>堆中存放类、方法、常量、保存所有引用类型的真实对象。</p>
+<p>堆内存可以分为三个区域：</p>
+<ul>
+<li><p>新生代（Eden，Survive From，Survive To）</p>
+<p>Minor GC</p>
+</li>
+<li><p>老年代（Old）</p>
+<p>Full GC</p>
+</li>
+<li><p>永久代（Perm）：常驻内存，存放JDK自身携带的Class对象。Interface元数据，存储的是Java运行时的一些环境或者类信息。该区域不存在垃圾回收，关闭JVM就会释放这个空间的内存。</p>
+<p>OOM可能原因：加载了大量的第三方jar包、Tomcat部署了太多的应用、大量动态生成的反射类，不断的被加载。</p>
+<ul>
+<li>JDK1.6之前：永久代，常量池是在方法区</li>
+<li>JDK1.7：永久代慢慢退化，去永久代，常量池在堆中</li>
+<li>JDK 1.8之后：无永久代，常量池在元空间</li>
+</ul>
+</li>
+</ul>
+<h4 id="12-堆内存调优"><a href="#12-堆内存调优" class="headerlink" title="12 堆内存调优"></a>12 堆内存调优</h4><p>默认情况下，JVM分配的总内存是电脑内存的1/4，而初始化内存是1/64。可以通过<code>-Xms1024m -Xmx1024m -XX:PrintGCDetails</code>进行堆内存调优。</p>
+<p>内存参数</p>
+<pre><code>-Xms1024m （堆初始化内存）     X-Memory Startup
+-Xmx1024m （堆的最大内存）     X-Memory Maximum, 注意: 堆内存大小=年轻代(1/3)+老年代(2/3)
+-Xmn256m （堆-年轻代大小）     X-Memory New, 注意: 老年代大小=Xmx-年轻代, 年轻代占比
+-Xss256k （棧-最大深度大小）     X-Stack Size
+-XX:MetaspaceSize=?m （元空间默认大小） , 注意: 元空间默认大小取决于系统内存,实测64bit-16G电脑, 默认30M
+-XX:MaxMetaspaceSize=?m （元空间最大大小） , 注意: 只要不设置上限,只要电脑内存足够就会动态增加
+-XX:SurvivorRatio=? （默认值:8, 即新生代分区比例默认 8:2, 即 Eden:S1:S2=8:1:1, S1约定于S2)
+-XX:+UseConcMarkSweepGC （指定使用的垃圾收集器，这里使用CMS收集器） 
+-XX:+PrintGCDetails （打印详细的GC日志）
+注意:jdk1.8已经移除了-XX:PermSize 和  -XX:MaxPermGen，取而代之的是 Metaspace</code></pre>
+<p>元空间在堆中逻辑上存在，物理上不存在。</p>
+<p>OOM：</p>
+<ol>
+<li><p>尝试扩大堆内存看结果</p>
+</li>
+<li><p>分析内存（专业工具）</p>
+</li>
+</ol>
+<p>OOM故障排查：</p>
+<ul>
+<li>能够看到代码第几行出错：内存快照分析工具，MAT，Jprofiler</li>
+<li>Debug，一行行分析代码！</li>
+</ul>
+<p>MAT，Jprofiler作用：</p>
+<ul>
+<li>分析Dump文件，快速分析内存泄露；</li>
+<li>获得堆中的数据；</li>
+<li>获得大的对象</li>
+</ul>
+<p>13 GC（常用算法）</p>
+<p>Minor GC</p>
+<p>Full GC</p>
+<p>判断对象是否可以回收：引用计数法（循环引用）、可达性分析（根搜索算法）。</p>
+<p><code>-XX:MaxTenuringThreshold</code>设定新生代进入老年代的年龄阈值。</p>
+<p><strong><em>垃圾回收算法</em></strong><br><strong>标记—清除算法</strong><br>标记—清除算法是最基础的垃圾回收算法，后续的垃圾收集算法都是基于标记—清除算法进行改进而得到的。标记—清除算法分为“标记”和“清除”两个阶段，首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象。</p>
+<p>标记—清除算法有两个主要缺点。一是效率问题，标记和清除的效率都不高，二是空间问题，标记清除之后会产生大量不连续的<strong>内存碎片</strong>，导致程序在之后的运行过程中无法为较大对象找到足够的连续内存。</p>
+<p><strong>复制算法</strong><br>复制算法是将可用内存分成大小相等的两块，每次只使用其中的一块，当用完一块内存时，将还存活着的对象复制到另外一块内存，然后把已使用过的内存空间一次清理掉。</p>
+<p>复制算法解决了效率问题。由于每次都是对整个半区进行内存回收，因此在内存分配时不需要考虑内存碎片等复杂情况，只要移动堆顶指针，按顺序分配内存即可。复制算法的优点是实现简单，运行高效，缺点是将<strong>内存缩小</strong>为了原来的一半，以及在对象存活率较高时复制操作的次数较多，导致效率降低。</p>
+<p><strong>标记—整理算法</strong><br>标记—整理算法是根据老年代的特点提出的。标记过程与标记—清除算法一样，但后续步骤不是直接回收被标记的对象，而是让所有存活的对象都向一端移动，然后清除边界以外的内存。</p>
+<p><strong>分代收集算法</strong><br>分代收集算法根据对象的存活周期不同将内存划分为多个区域，对每个区域选用不同的垃圾回收算法。</p>
+<p>一般把 Java 堆分为新生代和老年代。在新生代中，大多数对象的生命周期都很短，因此选用复制算法。在老年代中，对象存活率高，因此选用标记—清除算法或标记—整理算法。</p>
+<h4 id="13-JMM"><a href="#13-JMM" class="headerlink" title="13 JMM"></a>13 JMM</h4><p>JMM（Java Memory Model）定义了Java 虚拟机（JVM）在计算机内存（RAM）中的工作方式。JVM是整个计算机虚拟模型，所以JMM是隶属于JVM的。从抽象的角度来看，JMM定义了<strong>线程工作内存</strong>和<strong>主内存</strong>之间的抽象关系：线程之间的共享变量存储在主内存（Main Memory）中，每个线程都有一个<strong>私有的本地内存</strong>（Local Memory），本地内存中存储了该线程以读/写共享变量的<strong>副本</strong>。本地内存是JMM的一个抽象概念，并不真实存在。它涵盖了缓存、写缓冲区、寄存器以及其他的硬件和编译器优化。</p>
+<p>volatile → 共享对象可见性</p>
+<p>Java内存模型定义了以下八种操作来完成：</p>
+<ul>
+<li><strong>lock（锁定）</strong>：作用于主内存的变量，把一个变量标识为一条线程独占状态。</li>
+<li><strong>unlock（解锁）</strong>：作用于主内存变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定。</li>
+<li><strong>read（读取）</strong>：作用于主内存变量，把一个变量值从主内存传输到线程的工作内存中，以便随后的load动作使用</li>
+<li><strong>load（载入）</strong>：作用于工作内存的变量，它把read操作从主内存中得到的变量值放入工作内存的变量副本中。</li>
+<li><strong>use（使用）</strong>：作用于工作内存的变量，把工作内存中的一个变量值传递给执行引擎，每当虚拟机遇到一个需要使用变量的值的字节码指令时将会执行这个操作。</li>
+<li><strong>assign（赋值）</strong>：作用于工作内存的变量，它把一个从执行引擎接收到的值赋值给工作内存的变量，每当虚拟机遇到一个给变量赋值的字节码指令时执行这个操作。</li>
+<li><strong>store（存储）</strong>：作用于工作内存的变量，把工作内存中的一个变量的值传送到主内存中，以便随后的write的操作。</li>
+<li><strong>write（写入）</strong>：作用于主内存的变量，它把store操作从工作内存中一个变量的值传送到主内存的变量中。</li>
+</ul>
+<p>Java内存模型还规定了在执行上述八种基本操作时，必须满足如下规则：</p>
+<ul>
+<li>如果要把一个变量从主内存中复制到工作内存，就需要按顺寻地执行read和load操作， 如果把变量从工作内存中同步回主内存中，就要按顺序地执行store和write操作。但Java内存模型只要求上述操作必须按顺序执行，而没有保证必须是连续执行。</li>
+<li>不允许read和load、store和write操作之一单独出现</li>
+<li>不允许一个线程丢弃它的最近assign的操作，即变量在工作内存中改变了之后必须同步到主内存中。</li>
+<li>不允许一个线程无原因地（没有发生过任何assign操作）把数据从工作内存同步回主内存中。</li>
+<li>一个新的变量只能在主内存中诞生，不允许在工作内存中直接使用一个未被初始化（load或assign）的变量。即就是对一个变量实施use和store操作之前，必须先执行过了assign和load操作。</li>
+<li>一个变量在同一时刻只允许一条线程对其进行lock操作，但lock操作可以被同一条线程重复执行多次，多次执行lock后，只有执行相同次数的unlock操作，变量才会被解锁。lock和unlock必须成对出现</li>
+<li>如果对一个变量执行lock操作，将会清空工作内存中此变量的值，在执行引擎使用这个变量前需要重新执行load或assign操作初始化变量的值</li>
+<li>如果一个变量事先没有被lock操作锁定，则不允许对它执行unlock操作；也不允许去unlock一个被其他线程锁定的变量。</li>
+<li>对一个变量执行unlock操作之前，必须先把此变量同步到主内存中（执行store和write操作）。</li>
+</ul>
+
+        </div>
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next btn"
+                           rel="next"
+                           href="/2021/04/14/%E9%9D%A2%E7%BB%8F%E6%95%B4%E7%90%86%EF%BC%88Java-%E6%B5%8B%E5%BC%80%EF%BC%89/"
+                        >
+                            <span class="post-nav-title-item">面经整理（Java+测开）</span>
+                            <span class="post-nav-item">下一篇</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <i class="fa fa-heart-o"></i> <a href="/">Homgun</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.1.0</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa fa-outdent"></i>
+            </li>
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="sidebar-tools-2">
+        <div class="tools2-container">
+
+    <button class="tools-button">
+        <i class="fa fa-plus"></i>
+    </button>
+
+    <ul class="tools-wrapper">
+        <!-- back2top -->
+        
+            <li class="tools-item scroll-to-bottom">
+                <i class="fa fa-arrow-down"></i>
+            </li>
+            <li class="tools-item scroll-to-top">
+                <i class="fa fa-arrow-up"></i>
+            </li>
+        
+
+        <!-- mode toggle -->
+        <li class="tools-item mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+
+    </ul>
+</div>
+
+    </div>
+
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-JVM%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-text">1  JVM的位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-JVM%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">2 JVM的体系结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-text">3 类加载器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="nav-text">4 双亲委派机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%B2%99%E7%AE%B1%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="nav-text">5 沙箱安全机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Native"><span class="nav-text">6 Native</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-PC%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-text">7 PC寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-text">8 方法区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E6%A0%88"><span class="nav-text">9 栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-%E4%B8%89%E7%A7%8DJVM"><span class="nav-text">10 三种JVM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-%E5%A0%86"><span class="nav-text">11 堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-%E5%A0%86%E5%86%85%E5%AD%98%E8%B0%83%E4%BC%98"><span class="nav-text">12 堆内存调优</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-JMM"><span class="nav-text">13 JMM</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/dark-light-toggle.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/back2top.js"></script>
+
+
+
+
+
+    
+<script src="/js/left-side-toggle.js"></script>
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+</body>
+</html>

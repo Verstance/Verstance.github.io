@@ -287,8 +287,7 @@
 <li>获得堆中的数据；</li>
 <li>获得大的对象</li>
 </ul>
-<p>13 GC（常用算法）</p>
-<p>Minor GC</p>
+<h4 id="13-GC（常用算法）"><a href="#13-GC（常用算法）" class="headerlink" title="13 GC（常用算法）"></a>13 GC（常用算法）</h4><p>Minor GC</p>
 <p>Full GC</p>
 <p>判断对象是否可以回收：引用计数法（循环引用）、可达性分析（根搜索算法）。</p>
 <p><code>-XX:MaxTenuringThreshold</code>设定新生代进入老年代的年龄阈值。</p>
@@ -299,7 +298,7 @@
 <p><strong>标记—整理算法</strong><br>标记—整理算法是根据老年代的特点提出的。标记过程与标记—清除算法一样，但后续步骤不是直接回收被标记的对象，而是让所有存活的对象都向一端移动，然后清除边界以外的内存。</p>
 <p><strong>分代收集算法</strong><br>分代收集算法根据对象的存活周期不同将内存划分为多个区域，对每个区域选用不同的垃圾回收算法。</p>
 <p>一般把 Java 堆分为新生代和老年代。在新生代中，大多数对象的生命周期都很短，因此选用复制算法。在老年代中，对象存活率高，因此选用标记—清除算法或标记—整理算法。</p>
-<h4 id="13-JMM"><a href="#13-JMM" class="headerlink" title="13 JMM"></a>13 JMM</h4><p>JMM（Java Memory Model）定义了Java 虚拟机（JVM）在计算机内存（RAM）中的工作方式。JVM是整个计算机虚拟模型，所以JMM是隶属于JVM的。从抽象的角度来看，JMM定义了<strong>线程工作内存</strong>和<strong>主内存</strong>之间的抽象关系：线程之间的共享变量存储在主内存（Main Memory）中，每个线程都有一个<strong>私有的本地内存</strong>（Local Memory），本地内存中存储了该线程以读/写共享变量的<strong>副本</strong>。本地内存是JMM的一个抽象概念，并不真实存在。它涵盖了缓存、写缓冲区、寄存器以及其他的硬件和编译器优化。</p>
+<h4 id="14-JMM"><a href="#14-JMM" class="headerlink" title="14 JMM"></a>14 JMM</h4><p>JMM（Java Memory Model）定义了Java 虚拟机（JVM）在计算机内存（RAM）中的工作方式。JVM是整个计算机虚拟模型，所以JMM是隶属于JVM的。从抽象的角度来看，JMM定义了<strong>线程工作内存</strong>和<strong>主内存</strong>之间的抽象关系：线程之间的共享变量存储在主内存（Main Memory）中，每个线程都有一个<strong>私有的本地内存</strong>（Local Memory），本地内存中存储了该线程以读/写共享变量的<strong>副本</strong>。本地内存是JMM的一个抽象概念，并不真实存在。它涵盖了缓存、写缓冲区、寄存器以及其他的硬件和编译器优化。</p>
 <p>volatile → 共享对象可见性</p>
 <p>Java内存模型定义了以下八种操作来完成：</p>
 <ul>
@@ -435,7 +434,7 @@
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-JVM%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-text">1  JVM的位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-JVM%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">2 JVM的体系结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-text">3 类加载器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="nav-text">4 双亲委派机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%B2%99%E7%AE%B1%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="nav-text">5 沙箱安全机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Native"><span class="nav-text">6 Native</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-PC%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-text">7 PC寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-text">8 方法区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E6%A0%88"><span class="nav-text">9 栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-%E4%B8%89%E7%A7%8DJVM"><span class="nav-text">10 三种JVM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-%E5%A0%86"><span class="nav-text">11 堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-%E5%A0%86%E5%86%85%E5%AD%98%E8%B0%83%E4%BC%98"><span class="nav-text">12 堆内存调优</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-JMM"><span class="nav-text">13 JMM</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-JVM%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-text">1  JVM的位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-JVM%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">2 JVM的体系结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-text">3 类加载器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="nav-text">4 双亲委派机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%B2%99%E7%AE%B1%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="nav-text">5 沙箱安全机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Native"><span class="nav-text">6 Native</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-PC%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-text">7 PC寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-text">8 方法区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E6%A0%88"><span class="nav-text">9 栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-%E4%B8%89%E7%A7%8DJVM"><span class="nav-text">10 三种JVM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-%E5%A0%86"><span class="nav-text">11 堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-%E5%A0%86%E5%86%85%E5%AD%98%E8%B0%83%E4%BC%98"><span class="nav-text">12 堆内存调优</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-GC%EF%BC%88%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95%EF%BC%89"><span class="nav-text">13 GC（常用算法）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-JMM"><span class="nav-text">14 JMM</span></a></li></ol>
     </div>
 </div>
         

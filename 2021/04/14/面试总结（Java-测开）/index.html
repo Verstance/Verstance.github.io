@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        面经整理（Java+测开） |
+        面试总结（Java+测开） |
         
         Homgun&#39;s Blog
     </title>
@@ -112,7 +112,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <h3><a class="title-hover-animation">面经整理（Java+测开）</a></h3>
+            <h3><a class="title-hover-animation">面试总结（Java+测开）</a></h3>
         </div>
 
         <div class="meta-info">
@@ -136,7 +136,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-        <i class="fa fa-book"></i> <span>21.7k 字</span>
+        <i class="fa fa-book"></i> <span>27.2k 字</span>
         </span>
     
     
@@ -145,16 +145,22 @@
         </div>
 
         <div class="article-content markdown-body">
-            <h4 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h4><h5 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h5><p><strong><em>final关键字</em></strong>（**）</p>
+            <h4 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h4><h5 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h5><p><strong><em>final关键字</em></strong>（***）</p>
 <p>final用于修饰类、成员变量和成员方法。</p>
 <ul>
-<li><p>final修饰的类：不能被<strong>继承</strong>（String、StringBuilder、StringBuffer、Math，不可变类），其中所有的方法都不能被<strong>重写</strong>（这里需要注意的是不能被重写，但是可以被重载），所以不能同时用abstract和final修饰类（abstract修饰的类是抽象类，抽象类是用于被子类继承的，和final起相反的作用）；</p>
-</li>
-<li><p>final修饰的方法：不能被<strong>重写</strong>，但是子类<strong>可以用</strong>父类中final修饰的方法；</p>
-</li>
-<li><p>final修饰的成员变量：是<strong>不可变</strong>的，如果成员变量是基本数据类型，初始化之后成员变量的值不能被改变，如果成员变量是引用类型，那么它只能指向初始化时指向的那个对象，不能再指向别的对象，但是<strong>对象当中的内容是允许改变</strong>的。</p>
-</li>
+<li>final修饰的类：不能被<strong>继承</strong>（String、StringBuilder、StringBuffer、Math，不可变类），其中所有的方法都不能被<strong>重写</strong>（这里需要注意的是不能被重写，但是可以被重载），所以不能同时用abstract和final修饰类（abstract修饰的类是抽象类，抽象类是用于被子类继承的，和final起相反的作用）；</li>
+<li>final修饰的方法：不能被<strong>重写</strong>，但是子类<strong>可以用</strong>父类中final修饰的方法；</li>
+<li>final修饰的成员变量：是<strong>不可变</strong>的，如果成员变量是基本数据类型，初始化之后成员变量的值不能被改变，如果成员变量是引用类型，那么它只能指向初始化时指向的那个对象，不能再指向别的对象，但是<strong>对象当中的内容是允许改变</strong>的。</li>
 </ul>
+<p><strong><em>static关键字</em></strong></p>
+<p>JAVA类在加载时类信息、全局变量和方法、静态变量、final修饰的变量会被存到<strong>方法区</strong>，局部变量存储在栈内存中，当实例化一个对象时就将非static修饰的方法和变量复制到堆内存中以便对象引用，线程则被加载到寄存器运行。</p>
+<p>所以static修饰的变量和方法是独立于对象而存在的，不产生副本，可以直接用类名来调用。（当然也可以通过对象和this来调用，局部变量不能用this调用）</p>
+<p>一.static修饰的变量<br>static修饰的变量当且仅当<strong>类被加载</strong>时初始化。而非static变量在实例化对象时被初始化，产生多个副本，多个对象不互相影响。</p>
+<p>局部变量不能被static修饰</p>
+<p>static不改变变量和方法的作用域，其作用域只受四个访问修饰符的影响</p>
+<p>二.static修饰的方法<br>被static修饰的方法内部不能调用非static的变量和方法，非static方法内部可以调用static变量的方法和变量。</p>
+<p>三.static修饰的代码块<br>static修饰的代码块在且只在类被加载时<strong>执行一次</strong>。</p>
+<p>执行顺序：static代码块<strong>优于</strong>构造快优于构造方法。</p>
 <p><strong><em>Java8性能优化（字符串拼接）</em></strong></p>
 <p>字符串拼接常用到的几种方式如下：</p>
 <p>　　1、“+”拼接；</p>
@@ -170,6 +176,13 @@
 <p><strong>实现原理</strong>：HashSet是基于HashMap实现的，都是一个存放链表的数组。它不保证存储元素的迭代顺序，允许使用null元素，不允许有重复元素。当向HashSet中添加对象时，首先调用此对象所在类的hashCode()方法，计算次对象的哈希值，此哈希值决定了此对象在HashSet中存放的位置；若此位置没有被存储对象则直接存储，若已有对象则通过对象所在类的equals()比较两个对象是否相同，相同则不能被添加。因此，如果想实现自定义去重，需要重写model的hashcode方法和equals方法。</p>
 <p><strong>HashSet和HashMap的区别</strong>：<br>(1)HashSet实现了Set接口, 仅存储对象; HashMap实现了 Map接口, 存储的是键值对；</p>
 <p>(2)HashSet底层其实是用HashMap实现存储的, HashSet封装了一系列HashMap的方法. 依靠HashMap来存储元素值,(利用hashMap的key键进行存储), 而value值默认为Object对象. 所以HashSet也不允许出现重复值, 判断标准和HashMap判断标准相同, 两个元素的hashCode相等并且通过equals()方法返回true。</p>
+<p><strong>线程不安全</strong></p>
+<p><code>HashMap</code>的线程不安全体现在会造成<strong>死循环</strong>、<strong>数据丢失</strong>、<strong>数据覆盖</strong>这些问题。其中死循环和数据丢失是在JDK1.7中出现的问题，在JDK1.8中已经得到解决，然而1.8中仍会有数据覆盖这样的问题。</p>
+<p><code>HashMap</code>的线程不安全主要是发生在扩容函数中，即根源是在<code>transfer</code>函数中；</p>
+<p>JDK1.7出现的问题，在JDK1.8中已经得到了很好的解决，1.8的源码中不存在<code>transfer</code>函数，因为JDK1.8直接在<code>resize</code>函数中完成了数据迁移。而且JDK1.8在进行元素插入时使用的是<strong>尾插法</strong>。</p>
+<p><strong>ConcurrentHashMap</strong></p>
+<p>​        与HashMap不同，ConcurrentHashMap采用<strong>分段锁</strong>的思想实现并发操作，因此是线程安全的。ConcurrentHashMap由多个Segment组成（Segment的数量也是锁的并发度），每 个Segment均继承自ReentrantLock并单独加锁，所以每次进行加锁操作时锁住的都是一个 Segment，这样只要保证每个Segment都是线程安全的，也就实现了全局的线程安全。 </p>
+<p>​        在ConcurrentHashMap中有个concurrencyLevel参数表示并行级别，默认是 16，也就是 说ConcurrentHashMap<strong>默认由 16个Segments组成</strong>，在这种情况下最多同时支持 16个线程并 发执行写操作，只要它们的操作分布在不同的Segment上即可。并行级别concurrencyLevel 可以在初始化时设置，一旦初始化就不可更改。ConcurrentHashMap的每个Segment内部的 数据结构都和HashMap相同。</p>
 <p><strong><em>权限修饰符（可见性修饰符）</em></strong></p>
 <table>
 <thead>
@@ -211,7 +224,11 @@
 </tr>
 </tbody></table>
 <p>​    子类可以覆盖父类的 protected 方法，并把该方法的可见性改成 public。但是子类不能降低父类方法的可见性，即不能把父类的 public 方法的可见性改成 protected。</p>
-<p><strong><em>线程实现</em></strong></p>
+<p><strong><em>序列化</em></strong></p>
+<p>​        把对象转换成字节序列的过程称为对象的序列化，把字节序列恢复成对象的过程称为对象的反序列化。</p>
+<p>​        <code>Serializable</code> 接口的作用是标识一个对象是否可被序列化，只有当一个类实现了 Serializable 接口时，这个类的实例才是可序列化的。这个接口是<strong>标识接口</strong>，不包含任何数据域和方法。</p>
+<p>​        关键字 <code>transient </code>的作用是指定数据域<strong>不被序列化</strong>。当一个数据域不能被序列化，或者不想对一个数据域序列化时，给这个数据域加上关键字<code> transient</code>，在序列化的过程中将忽略这个数据域。</p>
+<h5 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h5><p><strong><em>线程实现</em></strong></p>
 <p><strong>方式一：继承Thread类的方式</strong></p>
 <ol>
 <li>创建一个继承于Thread类的子类</li>
@@ -291,16 +308,7 @@
 <p>上述操作中提到了两个概念，「核心线程」和「非核心线程」。核心线程和非核心线程的最大数目在创建线程池时被指定。核心线程和非核心线程的区别如下。</p>
 <p>向线程池提交任务时，首先创建核心线程运行任务，直到核心线程数到达上限，然后将任务放入阻塞队列。</p>
 <p>只有在核心线程数到达上限，且阻塞队列满的情况下，才会创建非核心线程运行任务。</p>
-<p><strong><em>序列化</em></strong></p>
-<p>​        把对象转换成字节序列的过程称为对象的序列化，把字节序列恢复成对象的过程称为对象的反序列化。</p>
-<p>​        <code>Serializable</code> 接口的作用是标识一个对象是否可被序列化，只有当一个类实现了 Serializable 接口时，这个类的实例才是可序列化的。这个接口是<strong>标识接口</strong>，不包含任何数据域和方法。</p>
-<p>​        关键字 <code>transient </code>的作用是指定数据域<strong>不被序列化</strong>。当一个数据域不能被序列化，或者不想对一个数据域序列化时，给这个数据域加上关键字<code> transient</code>，在序列化的过程中将忽略这个数据域。</p>
-<h5 id="编程算法"><a href="#编程算法" class="headerlink" title="编程算法"></a>编程算法</h5><p><strong><em>快速排序</em></strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuickSort</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123;<span class="number">5</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">4</span>&#125;;</span><br><span class="line"></span><br><span class="line">        quickSort(arr, <span class="number">0</span>, arr.length - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : arr) &#123;</span><br><span class="line">            System.out.print(i + <span class="string">&quot;\t&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> arr        待排序列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> leftIndex  待排序列起始位置</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> rightIndex 待排序列结束位置</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> leftIndex, <span class="keyword">int</span> rightIndex)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (leftIndex &gt;= rightIndex) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> left = leftIndex;</span><br><span class="line">        <span class="keyword">int</span> right = rightIndex;</span><br><span class="line">        <span class="comment">//待排序的第一个元素作为基准值</span></span><br><span class="line">        <span class="keyword">int</span> key = arr[left];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//从左右两边交替扫描，直到left = right</span></span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="keyword">while</span> (right &gt; left &amp;&amp; arr[right] &gt;= key) &#123;</span><br><span class="line">                <span class="comment">//从右往左扫描，找到第一个比基准值小的元素</span></span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//找到这种元素将arr[right]放入arr[left]中</span></span><br><span class="line">            arr[left] = arr[right];</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (left &lt; right &amp;&amp; arr[left] &lt;= key) &#123;</span><br><span class="line">                <span class="comment">//从左往右扫描，找到第一个比基准值大的元素</span></span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//找到这种元素将arr[left]放入arr[right]中</span></span><br><span class="line">            arr[right] = arr[left];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//基准值归位</span></span><br><span class="line">        arr[left] = key;</span><br><span class="line">        <span class="comment">//对基准值左边的元素进行递归排序</span></span><br><span class="line">        quickSort(arr, leftIndex, left - <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//对基准值右边的元素进行递归排序。</span></span><br><span class="line">        quickSort(arr, right + <span class="number">1</span>, rightIndex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="实现细节（锁-JVM）"><a href="#实现细节（锁-JVM）" class="headerlink" title="实现细节（锁 / JVM）"></a>实现细节（锁 / JVM）</h5><p><strong><em>synchronized</em></strong></p>
+<p><strong><em>synchronized</em></strong></p>
 <p>synchronized关键字用于为Java对象、方法、代码块提供线程安全的操作。</p>
 <p> synchronized属于独占式的悲观锁，同时属于可重入锁。</p>
 <p>在使用synchronized修饰对象时， 同一时刻只能有一个线程对该对象进行访问；在synchronized修饰方法、代码块时，同一 时刻只能有一个线程执行该方法体或代码块，其他线程只有等待当前线程执行完毕并释放锁资源后才能访问该对象或执行同步代码块。</p>
@@ -309,6 +317,37 @@
 <p> ◎ synchronized作用于成员变量和非静态方法时，锁住的是对象的实例，即this对象。 </p>
 <p>◎ synchronized作用于静态方法时，锁住的是Class实例，因为静态方法属于Class而不 属于对象。</p>
 <p> ◎ synchronized作用于一个代码块时，锁住的是所有代码块中配置的对象。 </p>
+<p><strong>静态方法 / 非静态方法</strong></p>
+<p>1.Synchronized修饰非静态方法，实际上是<strong>对调用该方法的对象加锁</strong>，俗称“对象锁”。</p>
+<p>情况1：同一个对象在两个线程中分别访问该对象的两个同步方法</p>
+<p>结果：会产生互斥。</p>
+<p>解释：因为锁针对的是对象，当对象调用一个synchronized方法时，其他同步方法需要等待其执行结束并释放锁后才能执行。</p>
+<p><strong>情况2</strong>：<strong>不同对象</strong>在两个线程中调用同一个同步方法</p>
+<p>结果：不会产生互斥。</p>
+<p>解释：因为是两个对象，<strong>锁针对的是对象</strong>，并不是方法，所以可以并发执行，不会互斥。形象的来说就是因为我们每个线程在调用方法的时候都是new 一个对象，那么就会出现两个空间，两把钥匙，</p>
+<p>2.Synchronized修饰静态方法，实际上是<strong>对该类对象加锁</strong>，俗称“类锁”。</p>
+<p>情况1：用类直接在两个线程中调用两个不同的同步方法</p>
+<p>结果：会产生互斥。</p>
+<p>解释：因为对静态对象加锁实际上对类（.class）加锁，类对象只有一个，可以理解为任何时候都只有一个空间，里面有N个房间，一把锁，因此房间（同步方法）之间一定是互斥的。</p>
+<p>注：上述情况和用单例模式声明一个对象来调用非静态方法的情况是一样的，因为永远就只有这一个对象。所以访问同步方法之间一定是互斥的。</p>
+<p>情况2：用一个类的静态对象在两个线程中调用静态方法或非静态方法</p>
+<p>结果：会产生互斥。</p>
+<p>解释：因为是一个对象调用，同上。</p>
+<p><strong>情况3</strong>：一个对象在两个线程中分别调用<strong>一个静态同步方法和一个非静态同步方法</strong></p>
+<p>结果：不会产生互斥。</p>
+<p>解释：因为虽然是一个对象调用，但是两个方法的<strong>锁类型不同</strong>，调用的静态方法实际上是类对象在调用，即这两个方法产生的并不是同一个对象锁，因此不会互斥，会并发执行。</p>
+<p><strong><em>锁</em></strong></p>
+<p>(synchronized、juc 提供的锁如 ReentrantLock、CountDownLatch、CyclicBarrier、Semaphore等)</p>
+<p>公平锁/非公平锁 (重要)</p>
+<p>可重入锁</p>
+<p>独享锁/共享锁 (重要)</p>
+<p>互斥锁/读写锁</p>
+<p>乐观锁/悲观锁 (重要)</p>
+<p>偏向锁/轻量级锁/重量级锁 (重要)</p>
+<p>自旋锁</p>
+<p><strong><em>乐观锁 / 悲观锁</em></strong><br>乐观锁与悲观锁区别在于看待并发同步的角度。悲观锁对于同一个数据的并发操作，悲观锁采取加锁的形式。悲观的认为，不加锁的并发操作一定会出问题。乐观锁在更新数据的时候，会采用尝试更新，不断重试的方式更新数据。乐观的认为，不加锁的并发操作是没有事情的。</p>
+<p>乐观锁适用于多读的应用类型，这样可以<strong>提高吞吐量</strong>。在Java中java.util.concurrent.atomic 包下面的原子变量类就是使用了乐观锁的一种实现方式CAS实现的。</p>
+<p>乐观锁适用于写比较少的情况下（多读场景），一般多写的场景下用悲观锁就比较合适，一 般会经常<strong>产生冲突</strong>，这就会导致上层应用会不断的进行retry，这样反倒是降低了性能。</p>
 <p><strong><em>锁升级</em></strong></p>
 <p>偏向锁/轻量级锁/重量级锁</p>
 <p>这三种锁是指锁的状态，并且是针对Synchronized。</p>
@@ -328,7 +367,7 @@
 <li>volatile不会造成线程的阻塞；synchronized可能会造成线程的阻塞。</li>
 <li>volatile标记的变量不会被编译器优化；synchronized标记的变量可以被编译器优化。</li>
 </ul>
-<p><strong><em>JVM体系结构</em></strong></p>
+<h5 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h5><p><strong><em>JVM体系结构</em></strong></p>
 <p>Java 虚拟机在执行 Java 程序的过程中会把它管理的内存划分成若干个不同的数据区域。</p>
 <p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/1377269-20200115202410991-705795907.jpg" alt="img"></p>
 <p>注：</p>
@@ -346,6 +385,23 @@
 <li><p>静态变量存放在方法区。</p>
 </li>
 </ul>
+<p><strong><em>内存泄露</em></strong></p>
+<p><strong>原因</strong></p>
+<p>内存泄漏是指无用对象（不再使用的对象）持续占有内存或无用对象的内存得不到及时释放，从而造成内存空间的浪费称为内存泄漏。内存泄露有时不严重且不易察觉，这样开发者就不知道存在内存泄露，但有时也会很严重，会提示你Out of memory。</p>
+<p>Java内存泄漏的根本原因是什么呢？长生命周期的对象持有短生命周期对象的引用就很可能发生内存泄漏，尽管短生命周期对象已经不再需要，但是因为长生命周期持有它的引用而导致不能被回收，这就是Java中内存泄漏的发生场景。具体主要有如下几大类：</p>
+<p><strong>1、静态集合类引起内存泄漏：</strong></p>
+<p>像HashMap、Vector等的使用最容易出现内存泄露，这些静态变量的生命周期和应用程序一致，他们所引用的所有的对象Object也不能被释放，因为他们也将一直被Vector等引用着。</p>
+<p><strong>2、当集合里面的对象属性被修改后，再调用remove()方法时不起作用。</strong></p>
+<p><strong>3、监听器</strong></p>
+<p>在java 编程中，我们都需要和监听器打交道，通常一个应用当中会用到很多监听器，我们会调用一个控件的诸如addXXXListener()等方法来增加监听器，但往往在释放对象的时候却没有记住去删除这些监听器，从而增加了内存泄漏的机会。</p>
+<p><strong>4、各种连接</strong></p>
+<p>比如数据库连接（dataSourse.getConnection()），网络连接(socket)和io连接，除非其显式的调用了其close（）方法将其连接关闭，否则是不会自动被GC 回收的。对于Resultset 和Statement 对象可以不进行显式回收，但Connection 一定要显式回收，因为Connection 在任何时候都无法自动回收，而Connection一旦回收，Resultset 和Statement 对象就会立即为NULL。但是如果使用连接池，情况就不一样了，除了要显式地关闭连接，还必须显式地关闭Resultset Statement 对象（关闭其中一个，另外一个也会关闭），否则就会造成大量的Statement 对象无法释放，从而引起内存泄漏。这种情况下一般都会在try里面去的连接，在finally里面释放连接。</p>
+<p><strong>5、内部类和外部模块的引用</strong></p>
+<p>内部类的引用是比较容易遗忘的一种，而且一旦没释放可能导致一系列的后继类对象没有释放。此外程序员还要小心外部模块不经意的引用，例如程序员A 负责A 模块，调用了B 模块的一个方法如：</p>
+<p>public void registerMsg(Object b);</p>
+<p>这种调用就要非常小心了，传入了一个对象，很可能模块B就保持了对该对象的引用，这时候就需要注意模块B 是否提供相应的操作去除引用。</p>
+<p><strong>6、单例模式</strong></p>
+<p>不正确使用单例模式是引起内存泄漏的一个常见问题，单例对象在初始化后将在JVM的整个生命周期中存在（以静态变量的方式），如果单例对象持有外部的引用，那么这个对象将不能被JVM正常回收，导致内存泄漏。</p>
 <p><strong><em>垃圾回收</em></strong></p>
 <p><strong>内存分配</strong></p>
 <p>​        Java 堆可以分成新生代和老年代，新生代又可以细分成 Eden 区、From Survivor 区、To Survivor 区等。对于不同的对象，有相应的内存分配规则。</p>
@@ -405,7 +461,76 @@
 
 
 
-<h5 id="框架（含前端）"><a href="#框架（含前端）" class="headerlink" title="框架（含前端）"></a>框架（含前端）</h5><p><strong><em>MVC</em></strong></p>
+<p><strong><em>工厂模式</em></strong></p>
+<p>工厂模式（Factory Pattern）是 Java 中最常用的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<p>在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用一个共同的接口来指向新创建的对象。通过工厂模式实现了<strong>创建者和调用者的分离</strong>。</p>
+<p><strong>优点：</strong> </p>
+<ul>
+<li>一个调用者想创建一个对象，只要知道其<strong>名称</strong>就可以了。 </li>
+<li><strong>扩展</strong>性高，如果想增加一个产品，只要扩展一个工厂类就可以。 </li>
+<li>屏蔽产品的具体实现，调用者只关心产品的<strong>接口</strong>。</li>
+</ul>
+<p><strong>缺点：</strong>每次增加一个产品时，都需要增加一个具体类和对象实现工厂，使得系统中类的个数成倍增加，在一定程度上增加了系统的复杂度，同时也增加了系统具体类的依赖。这并不是什么好事。</p>
+<p><strong>应用场景：</strong></p>
+<ul>
+<li>JDK中的Calendar的getInstance方法</li>
+<li>JDBC中的Connection对象的获取</li>
+<li>Spring中IOC容器创建管理bean对象</li>
+<li>反射中Class对象的newInstance方法</li>
+</ul>
+<p>简单工厂模式（Simple Factory），常用！</p>
+<p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/09067f878916c0e4377bfadc82afc248_720w.jpg" alt="img"></p>
+<p><strong><em>动态代理</em></strong></p>
+<ul>
+<li><p>动态代理和静态代理角色一样</p>
+</li>
+<li><p>动态代理的代理类是动态生成的，不是直接写好的</p>
+</li>
+<li><p>动态代理分为两大类：基于接口的动态代理，基于类的动态代理</p>
+<ul>
+<li><p>基于接口——JDK动态代理</p>
+</li>
+<li><p>基于类：cglib</p>
+<p>​        CGLIB是一个强大的、高性能的<strong>代码生成库</strong>。其被广泛应用于AOP框架（Spring、dynaop）中，用以提供<strong>方法拦截操作</strong>。Hibernate作为一个比较受欢迎的ORM框架，同样使用CGLIB来代理单端（多对一和一对一）关联（延迟提取集合使用的另一种机制）。</p>
+<p>​        CGLIB代理主要通过对<strong>字节码</strong>的操作，为对象引入间接级别，以控制对象的访问。我们知道Java中有一个动态代理也是做这个事情的，那我们为什么不直接使用Java动态代理，而要使用CGLIB呢？答案是CGLIB相比于JDK动态代理更加强大，JDK动态代理虽然简单易用，但是其有一个致命缺陷是，只能对接口进行代理。如果要代理的类为一个<strong>普通类、没有接口</strong>，那么Java动态代理就没法使用了。</p>
+</li>
+<li><p>Java字节码实现：JAVAssist</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>需要了解两个类：Proxy，InvocationHandler</p>
+<p>【InvocationHandler：调用处理程序】</p>
+<p>InvocationHandler是由代理实例的调用处理程序实现的接口。每个代理实例都有一个关联的调用处理程序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">invoke</span><span class="params">(Object proxy, 方法 method, Object[] args)</span>；</span></span><br><span class="line"><span class="function"><span class="comment">//参数</span></span></span><br><span class="line"><span class="function"><span class="comment">//proxy - 调用该方法的代理实例</span></span></span><br><span class="line"><span class="function"><span class="comment">//method -所述方法对应于调用代理实例上的接口方法的实例。方法对象的声明类将是该方法声明的接口，它可以是代理类继承该方法的代理接口的超级接口。</span></span></span><br><span class="line"><span class="function"><span class="comment">//args -包含的方法调用传递代理实例的参数值的对象的阵列，或null如果接口方法没有参数。原始类型的参数包含在适当的原始包装器类的实例中，例如java.lang.Integer或java.lang.Boolean 。</span></span></span><br></pre></td></tr></table></figure>
+
+<p>【Proxy  : 代理】</p>
+<p>Proxy提供了创建动态代理类和实例的静态方法，它也是由这些方法创建的所有动态代理对象的超类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成代理类</span></span><br><span class="line"><span class="comment">//public static Object newProxyInstance(Classloader loader,类&lt;&gt;[] interfaces,InvocationHandler h) throws IllegalArgumentException</span></span><br><span class="line"><span class="comment">//loader - 类加载器来定义代理类</span></span><br><span class="line"><span class="comment">//interfaces - 代理类实现的接口列表</span></span><br><span class="line"><span class="comment">//h - 调度方法调用的调用处理程序</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getProxy</span><span class="params">()</span></span>&#123;</span><br><span class="line">   <span class="keyword">return</span> Proxy.newProxyInstance(<span class="keyword">this</span>.getClass().getClassLoader(),rent.getClass().getInterfaces(),<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>代码实现：</strong></p>
+<p>Rent - 抽象角色</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//抽象角色：租房</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Rent</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Host  - 真实角色</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//真实角色：房东，房东要出租房子</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Host</span> <span class="keyword">implements</span> <span class="title">Rent</span></span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;房屋出租&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ProxyInvocationHandler - 代理角色</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyInvocationHandler</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> Rent rent;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRent</span><span class="params">(Rent rent)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.rent = rent;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//生成代理类，重点是第二个参数，获取要代理的抽象角色！之前都是一个角色，现在可以代理一类角色</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Object <span class="title">getProxy</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">return</span> Proxy.newProxyInstance(<span class="keyword">this</span>.getClass().getClassLoader(),</span><br><span class="line">               rent.getClass().getInterfaces(),<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// proxy : 代理类 method : 代理类的调用处理程序的方法对象.</span></span><br><span class="line">   <span class="comment">// 处理代理实例上的方法调用并返回结果</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">       seeHouse();</span><br><span class="line">       <span class="comment">//核心：本质利用反射实现！</span></span><br><span class="line">       Object result = method.invoke(rent, args);</span><br><span class="line">       fare();</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//看房</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">seeHouse</span><span class="params">()</span></span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;带房客看房&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="comment">//收中介费</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fare</span><span class="params">()</span></span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;收中介费&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Client - 租客</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//租客</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//真实角色</span></span><br><span class="line">       Host host = <span class="keyword">new</span> Host();</span><br><span class="line">       <span class="comment">//代理实例的调用处理程序</span></span><br><span class="line">       ProxyInvocationHandler pih = <span class="keyword">new</span> ProxyInvocationHandler();</span><br><span class="line">       pih.setRent(host); <span class="comment">//将真实角色放置进去！</span></span><br><span class="line">       Rent proxy = (Rent)pih.getProxy(); <span class="comment">//动态生成对应的代理类！</span></span><br><span class="line">       proxy.rent();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>核心：一个动态代理 , 一般代理某<strong>一类业务</strong> , 一个动态代理可以代理多个类，代理的是接口！</p>
+<p>动态代理的好处：</p>
+<ul>
+<li>可以使得我们的真实角色更加纯粹 ，不再去关注一些公共的事情 ；</li>
+<li><strong>公共的业务</strong>由代理来完成 ，实现了业务的分工 ；</li>
+<li>公共业务发生扩展时变得更加集中和方便 ；</li>
+<li>一个动态代理 , 一般代理某一类业务；</li>
+<li>一个动态代理可以代理多个类，代理的是<strong>接口</strong>。</li>
+</ul>
+<h5 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h5><p><strong><em>MVC</em></strong></p>
 <p>MVC 模式代表 Model-View-Controller（模型-视图-控制器） 模式。这种模式用于应用程序的分层开发。</p>
 <ul>
 <li>Model（模型）代表一个<strong>存取数据的对象</strong>或 JAVA POJO。它也可以带有逻辑，在数据变化时更新控制器。</li>
@@ -447,11 +572,25 @@
 <p>spring boot就是一个大框架里面包含了许许多多的东西，其中spring就是最核心的内容之一，当然也就包含spring mvc。</p>
 <p>spring mvc 只是spring 处理web层请求的一个模块。</p>
 <p><strong><em>SpringMVC 执行流程</em></strong></p>
-<p>1、 首先用户发送请求到前端控制器，前端控制器根据请求信息（如 URL）来决定选择哪一个页面控制器进行处理并把请求委托给它，即以前的控制器的控制逻辑部分；</p>
-<p>2、 页面控制器接收到请求后，进行功能处理，首先需要收集和绑定请求参数到一个对象，这个对象在 Spring Web MVC 中叫命令对象，并进行验证，然后将命令对象委托给业务对象进行处理；处理完毕后返回一个 ModelAndView（模型数据和逻辑视图名）；</p>
-<p>3、 前端控制器收回控制权，然后根据返回的逻辑视图名，选择相应的视图进行渲染，并把模型数据传入以便视图渲染；</p>
-<p>4、 前端控制器再次收回控制权，将响应返回给用户。</p>
-<p><strong>JavaScript中let和var区别</strong></p>
+<p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/5220087-3c0f59d3c39a12dd.png" alt="img"></p>
+<p>1、 用户向服务端发送一次请求，这个请求会先到前端控制器DispatcherServlet(也叫中央控制器)。<br>2、DispatcherServlet接收到请求后会调用HandlerMapping处理器映射器。由此得知，该请求该由哪个Controller来处理（并未调用Controller，只是得知）<br>3、DispatcherServlet调用HandlerAdapter处理器适配器，告诉处理器适配器应该要去执行哪个Controller<br>4、HandlerAdapter处理器适配器去执行Controller并得到ModelAndView(数据和视图)，并层层返回给DispatcherServlet<br>5、DispatcherServlet将ModelAndView交给ViewReslover视图解析器解析，然后返回真正的视图。<br>6、DispatcherServlet将模型数据填充到视图中<br>7、DispatcherServlet将结果响应给用户</p>
+<p><strong><em>AOP</em></strong></p>
+<p><strong>概念</strong></p>
+<p><strong>Joinpoint（连接点）：</strong>程序执行时的某个特定的点，在Spring中就是某一个方法的执行 。<br><strong>Pointcut（切点）：</strong>说的通俗点，spring中AOP的切点就是指一些方法的集合，而这些方法是需要被增强、被代理的。一般都是按照一定的约定规则来表示的，如正则表达式等。切点是由一类连接点组成。<br><strong>Advice（通知)：</strong>还是说的通俗点，就是在指定切点上要干些什么。Advice定义横切逻辑，Spring中支持5种类型的Advice。<br><strong>Advisor（通知器)：</strong>其实就是切点和通知的结合 。</p>
+<p><strong>实现</strong></p>
+<p>1.经典的基于代理的AOP（CGLIB动态代理）</p>
+<p>2.@AspectJ注解驱动的切面（注解实现）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationPointcut</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Before(&quot;execution(* com.zhg.service.UserServiceImpl.*(..))&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span></span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;---------方法执行前---------&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@After(&quot;execution(* com.zhg.service.UserServiceImpl.*(..))&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span></span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;---------方法执行后---------&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Around(&quot;execution(* com.zhg.service.UserServiceImpl.*(..))&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">around</span><span class="params">(ProceedingJoinPoint jp)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;环绕前&quot;</span>);</span><br><span class="line">       System.out.println(<span class="string">&quot;签名:&quot;</span>+jp.getSignature());</span><br><span class="line">       <span class="comment">//执行目标方法proceed</span></span><br><span class="line">       Object proceed = jp.proceed();</span><br><span class="line">       System.out.println(<span class="string">&quot;环绕后&quot;</span>);</span><br><span class="line">       System.out.println(proceed);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.纯POJO切面（实现Spring 增强类的接口）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--aop的配置--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--切入点 expression:表达式匹配要执行的方法--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">&quot;pointcut&quot;</span> <span class="attr">expression</span>=<span class="string">&quot;execution(* com.zhg.service.UserServiceImpl.*(..))&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--执行环绕; advice-ref执行方法 . pointcut-ref切入点--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">&quot;log&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pointcut&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">&quot;afterLog&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pointcut&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>4.注入式AspectJ切面（自定义切入类）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--aop的配置--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!--第二种方式：使用AOP的标签实现--&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">&quot;diy&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">&quot;diyPonitcut&quot;</span> <span class="attr">expression</span>=<span class="string">&quot;execution(* com.zhg.service.UserServiceImpl.*(..))&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">aop:before</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;diyPonitcut&quot;</span> <span class="attr">method</span>=<span class="string">&quot;before&quot;</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">aop:after</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;diyPonitcut&quot;</span> <span class="attr">method</span>=<span class="string">&quot;after&quot;</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><em>JavaScript中let和var区别</em></strong></p>
 <p>1、作用域不同</p>
 <p>var是函数作用域，let是块作用域。</p>
 <p>在函数中声明了var，整个函数内都是有效的，比如说在for循环内定义的一个var变量，实际上其在for循环以外也是可以访问的</p>
@@ -718,22 +857,32 @@
 <p>1)页是信息的<strong>物理</strong>单位，分页是为实现<strong>离散</strong>分配方式，以消减内存的外零头，提高内存的利用率；或者说，分页仅仅是由于<strong>系统管理</strong>的需要，而不是用户的需要（也是<strong>对用户透明</strong>的）。段是信息的<strong>逻辑</strong>单位，它含有一组其意义相对完整的信息（比如数据段、代码段和堆栈段等）。分段的目的是为了能更好的满足<strong>用户</strong>的需要（用户也是可以使用的）。</p>
 <p>2)页的大小<strong>固定</strong>且由系统确定，把逻辑地址划分为页号和页内地址两部分，是由机器硬件实现的，因而一个系统只能有一种大小的页面。段的长度却不固定，决定于用户所编写的程序，通常由编辑程序在对源程序进行编辑时，根据信息的性质来划分。</p>
 <p>3)分页的作业地址空间是一维的，即单一的线性空间，程序员只须利用一个记忆符（线性地址的16进制表示），即可表示一地址。分段的作业地址空间是二维的，程序员在标识一个地址时，既需给出段名（比如数据段、代码段和堆栈段等），又需给出段内地址。</p>
-<p>4)页和段都有存储保护机制。但存取权限不同：段有读、写和执行三种权限；而页只有读和写两种权限</p>
+<p>4)页和段都有存储保护机制。但存取权限不同：段有读、写和执行三种权限；而页只有读和写两种权限。</p>
+<p><strong><em>死锁</em></strong></p>
+<p><strong>解决方法</strong></p>
+<p>死锁预防： 破坏导致死锁必要条件中的任意一个就可以预防死锁。例如：</p>
+<p>（1） 破坏保持和等待条件： <strong>一次性申请所有资源</strong>，之后不再申请资源，如果不满足资源条件则得不到资源分配。</p>
+<p>（2） 破坏不可剥夺条件： 当一个进程获得某个不可剥夺的资源时，提出新的资源申请，若<strong>不满足，则释放所有资源</strong>。</p>
+<p>（3） 破坏循环等待条件： 按某一<strong>顺序申请资源</strong>，释放资源则反序释放。</p>
+<p>死锁避免： 进程在每次申请资源时<strong>判断</strong>这些操作是否安全。（银行家算法，系统在进行资源分配之前，应先计算此次分配资源的安全性，若分配不会导致系统进入不安全状态，则分配，否则等待。）</p>
+<p>死锁检测： 判断系统是否属于死锁的状态，如果是，则执行死锁解除策略。</p>
+<p>死锁解除： 将某进程所占资源进行<strong>强制回收</strong>，然后分配给其他进程。（与死锁检测结合使用的）</p>
 <h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><p><strong><em>Linux常用命令</em></strong>（**）</p>
 <p>pwd：显示当前所在位置</p>
 <p>sudo + 其他命令：以系统管理者的身份执行指令</p>
 <p>grep：要搜索的字符串 要搜索的文件 –color （高亮）</p>
 <p>ps - ef/ps aux：查看当前系统正在运行进程</p>
-<p>查看特定的进程（查看包括redis的进程）： ps aux|grep redis / pgrep redis -a</p>
-<p>kill -9 进程pid ： 杀死进程（-9 表示强制终止）</p>
+<p><strong>查看特定的进程（查看包括redis的进程）： ps aux|grep redis / pgrep redis -a</strong></p>
+<p><strong>kill -9 进程pid ： 杀死进程（-9 表示强制终止）</strong></p>
 <p>find 目录 参数 ：find /home -name “*.txt”  </p>
 <p>ls 或者 ll ：查看目录信息（ll 是 ls -l 的别名，ll 命令可以看到该目录下的所有目录和文件的详细信息）</p>
 <p>free : 显示<strong>系统内存</strong>的使用情况，包括物理内存、交换内存(swap)和内核缓冲区内存</p>
 <p>tar -zcvf 打包压缩后的文件名 要打包压缩的文件 : 打包并压缩文件，一般情况下打包和压缩是一起进行的，打包并压缩后的文件的后缀名一般 .tar.gz</p>
 <p>tar -xvf 压缩文件 - C 解压的位置 : 解压压缩包</p>
 <p>wget : 是从远程下载的工具</p>
+<p><strong>netstat</strong>：显示<strong>网络状态</strong>。netstat –apn | grep 8080，查看程序端口占用情况。</p>
 <p>vmstat : 虚拟内存性能监控、CPU 监控。</p>
-<p>top : 常用来监控Linux的<strong>系统状况</strong>，比如CPU、内存的使用，显示系统上正在运行的进程。</p>
+<p><strong>top</strong> : 常用来监控Linux的<strong>系统状况</strong>，比如<strong>CPU、内存</strong>的使用，显示系统上正在运行的进程。</p>
 <p>load average：系统负载，就是进程队列的长度。当这个值&gt;cpu核心数的时候就说明有进程在等待处理了，是负载过重。</p>
 <p><strong><em>创建新进程</em></strong>在Linux的下是由父进程来完成的，创建完成的新进程是子进程。</p>
 <p>新进程的地址空间有两种可能性：</p>
@@ -829,11 +978,51 @@
 <p>​        你能用的数据库引擎取决于mysql在安装的时候是如何被<strong>编译</strong>的。要添加一个新的引擎，就必须重新编译MYSQL。在缺省情况下,MYSQL支持三个引擎:<strong>ISAM、MYISAM和HEAP</strong>。另外两种类型<strong>INNODB和BERKLEY（BDB）</strong>，也常常可以使用。</p>
 <p>​        <strong>MyISAM</strong>是MySQL的ISAM扩展格式。除了提供ISAM里所没有的<strong>索引</strong> （ISAM允许没有任何索引和主键的表存在，索引都是保存行的地址）和字段管理的大量功能， MyISAM还使用一种表格锁定的机制（<strong>表级锁</strong>），来优化多个并发的读写操作，其代价是你需要经常运行OPTIMIZE TABLE命令，来恢复被更新机制所浪费的空间，否则碎片也会随之增加，最终影响数据访问性能。 MYISAM强调了<strong>快速读取操作</strong> ，这可能就是为什么MySQL受到了WEB开发如此青睐的主要原因：在WEB开发中你所进行的大量数据操作都是读取操作。所以，大多数虚拟主机提供商和INTERNET平台提供商只允许使用MYISAM格式。</p>
 <p>​        <strong>InnoDB</strong>数据库引擎是早就Mysql灵活性的技术的直接产品，这项技术就是mysql+api，在使用mysql的时候，你所面对的每一个挑战几乎都源于isam和myisam数据库引擎不支持事务处理也不支持外键。InnoDB要比isam和myisam引擎<strong>慢</strong>，innoDB为mysql表提供了<strong>acid事务支持</strong>，系统崩溃修复能力和多版本并发控制的<strong>行级锁</strong>，该引擎提供了行级锁和外键约束，所以InnoDB是事务型数据库首选的引擎。采用B+树实现，索引与数据存储在同一文件中。</p>
+<p><strong><em>回滚 / 提交</em></strong></p>
+<p>1 回滚日志(undo)</p>
+<p>undo log属于逻辑日志，它记录的是sql执行相关的信息。当发生回滚时，InnoDB会根据undo log的内容做与之前<strong>相反的工作</strong>：对于每个insert，回滚时会执行delete；对于每个delete，回滚时会执行insert；对于每个update，回滚时会执行一个相反的update，把数据改回去。</p>
+<p>undo log用于存放数据被修改前的值，如果修改出现异常，可以使用undo日志来实现回滚操作，保证事务的一致性。另外InnoDB MVCC事务特性也是基于undo日志实现的。</p>
+<p>因此，undo log有两个作用：提供回滚和多版本控制(MVCC)。</p>
+<p>2 重做日志(redo)</p>
+<p>redo log重做日志记录的是新数据的<strong>备份</strong>，属于物理日志。在事务提交前，只要将redo log持久化即可，不需要将数据持久化。当系统崩溃时，虽然数据没有持久化，但是redo log已经持久化。系统可以根据redo log的内容，将所有数据<strong>恢复</strong>到最新的状态。</p>
+<p>redo log包括两部分：一是内存中的<strong>日志缓冲</strong>(redo log buffer)，该部分日志是<strong>易失性</strong>的；二是磁盘上的<strong>重做日志文件</strong>(redo log file)，该部分日志是<strong>持久</strong>的。</p>
+<p>MySQL中redo log刷新规则采用一种称为Checkpoint的机制(利用LSN实现)，为了确保安全性，又引入double write机制。</p>
+<p>4.3 MVCC</p>
+<p>MVCC(Multi-Version Concurrency Control)多版本并发控制，可以简单地认为：MVCC就是<strong>行级锁</strong>的一个变种(升级版)。</p>
+<p>事务的隔离级别就是通过锁的机制来实现，只不过隐藏了加锁细节。</p>
+<p>在表锁中我们读写是阻塞的，基于提升并发性能的考虑，MVCC一般<strong>读写是不阻塞</strong>的。</p>
+<p>MySQL中MVCC是通过redo log版本链+一致性视图Read-view实现的。</p>
 <h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/image-20210419232705108.png" alt="image-20210419232705108"></p>
 <p><strong><em>测试流程</em></strong></p>
 <p>需求分析→测试计划→测试设计→测试环境搭建→测试执行→测试记录→缺陷管理→软件评估→测试总结→测试维护</p>
 <p><strong><em>测试分类</em></strong></p>
 <p>1、按开发阶段：单元测试、集成测试、系统测试、验收测试<br>2、按测试实施组织：α、β、第三方<br>3、按测试执行方式：静态测试、动态测试<br>4、按是否查看代码：黑盒测试、白盒测试、灰盒测试<br>5、按是否手工执行划分：手工测试、自动化测试<br>6、按测试对象划分：性能测试、安全测试、兼容性测试、文档测试、易用性测试（用户体验测试）、业务测试、界面测试、安装测试（功能测试、接口测试）<br>7、按测试地域划分：本地化测试、国际化测试</p>
+<p><strong><em>白盒测试</em></strong></p>
+<p><strong>定义</strong>：<br>　　白盒测试又称结构测试,透明盒测试、逻辑驱动测试或基于代码的测试。白盒测试是一种测试用例设计方法，白盒指的是程序的内部结构和<strong>目的</strong>：<br>　　通过检查软件内部的逻辑结构，对软件中的逻辑路径进行覆盖测试；在程序不同地方设置检查点，检查程序的状态，以确定实际运行状态与预期状态是否一致。</p>
+<p><strong>方法：</strong>大致分为静态方法和动态方法两大类。</p>
+<p>A. 静态分析：<br>　　是一种不执行程序而进行测试的技术。静态分析的主要目的是检查软件的表示和描述是否一致,没有冲突或者没有歧义。</p>
+<p>B. 动态分析：<br>　　当软件系统在模拟或真实的环境中执行前、过程中和执行后,对其行为分析。它显示了一个系统在检查状态下是否正确。在动态分析技术中,最重要的技术是路径和分支测试。下面要介绍的六种覆盖测试方法属于动态分析方法。</p>
+<p>（1）语句覆盖</p>
+<p>使程序中的每个可执行语句都能执行一次的测试用例</p>
+<p>测试用例条件： A ^ B = T</p>
+<p>（2）判定覆盖（分支覆盖）</p>
+<p>对于判断语句，在设计用例的时候，要设计判断语句结果为True和False的两种情况</p>
+<p>测试用例条件：<br>　　　　　　　A ^ B = T<br>　　　　　　　A ^ B = F
+　　　　　　　</p>
+<p>（3）条件覆盖</p>
+<p>设计用例时针对判断语句里面每个条件表达式true 和 false各取值一次，不考判断语句的计算结果</p>
+<p>测试用例条件：<br>　　　　　　　A=T 　　　　A=F<br>　　　　　　　B=T 　　　　B=F
+　　　　　　　</p>
+<p>（4）判定条件覆盖（分支条件覆盖）</p>
+<p>设计测试用例时，使得判断语句中每个条件表达式的所有可能结果至少出现一次，每个判断语句本身所有可能结果也至少出现一次。</p>
+<p>测试用例条件：<br>　　　　　　　A ^ B = T 　　 A ^ B = F<br>　　　　　　　A=T　　　　　A=F<br>　　　　　　　B=T　　　　　B=F</p>
+<p>（5）条件组合覆盖</p>
+<p>设计测试用例时，使得每个判断语句中条件结果的所有可能组合至少出现一次</p>
+<p>测试用例条件：<br>　　　　　　　A= T　　　 B= T<br>　　　　　　　A= T 　　　B= F<br>　　　　　　　A= F　　　 B= T<br>　　　　　　　A= F 　　　B= F</p>
+<p>（6）路径覆盖</p>
+<p>设计测试用例时，覆盖程序中所有可能的执行路径</p>
+<p>优点：这种覆盖方法可以对程序进行彻底的测试用例覆盖，比前面讲的五种方法覆盖度都要高。</p>
+<p>缺点：于路径覆盖需要对所有可能的路径进行测试（包括循环、条件组合、分支选择等），那么需要设计大量、复杂的测试用例，使得工作量呈指数级增长。路径覆盖虽然是一种比较强的覆盖，但未必考虑判断语句中条件表达式结果的组合，并不能代替条件覆盖和条件组合覆盖。</p>
 <p><strong><em>冒烟测试</em></strong></p>
 <p>1.冒烟测试是什么？</p>
 <p>　　针对每个版本或每次<strong>需求变更</strong>后，在正式测试前，对产品或系统的一次<strong>简单</strong>的验证性测试。</p>
@@ -841,70 +1030,6 @@
 <p>　　为正式测试前，验证是否产品或系统的<strong>主要需求或预置条件</strong>是否存在bug。</p>
 <p>3.冒烟测试怎么做？</p>
 <p>　　最好的方法，设计出<strong>自动化测试脚本</strong>，每一次版本更新后都可以去执行脚本验证一下。</p>
-<p><strong><em>常用自动化测试工具</em></strong></p>
-<p>1、Appium</p>
-<p>官网：<a target="_blank" rel="noopener" href="http://appium.io/">http://appium.io</a></p>
-<p>AppUI自动化测试</p>
-<p>Appium 是一个移动端自动化测试开源工具，支持iOS 和Android 平台，支持Python、Java 等语言，即同一套Java 或Python 脚本可以同时运行在iOS 和Android平台，Appium 是一个C/S 架构，核心是一个 Web 服务器，它提供了一套 REST 的接口。当收到客户端的连接后，就会监听到命令，然后在移动设备上执行这些命令，最后将执行结果放在 HTTP 响应中返还给客户端。</p>
-<p>License：免费</p>
-<p>2、Selenium</p>
-<p>官网：<a target="_blank" rel="noopener" href="https://www.seleniumhq.org/download/">https://www.seleniumhq.org/download/</a></p>
-<p>WebUI自动化测试</p>
-<p>Selenium是一个用于Web应用程序测试的工具，Selenium已经成为Web自动化测试工程师的首选。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE(7、8、9)、Mozilla Firefox、Mozilla Suite等。这个工具的主要功能包括：测试与浏览器的兼容性——测试你的应用程序看是否能够很好得工作在不同浏览器和操作系统之上。测试系统功能——创建回归测试检验软件功能和用户需求。支持自动录制动作和自动生成 .Net、Java、Perl等不同语言的测试脚本。Selenium 是ThoughtWorks专门为Web应用程序编写的一个验收测试工具。其升级版本为Webdriver。</p>
-<p>License：免费</p>
-<p>3、Postman</p>
-<p>官网：<a target="_blank" rel="noopener" href="https://www.getpostman.com/">https://www.getpostman.com</a></p>
-<p>接口测试</p>
-<p> Postman 提供功能强大的 Web API 和 HTTP 请求的调试，它能够发送任何类型的HTTP 请求 (GET, POST, PUT, DELETE…)，并且能附带任何数量的参数和 Headers。不仅如此，它还提供测试数据和环境配置数据的导入导出，付费的 Post Cloud 用户还能够创建自己的 Team Library 用来团队协作式的测试，并能够将自己的测试收藏夹和用例数据分享给团队。</p>
-<p>License：免费</p>
-<p>4、Soapui</p>
-<p>官网：<a target="_blank" rel="noopener" href="https://www.soapui.org/">https://www.soapui.org</a></p>
-<p>接口测试</p>
-<p>SoapUI提供了所有所需的工具来测试和完善的测试。总览标签给你一个项目的所有内容和全面的看法。只需一次点击，您可以添加任何数量的断言为验证传入的消息TestStep。使用功能强大的HTTP监视器记录，分析甚至修改客户机 - 服务器通信，因为它发生。和SoapUI临带来了更专业和先进的功能，保持遥遥领先其他测试工具。轻松创建和运行数据驱动测试。该数据源TestStep读取测试数据从任何外部来源 - Excel中，XML，JDBC，文件，等等 - 到标准SoapUI属性。</p>
-<p>License：免费</p>
-<p>5、Robot Framework</p>
-<p>官网：<a target="_blank" rel="noopener" href="http://robotframework.org/">http://robotframework.org</a>  </p>
-<p>WebUI自动化测试，接口测试，APP测试</p>
-<p>   Robot Framework是一款python编写的功能自动化测试框架。具备良好的可扩展性，支持关键字驱动，可以同时测试多种类型的客户端或者接口，可以进行分布式测试执行。主要用于轮次很多的验收测试和验收测试驱动开发。</p>
-<p>Robot framework为不同的自动化测试需求提供了不同的框架。它的测试能力可以通过 Python 和 Java 测试库得到扩展。Selenium WebDriver 是 Robot Framework 中内置的流行库。</p>
-<p>Robot Framework 不仅仅是网页测试工具，同样可以用来做 Android 和 iOS 的自动化测试。对于关键字测试驱动熟悉的测试员可以轻松上手 Robot Framework。</p>
-<p>License：免费  </p>
-<p>6、QTP</p>
-<p>官网：<a target="_blank" rel="noopener" href="https://software.microfocus.com/en-us/products/unified-functional-automated-testing/overview">https://software.microfocus.com/en-us/products/unified-functional-automated-testing/overview</a></p>
-<p>WebUI自动化测试，接口测试，APP测试</p>
-<p>HP QuickTest Professional 提供符合所有主要应用软件环境的功能测试和回归测试的自动化。采用关键字驱动的理念以简化测试用例的创建和维护。它让用户可以直接录制屏幕上的操作流程，自动生成功能测试或者回归测试用例。专业的测试者也可以通过提供的内置脚本和调试环境来取得对测试和对象属性的完全控制。目前版本名为Unified Functional Testing，简称UFT。可以测试非常多的应用，比如接口API，Web services，桌面程序，Web系统，手机APP。</p>
-<p>License：商业</p>
-<p>7、Jmeter</p>
-<p>官网：<a target="_blank" rel="noopener" href="https://jmeter.apache.org/">https://jmeter.apache.org</a></p>
-<p>接口测试，性能测试</p>
-<p>JMeter是Apache组织的开放源代码项目，它是功能和性能测试的工具，100%的用java实现；</p>
-<p>JMeter可以用于测试静态或者动态资源的性能（文件、Servlets、Perl脚本、java对象、数据库和查询、ftp服务器或者其他的资源）。JMeter用于模拟在服务器、网络或者其他对象上附加高负载以测试他们提供服务的受压能力，或者分析他们提供的服务在不同负载条件下的总性能情况。你可以用JMeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器/脚本/对象的行为。</p>
-<p>使用Jmeter做接口测试需要注意一点，小心使用“用户定义变量”，Jmeter组件有优先级的，如果多个线程同时执行的时候，“用户定义变量”组件定义的变量可能会乱套。</p>
-<p>License：免费</p>
-<p>8、Loadrunner</p>
-<p>官网：<a target="_blank" rel="noopener" href="https://software.microfocus.com/en-us/products/loadrunner-load-testing/overview">https://software.microfocus.com/en-us/products/loadrunner-load-testing/overview</a></p>
-<p>性能测试</p>
-<p>LoadRunner，是一种预测系统行为和性能的负载测试工具。通过以模拟上千万用户实施并发负载及实时性能监测的方式来确认和查找问题，LoadRunner能够对整个企业架构进行测试。企业使用LoadRunner能最大限度地缩短测试时间，优化性能和加速应用系统的发布周期。 LoadRunner可适用于各种体系架构的自动负载测试，能预测系统行为并评估系统性能。</p>
-<p>License：商业</p>
-<p>9、Monkey</p>
-<p>App稳定性测试</p>
-<p>软件附带在sdk中，适用于android和ios，通过adb shell，生成用户或系统的伪随机事件，压力测试结果：崩溃crash，无响应anr。</p>
-<p>License：免费</p>
-<p>10、GT</p>
-<p>官网：<a target="_blank" rel="noopener" href="http://gt.qq.com/index.html">http://gt.qq.com/index.html</a></p>
-<p>App性能测试</p>
-<p>GT（随身调）是APP的随身调测平台，它是直接运行在手机上的“集成调测环境”(IDTE, Integrated Debug Environment)。利用GT，仅凭一部手机，无需连接电脑，您即可对APP进行快速的性能测试(CPU、内存、流量、电量、帧率/流畅度等等)、开发日志的查看、Crash日志查看、网络数据包的抓取、APP内部参数的调试、真机代码耗时统计等。</p>
-<p>License：免费</p>
-<p>11、Appscan</p>
-<p>官网：<a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/downloads/r/appscan/">https://www.ibm.com/developerworks/downloads/r/appscan/</a></p>
-<p>安全测试</p>
-<p>IBM Security AppScan 是一个适合安全专家的 Web 应用程序和 Web 服务渗透测试解决方案，对现代 Web 应用程序和服务执行自动化的动态应用程序安全测试 (DAST) 和交互式应用程序安全测试 (IAST)，支持 Web 2.0、JavaScript 和 AJAX 框架的全面的 JavaScript 执行引擎，涵盖 XML 和 JSON 基础架构的 SOAP 和 REST Web 服务测试支持 WS-Security 标准、XML 加密和 XML 签名，详细的漏洞公告和修复建议。</p>
-<p>License：免费</p>
-<p>12、Jenkins</p>
-<p>官网：<a target="_blank" rel="noopener" href="https://jenkins.io/">https://jenkins.io</a></p>
-<p>持续集成</p>
-<p>自动化构建 编译，部署，任务执行，测试报告，邮件通知等。</p>
-<p>License：免费</p>
 <p><strong><em>Junit @Before @After</em></strong></p>
 <p>@Before修饰的方法，会在测试方法之前被自动执行，所有测试方法在执行之前都会执行该方法</p>
 <p>@After修饰的方法，会在测试方法执行之后自动被执行，在所有测试方法执行完之后，都会自动执行该方法</p>
@@ -998,20 +1123,70 @@
 <li>Repository：仓库区（或本地仓库）</li>
 <li>Remote：远程仓库</li>
 </ul>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p><strong><em>自我介绍</em></strong></p>
-<p>优缺点：严谨，认真，计划 （同理心） / 想太多，行动力不足 （优柔寡断）</p>
-<p>阅读书籍：亲密关系</p>
-<p>职业规划：测试 / 开发</p>
-<p>最失败的事：高考</p>
-<p><strong><em>项目介绍</em></strong></p>
-<p><strong>项目一：基于 SSM 框架的在线学习系统</strong></p>
-<p>基本介绍：</p>
-<p>项目难点：</p>
-<p>解决方法：</p>
-<p><strong>项目二：人脸识别考勤报表系统</strong></p>
-<p>基本介绍：</p>
-<p>项目难点：</p>
-<p>解决方法：</p>
+<p><strong><em>常用自动化测试工具</em></strong></p>
+<p>1、Appium</p>
+<p>官网：<a target="_blank" rel="noopener" href="http://appium.io/">http://appium.io</a></p>
+<p>AppUI自动化测试</p>
+<p>Appium 是一个移动端自动化测试开源工具，支持iOS 和Android 平台，支持Python、Java 等语言，即同一套Java 或Python 脚本可以同时运行在iOS 和Android平台，Appium 是一个C/S 架构，核心是一个 Web 服务器，它提供了一套 REST 的接口。当收到客户端的连接后，就会监听到命令，然后在移动设备上执行这些命令，最后将执行结果放在 HTTP 响应中返还给客户端。</p>
+<p>License：免费</p>
+<p>2、<strong>Selenium</strong></p>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.seleniumhq.org/download/">https://www.seleniumhq.org/download/</a></p>
+<p>WebUI自动化测试</p>
+<p>Selenium是一个用于Web应用程序测试的工具，Selenium已经成为Web自动化测试工程师的首选。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。支持的浏览器包括IE(7、8、9)、Mozilla Firefox、Mozilla Suite等。这个工具的主要功能包括：测试与浏览器的兼容性——测试你的应用程序看是否能够很好得工作在不同浏览器和操作系统之上。测试系统功能——创建回归测试检验软件功能和用户需求。支持自动录制动作和自动生成 .Net、Java、Perl等不同语言的测试脚本。Selenium 是ThoughtWorks专门为Web应用程序编写的一个验收测试工具。其升级版本为Webdriver。</p>
+<p>License：免费</p>
+<p>3、<strong>Postman</strong></p>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.getpostman.com/">https://www.getpostman.com</a></p>
+<p>接口测试</p>
+<p> Postman 提供功能强大的 Web API 和 HTTP 请求的调试，它能够发送任何类型的HTTP 请求 (GET, POST, PUT, DELETE…)，并且能附带任何数量的参数和 Headers。不仅如此，它还提供测试数据和环境配置数据的导入导出，付费的 Post Cloud 用户还能够创建自己的 Team Library 用来团队协作式的测试，并能够将自己的测试收藏夹和用例数据分享给团队。</p>
+<p>License：免费</p>
+<p>4、Soapui</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.soapui.org/">https://www.soapui.org</a></p>
+<p>接口测试</p>
+<p>SoapUI提供了所有所需的工具来测试和完善的测试。总览标签给你一个项目的所有内容和全面的看法。只需一次点击，您可以添加任何数量的断言为验证传入的消息TestStep。使用功能强大的HTTP监视器记录，分析甚至修改客户机 - 服务器通信，因为它发生。和SoapUI临带来了更专业和先进的功能，保持遥遥领先其他测试工具。轻松创建和运行数据驱动测试。该数据源TestStep读取测试数据从任何外部来源 - Excel中，XML，JDBC，文件，等等 - 到标准SoapUI属性。</p>
+<p>License：免费</p>
+<p>5、Robot Framework</p>
+<p>官网：<a target="_blank" rel="noopener" href="http://robotframework.org/">http://robotframework.org</a>  </p>
+<p>WebUI自动化测试，接口测试，APP测试</p>
+<p>   Robot Framework是一款python编写的功能自动化测试框架。具备良好的可扩展性，支持关键字驱动，可以同时测试多种类型的客户端或者接口，可以进行分布式测试执行。主要用于轮次很多的验收测试和验收测试驱动开发。</p>
+<p>Robot framework为不同的自动化测试需求提供了不同的框架。它的测试能力可以通过 Python 和 Java 测试库得到扩展。Selenium WebDriver 是 Robot Framework 中内置的流行库。</p>
+<p>Robot Framework 不仅仅是网页测试工具，同样可以用来做 Android 和 iOS 的自动化测试。对于关键字测试驱动熟悉的测试员可以轻松上手 Robot Framework。</p>
+<p>License：免费  </p>
+<p>6、QTP</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://software.microfocus.com/en-us/products/unified-functional-automated-testing/overview">https://software.microfocus.com/en-us/products/unified-functional-automated-testing/overview</a></p>
+<p>WebUI自动化测试，接口测试，APP测试</p>
+<p>HP QuickTest Professional 提供符合所有主要应用软件环境的功能测试和回归测试的自动化。采用关键字驱动的理念以简化测试用例的创建和维护。它让用户可以直接录制屏幕上的操作流程，自动生成功能测试或者回归测试用例。专业的测试者也可以通过提供的内置脚本和调试环境来取得对测试和对象属性的完全控制。目前版本名为Unified Functional Testing，简称UFT。可以测试非常多的应用，比如接口API，Web services，桌面程序，Web系统，手机APP。</p>
+<p>License：商业</p>
+<p>7、<strong>Jmeter</strong></p>
+<p>官网：<a target="_blank" rel="noopener" href="https://jmeter.apache.org/">https://jmeter.apache.org</a></p>
+<p>接口测试，性能测试</p>
+<p>JMeter是Apache组织的开放源代码项目，它是功能和性能测试的工具，100%的用java实现；</p>
+<p>JMeter可以用于测试静态或者动态资源的性能（文件、Servlets、Perl脚本、java对象、数据库和查询、ftp服务器或者其他的资源）。JMeter用于模拟在服务器、网络或者其他对象上附加高负载以测试他们提供服务的受压能力，或者分析他们提供的服务在不同负载条件下的总性能情况。你可以用JMeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器/脚本/对象的行为。</p>
+<p>使用Jmeter做接口测试需要注意一点，小心使用“用户定义变量”，Jmeter组件有优先级的，如果多个线程同时执行的时候，“用户定义变量”组件定义的变量可能会乱套。</p>
+<p>License：免费</p>
+<p>8、<strong>Loadrunner</strong></p>
+<p>官网：<a target="_blank" rel="noopener" href="https://software.microfocus.com/en-us/products/loadrunner-load-testing/overview">https://software.microfocus.com/en-us/products/loadrunner-load-testing/overview</a></p>
+<p>性能测试</p>
+<p>LoadRunner，是一种预测系统行为和性能的负载测试工具。通过以模拟上千万用户实施并发负载及实时性能监测的方式来确认和查找问题，LoadRunner能够对整个企业架构进行测试。企业使用LoadRunner能最大限度地缩短测试时间，优化性能和加速应用系统的发布周期。 LoadRunner可适用于各种体系架构的自动负载测试，能预测系统行为并评估系统性能。</p>
+<p>License：商业</p>
+<p>9、Monkey</p>
+<p>App稳定性测试</p>
+<p>软件附带在sdk中，适用于android和ios，通过adb shell，生成用户或系统的伪随机事件，压力测试结果：崩溃crash，无响应anr。</p>
+<p>License：免费</p>
+<p>10、GT</p>
+<p>官网：<a target="_blank" rel="noopener" href="http://gt.qq.com/index.html">http://gt.qq.com/index.html</a></p>
+<p>App性能测试</p>
+<p>GT（随身调）是APP的随身调测平台，它是直接运行在手机上的“集成调测环境”(IDTE, Integrated Debug Environment)。利用GT，仅凭一部手机，无需连接电脑，您即可对APP进行快速的性能测试(CPU、内存、流量、电量、帧率/流畅度等等)、开发日志的查看、Crash日志查看、网络数据包的抓取、APP内部参数的调试、真机代码耗时统计等。</p>
+<p>License：免费</p>
+<p>11、Appscan</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/downloads/r/appscan/">https://www.ibm.com/developerworks/downloads/r/appscan/</a></p>
+<p>安全测试</p>
+<p>IBM Security AppScan 是一个适合安全专家的 Web 应用程序和 Web 服务渗透测试解决方案，对现代 Web 应用程序和服务执行自动化的动态应用程序安全测试 (DAST) 和交互式应用程序安全测试 (IAST)，支持 Web 2.0、JavaScript 和 AJAX 框架的全面的 JavaScript 执行引擎，涵盖 XML 和 JSON 基础架构的 SOAP 和 REST Web 服务测试支持 WS-Security 标准、XML 加密和 XML 签名，详细的漏洞公告和修复建议。</p>
+<p>License：免费</p>
+<p>12、<strong>Jenkins</strong></p>
+<p>官网：<a target="_blank" rel="noopener" href="https://jenkins.io/">https://jenkins.io</a></p>
+<p>持续集成</p>
+<p>自动化构建 编译，部署，任务执行，测试报告，邮件通知等。</p>
+<p>License：免费</p>
 <p><strong><em>拓展知识</em></strong></p>
 <p><strong>CDN</strong></p>
 <p><strong>全称</strong>:Content Delivery Network或Content Ddistribute Network，即<strong>内容分发网络</strong></p>
@@ -1142,7 +1317,7 @@
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-text">基础语法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E7%AE%97%E6%B3%95"><span class="nav-text">编程算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82%EF%BC%88%E9%94%81-JVM%EF%BC%89"><span class="nav-text">实现细节（锁 &#x2F; JVM）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%EF%BC%88%E5%90%AB%E5%89%8D%E7%AB%AF%EF%BC%89"><span class="nav-text">框架（含前端）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-text">网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="nav-text">基础语法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JVM"><span class="nav-text">JVM</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MVC"><span class="nav-text">MVC</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-text">网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li></ol>
     </div>
 </div>
         

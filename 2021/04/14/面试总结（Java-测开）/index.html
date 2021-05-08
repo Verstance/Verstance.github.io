@@ -136,7 +136,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-        <i class="fa fa-book"></i> <span>27.2k 字</span>
+        <i class="fa fa-book"></i> <span>28.3k 字</span>
         </span>
     
     
@@ -582,7 +582,7 @@
 <p>2.@AspectJ注解驱动的切面（注解实现）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationPointcut</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Before(&quot;execution(* com.zhg.service.UserServiceImpl.*(..))&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span></span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;---------方法执行前---------&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@After(&quot;execution(* com.zhg.service.UserServiceImpl.*(..))&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span></span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;---------方法执行后---------&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Around(&quot;execution(* com.zhg.service.UserServiceImpl.*(..))&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">around</span><span class="params">(ProceedingJoinPoint jp)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;环绕前&quot;</span>);</span><br><span class="line">       System.out.println(<span class="string">&quot;签名:&quot;</span>+jp.getSignature());</span><br><span class="line">       <span class="comment">//执行目标方法proceed</span></span><br><span class="line">       Object proceed = jp.proceed();</span><br><span class="line">       System.out.println(<span class="string">&quot;环绕后&quot;</span>);</span><br><span class="line">       System.out.println(proceed);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>3.纯POJO切面（实现Spring 增强类的接口）</p>
+<p>3.纯POJO切面（实现Spring增强类的接口）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--aop的配置--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--切入点 expression:表达式匹配要执行的方法--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">&quot;pointcut&quot;</span> <span class="attr">expression</span>=<span class="string">&quot;execution(* com.zhg.service.UserServiceImpl.*(..))&quot;</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--执行环绕; advice-ref执行方法 . pointcut-ref切入点--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">&quot;log&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pointcut&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">&quot;afterLog&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pointcut&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>4.注入式AspectJ切面（自定义切入类）</p>
@@ -871,6 +871,11 @@
 <p>pwd：显示当前所在位置</p>
 <p>sudo + 其他命令：以系统管理者的身份执行指令</p>
 <p>grep：要搜索的字符串 要搜索的文件 –color （高亮）</p>
+<p>​     -o 正则表达式匹配的字符串 -v 筛除</p>
+<p>awk：’条件{print $X,Y}’ 文件（筛选）</p>
+<p>​    awk -F “,” ‘{print $2}’ 文件</p>
+<p>​    awk ‘{enginearr[$1]++}END{for(i in enginearr) print i “\t” enginearr[i]}’</p>
+<p>sed：-i ‘s/^Str\.$/String\;/g’ 文件（批量替换文本内容）</p>
 <p>ps - ef/ps aux：查看当前系统正在运行进程</p>
 <p><strong>查看特定的进程（查看包括redis的进程）： ps aux|grep redis / pgrep redis -a</strong></p>
 <p><strong>kill -9 进程pid ： 杀死进程（-9 表示强制终止）</strong></p>
@@ -1114,7 +1119,8 @@
 <p>38.是否方便人们操作</p>
 <p>39.是否有免密码支付功能</p>
 <p>40.是否具有青少年模式</p>
-<p><strong><em>测试场景</em></strong></p>
+<p><strong>微信语音输入</strong></p>
+<p><strong>功能测试</strong><br>不说话的时候发送语音, 是否会有相关的信息提示<br>说话分贝很轻很轻, 是否可以录入语言<br>普通的语音信息是否可以正常发送<br>语音录制的时候是否有时间限制(最短限制 / 最长限制)<br>录制时间不足最短时长限制会发送失败<br>超出了最长时间限制时, 语音自动保存并发送<br>语音识别<br>是否可以录入中文, 英文, 日语…<br>是否可以录入小动物的声音: 狗叫, 猫叫, 羊叫…<br>是否可以录入其他声音: 汽笛, 施工声…<br>是否可以取消语音发送<br>是否可以将语音转换成文字<br>语音发送后<br>对方是否可以立即受到<br>语音信息上是否会显示所发语音的时长, 以及语音标志<br>在多长时间内可以撤回<br>超出了撤回时长, 不可以再撤回<br>如果语音发送失败, 是否会有相应的提示<br>如果语音未发出去, 是否会有相应的提示<br>语音显示长度应该和说话时长成正比, 说话时长越长, 语音信息显示的长度越长<br>如果一次发送了多条语音, 是否会因为网络不稳定原因而打乱顺序<br>对方收到的语音和你发送的语音内容, 音量大小是否一致<br><strong>性能测试</strong><br>语音录制结束到发送语音成功的响应时间是多少<br>发送语音后, 对方是否可以立马收到语音消息提示<br>不停地发送语音, 发送的时间是否会有迟缓<br>将语音转换成文字全部显示出来的响应时间<br>发送一条语音的耗电量<br>打开语音发送界面对于手机或者电脑资源的占用情况<br><strong>界面测试</strong><br>界面设计, 排版是否合理<br>界面上是否有错别字<br>语音图标是否正常显示<br>语音图标的显示位置是否设计合理, 是否符合人的使用习惯<br>语音图标是否可以正常点击<br>语音按钮是上是否会有文字说明<br>录制语音时, 声音采集器会随着分贝的大小而变化<br>在点击取消发送按钮时, 按钮变成红色<br>语音是否已读<br>如果语音未读, 则会在语音前显示红点<br>如果语音已读, 则没有红点显示<br>语音消息上显示语音时长<br>播放的时候, 语音图标会闪烁表示正在播放中<br>如果语音未发送出去. 语音信息前显示红色的感叹号<br>兼容性测试<br>不同手机系统下是否可以发送语音:<br>安卓手机<br>苹果手机<br>不同手机型号和不同的微信版本是否都可以发送语音<br>PC 端是否可以发语音:<br>Windows 电脑<br>MAC 电脑<br>手机端发送的语音, 电脑端是否可以同步接收, 反之电脑端发送的语音, 手机端是否可以同步接收<br>安全测试和网络测试<br>如果发送的语音中有敏感信息, 语音是否可以成功发送<br>如果撤回, 对方是否还可以看见被撤回的语音消息<br>如果发语音是, 发生了中断, 有电话和短信接进来, 关机, 重启, 语音是否还可以正常发送<br>弱网情况下(2G, 3G, wifi), 是否可以正常的发送语音<br>不同网络运营商下是否可以正常发送<br>中国移动<br>中国电吸<br>中国联通<br>网络间发生切换, 语音是否可以正常发送<br>网络从断开到连接<br>3G 切换到 4G / wifi<br><strong>易用性测试</strong><br>点击一条语音信息后, 是否可以自动播放所有未读取的语音信息<br>是否可以根据手机和耳部的距离自动转换模式(扬声器模式 / 听筒模式)</p>
 <h4 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h4><p><strong><em>Git常用命令</em></strong></p>
 <p><img src="http://typora-imagehosting.oss-cn-shanghai.aliyuncs.com/img/bg2015120901.png" alt="img"></p>
 <ul>

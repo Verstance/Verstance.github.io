@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        分页功能的实现 |
+        
+        Homgun&#39;s Blog
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let ILS = window.ILS || {};
+    let CONFIG = {"hostname":"example.com","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"2.1.0","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"},"toc":{"enable":true,"number":false,"expand_all":true},"back2top":{"enable":true},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            Homgun&#39;s Blog
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/tags"
+                    >
+                        标签
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">分页功能的实现</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2021-05-08 16:18:18
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Java/">Java</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MySQL/">MySQL</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E9%A1%B9%E7%9B%AE/">项目</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+        <span class="article-wordcount article-meta-item">
+        <i class="fa fa-book"></i> <span>1.7k 字</span>
+        </span>
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <p>​        当要显示的数据量较大时，可以通过分页提升用户的体验，点击上一页/下一页时，需要传入第几页以及一页显示的数据量，例如<code>&quot;$&#123;ctx&#125;/student/showCourse?page=$&#123;i&#125;&quot;</code>，底层是通过MySQL的limit语句实现的。</p>
+<p>1 原始</p>
+<p>定义分页POJO</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 分页信息POJO</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PagingVO</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 当前页码,默认为1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> curentPageNo = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 底下显示页数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> pageCount = GlobalConstant.DEFAULT_PAGECOUNT;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 总页数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> totalCount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 页面容量</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> pageSize = GlobalConstant.DEFAULT_PAGESIZE;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 上一页</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> upPageNo;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 下一页</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> nextPageNo;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 要前往的页码，默认为0</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> toPageNo = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setToPageNo</span><span class="params">(Integer toPageNo)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//新一页</span></span><br><span class="line">        <span class="keyword">this</span>.toPageNo = (toPageNo-<span class="number">1</span>) * pageSize ;</span><br><span class="line">        <span class="comment">//设置跳转后当前的页码</span></span><br><span class="line">        setCurentPageNo(toPageNo);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPageCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> pageCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPageCount</span><span class="params">(<span class="keyword">int</span> pageCount)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.pageCount = pageCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getTopageNo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> toPageNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCurentPageNo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> curentPageNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置当前页码</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> curentPageNo 页码数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCurentPageNo</span><span class="params">(<span class="keyword">int</span> curentPageNo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (curentPageNo != <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.upPageNo = curentPageNo - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.nextPageNo = curentPageNo + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.curentPageNo = curentPageNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getTotalCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> totalCount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTotalCount</span><span class="params">(<span class="keyword">int</span> totalCount)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (totalCount%pageSize &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.totalCount = (totalCount/pageSize)+<span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.totalCount = totalCount/pageSize;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPageSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> pageSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPageSize</span><span class="params">(<span class="keyword">int</span> pageSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.pageSize = pageSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getUpPageNo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> upPageNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUpPageNo</span><span class="params">(<span class="keyword">int</span> upPageNo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.upPageNo = upPageNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNextPageNo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> nextPageNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNextPageNo</span><span class="params">(<span class="keyword">int</span> nextPageNo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.nextPageNo = nextPageNo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>student/showCourse接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value = &quot;/showCourse&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">stuCourseShow</span><span class="params">(Model model, Integer page)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        List&lt;Course&gt; list = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">//页码对象</span></span><br><span class="line">        PagingVO pagingVO = <span class="keyword">new</span> PagingVO();</span><br><span class="line">        <span class="comment">//设置总页数</span></span><br><span class="line">        pagingVO.setTotalCount(courseService.getCountCourse());</span><br><span class="line">        <span class="keyword">if</span> (page == <span class="keyword">null</span> || page == <span class="number">0</span>) &#123;</span><br><span class="line">            pagingVO.setToPageNo(<span class="number">1</span>);</span><br><span class="line">            list = courseService.findByPaging(<span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            pagingVO.setToPageNo(page);</span><br><span class="line">            list = courseService.findByPaging(page);</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;CourseCustom&gt; lists = getCourseCustomList(list);</span><br><span class="line">        model.addAttribute(<span class="string">&quot;courseList&quot;</span>, lists);</span><br><span class="line">        model.addAttribute(<span class="string">&quot;pagingVO&quot;</span>, pagingVO);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;student/showCourse&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>findByPaging</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;findByPaging&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;PagingVO&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;BaseResultMap&quot;</span>&gt;</span></span><br><span class="line">  select</span><br><span class="line">  <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">&quot;Base_Column_List&quot;</span> /&gt;</span></span><br><span class="line">  from course</span><br><span class="line">  limit #&#123;toPageNo&#125;, #&#123;pageSize&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2 插件</p>
+<p>MyBatis 分页插件 PageHelper（需要配置拦截器）</p>
+<p>文档地址：<a target="_blank" rel="noopener" href="https://pagehelper.github.io/docs/howtouse/">https://pagehelper.github.io/docs/howtouse/</a></p>
+<p>3 拦截器</p>
+<p>原理</p>
+<blockquote>
+<p>Mybatis拦截器常常会被用来进行分页处理。JDBC对数据库进行操作就必须产生一个对应的Statement对象，Mybatis在执行Sql语句前也会产生一个包含Sql语句的Statement对象，而且对应的Sql语句是在Statement之前产生的，所以我们就可以在它成Statement之前对用来生成Statement的Sql语句下手。在Mybatis中Statement语句是通过RoutingStatementHandler对象的prepare方法生成的。所以利用拦截器实现Mybatis分页的一个思路就是拦截StatementHandler接口的prepare方法，然后在拦截器方法中把Sql语句改成对应的分页查询Sql语句，之后再调用StatementHandler对象的prepare方法，即调用invocation.proceed()。更改Sql语句这个看起来很简单，而事实上来说的话就没那么直观，因为包括sql等其他属性在内的多个属性都没有对应的方法可以直接取到，它们对外部都是封闭的，是对象的私有属性，所以这里就需要引入反射机制来获取或者更改对象的私有属性的值了。对于分页而言，在拦截器里面我们常常还需要做的一个操作就是统计满足当前条件的记录一共有多少，这是通过获取到了原始的Sql语句后，把它改为对应的统计语句再利用Mybatis封装好的参数和设置参数的功能把Sql语句中的参数进行替换，之后再执行查询记录数的Sql语句进行总记录数的统计。</p>
+</blockquote>
+<p>Page</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Page</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> total;<span class="comment">//总的行数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;<span class="comment">//每页的大小</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> index;<span class="comment">//页码  从1开始</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Page</span><span class="params">(<span class="keyword">int</span> size, <span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.size = size;</span><br><span class="line">        <span class="keyword">this</span>.index = index;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getTotal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> total;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTotal</span><span class="params">(<span class="keyword">int</span> total)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.total = total;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSize</span><span class="params">(<span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.size = size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getIndex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> index;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIndex</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.index = index;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getOffset</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size*(index-<span class="number">1</span>);<span class="comment">//offset 0 limit 50&lt;size&gt;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Page&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;total=&quot;</span> + total +</span><br><span class="line">                <span class="string">&quot;, size=&quot;</span> + size +</span><br><span class="line">                <span class="string">&quot;, index=&quot;</span> + index +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>PageIntercepter</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> icu.xblogs.report.plugin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.executor.statement.StatementHandler;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.mapping.BoundSql;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.plugin.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.reflection.SystemMetaObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用分页插件步骤</span></span><br><span class="line"><span class="comment"> * 1. 本项目的分页查询的逻辑会在mapper类中单独写出</span></span><br><span class="line"><span class="comment"> * 2. 分页的实体工具类有三个参数，index用于记录分页的开始 size用于记录每页多少条记录</span></span><br><span class="line"><span class="comment"> * 3. 在mapper接口的方法中，有Page参数的都是分页方法，在mapper中无需再写分页的sql逻辑，插件已经自动的完成</span></span><br><span class="line"><span class="comment"> * 4. 如果有多个参数，在非page参数前加上<span class="doctag">@param</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Intercepts(@Signature(type = StatementHandler.class,</span></span><br><span class="line"><span class="meta">        method = &quot;prepare&quot;, args = &#123;Connection.class,</span></span><br><span class="line"><span class="meta">        Integer.class&#125;))</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PageInterceptor</span> <span class="keyword">implements</span> <span class="title">Interceptor</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="comment">//1. 检测当前是否满足分页条件</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 带上分页参数,获取被拦截的对象StatementHandler，不能去拦截exector,因为需要拦截参数传递</span></span><br><span class="line">        StatementHandler target = (StatementHandler) invocation.getTarget();</span><br><span class="line">        <span class="comment">// SQL包 sql、参数、参数映射，</span></span><br><span class="line">        <span class="comment">// 如果参数为单一的参数且没有配置@param注解，且参数值不是复杂的类型，会被判定为arg，如果是复杂的类型会为类型值，</span></span><br><span class="line">        <span class="comment">// 参数为多个 类型则会被判定为一个map 键的规则如上，</span></span><br><span class="line">        <span class="comment">// sql为直接可以执行的sql</span></span><br><span class="line">        BoundSql boundSql = target.getBoundSql();</span><br><span class="line">        Object parameterObject = boundSql.getParameterObject();</span><br><span class="line"></span><br><span class="line">        Page page = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">//如果参数只有一个Page的类型的时候，直接拿到这个page</span></span><br><span class="line">        <span class="keyword">if</span> (parameterObject <span class="keyword">instanceof</span> Page) &#123;</span><br><span class="line">            page = (Page) parameterObject;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (parameterObject <span class="keyword">instanceof</span> Map) &#123;</span><br><span class="line">            <span class="comment">//这个流式的编程没看懂，估计是拿到map中Page的类容</span></span><br><span class="line">            page = (Page) ((Map) parameterObject).values().stream().filter(v -&gt; v <span class="keyword">instanceof</span> Page).findFirst().orElse(<span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果不是分页  直接放行</span></span><br><span class="line">        <span class="keyword">if</span> (page == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> invocation.proceed();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 2.设置总行数</span></span><br><span class="line">        <span class="comment">// select count(0) from (sql);</span></span><br><span class="line">        page.setTotal(selectCount(invocation));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3.修改原有SQL</span></span><br><span class="line">        <span class="comment">// select * from users offset 0,limit 50</span></span><br><span class="line">        <span class="comment">//重新的设置boundsql中的可执行sql的值</span></span><br><span class="line">        String newSql= String.format(<span class="string">&quot;%s limit %s offset %s&quot;</span>, boundSql.getSql(),page.getSize(),page.getOffset());</span><br><span class="line">        <span class="comment">//使用MetaObject工具类重新的构建sql</span></span><br><span class="line">        SystemMetaObject.forObject(boundSql).setValue(<span class="string">&quot;sql&quot;</span>,newSql);</span><br><span class="line">        <span class="keyword">return</span> invocation.proceed();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">selectCount</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        StatementHandler target = (StatementHandler) invocation.getTarget();</span><br><span class="line">        <span class="comment">// SQL包 sql、参数、参数映射</span></span><br><span class="line">        <span class="comment">//通过jdbc计算查询sql的总条数</span></span><br><span class="line">        String countSql = String.format(<span class="string">&quot;select count(*) from (%s) as _page&quot;</span>, target.getBoundSql().getSql());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// JDBC</span></span><br><span class="line">        Connection connection = (Connection) invocation.getArgs()[<span class="number">0</span>];</span><br><span class="line">        PreparedStatement preparedStatement = connection.prepareStatement(countSql);</span><br><span class="line"></span><br><span class="line">        target.getParameterHandler().setParameters(preparedStatement);</span><br><span class="line"></span><br><span class="line">        ResultSet resultSet = preparedStatement.executeQuery();</span><br><span class="line">        <span class="keyword">if</span> (resultSet.next()) &#123;</span><br><span class="line">            count = resultSet.getInt(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        resultSet.close();</span><br><span class="line">        preparedStatement.close();</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//包装  动态代理 静态代理</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">plugin</span><span class="params">(Object target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Plugin.wrap(target, <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProperties</span><span class="params">(Properties properties)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+        </div>
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next btn"
+                           rel="next"
+                           href="/2021/04/24/JVM%E6%8E%A2%E7%A9%B6/"
+                        >
+                            <span class="post-nav-title-item">JVM探究</span>
+                            <span class="post-nav-item">下一篇</span>
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <i class="fa fa-heart-o"></i> <a href="/">Homgun</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v2.1.0</a>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+        
+
+        
+
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fa fa-outdent"></i>
+            </li>
+        
+
+    </ul>
+</div>
+
+    </div>
+
+    <div class="sidebar-tools-2">
+        <div class="tools2-container">
+
+    <button class="tools-button">
+        <i class="fa fa-plus"></i>
+    </button>
+
+    <ul class="tools-wrapper">
+        <!-- back2top -->
+        
+            <li class="tools-item scroll-to-bottom">
+                <i class="fa fa-arrow-down"></i>
+            </li>
+            <li class="tools-item scroll-to-top">
+                <i class="fa fa-arrow-up"></i>
+            </li>
+        
+
+        <!-- mode toggle -->
+        <li class="tools-item mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+
+    </ul>
+</div>
+
+    </div>
+
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/dark-light-toggle.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/back2top.js"></script>
+
+
+
+
+
+    
+<script src="/js/left-side-toggle.js"></script>
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+</body>
+</html>
